@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<SqlWorkbenchSqlProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="AztecPartPackaging">
+  <Items>
+    <LogicalFolder Name="Connections" Type="2" Sorted="true">
+      <Items>
+        <ConnectionNode Name="10.1.10.5,1433:Eric">
+          <Created>2013-04-08T13:58:12.8414774-04:00</Created>
+          <Type>SQL</Type>
+          <Server>10.1.10.5,1433</Server>
+          <UserName>Eric</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB>FxVoltTech</InitialDB>
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+        <ConnectionNode Name="192.0.0.2\FX:estimpson">
+          <Created>2012-12-06T09:41:20.7975058-05:00</Created>
+          <Type>SQL</Type>
+          <Server>192.0.0.2\FX</Server>
+          <UserName>estimpson</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB>FxArmada</InitialDB>
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Queries" Type="0" Sorted="true">
+      <Items>
+        <FileNode Name="Procedure.dbo.usp_Shipping_PartPackaging_DisablePack.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:10.1.10.5,1433:False:Eric</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>10.1.10.5,1433</AssociatedConnSrvName>
+          <AssociatedConnUserName>Eric</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_Shipping_PartPackaging_DisablePack.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_Shipping_PartPackaging_EnablePack.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:10.1.10.5,1433:False:Eric</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>10.1.10.5,1433</AssociatedConnSrvName>
+          <AssociatedConnUserName>Eric</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_Shipping_PartPackaging_EnablePack.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_Shipping_PartPackaging_EnablePackWithWarning.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:10.1.10.5,1433:False:Eric</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>10.1.10.5,1433</AssociatedConnSrvName>
+          <AssociatedConnUserName>Eric</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_Shipping_PartPackaging_EnablePackWithWarning.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_Shipping_PartPackaging_SetDefaultPack.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:10.1.10.5,1433:False:Eric</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>10.1.10.5,1433</AssociatedConnSrvName>
+          <AssociatedConnUserName>Eric</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_Shipping_PartPackaging_SetDefaultPack.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_Shipping_PartPackaging_VerifyPack.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:10.1.10.5,1433:False:Eric</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>10.1.10.5,1433</AssociatedConnSrvName>
+          <AssociatedConnUserName>Eric</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_Shipping_PartPackaging_VerifyPack.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.PartPackaging Tables and Views.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.PartPackaging Tables and Views.sql</FullPath>
+        </FileNode>
+        <FileNode Name="TableIndex.dbo.audit_trail.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>TableIndex.dbo.audit_trail.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ViewTrigger.dbo.trPartPackagingSetup.View.dbo.PartPackaging_Setup.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:192.0.0.2\FX:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>192.0.0.2\FX</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ViewTrigger.dbo.trPartPackagingSetup.View.dbo.PartPackaging_Setup.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ViewTrigger.dbo.trShipping_PartPackagingSetup.View.dbo.Shipping_PartPackaging_Setup.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:192.0.0.2\FX:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>192.0.0.2\FX</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ViewTrigger.dbo.trShipping_PartPackagingSetup.View.dbo.Shipping_PartPackaging_Setup.sql</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Miscellaneous" Type="3" Sorted="true">
+      <Items />
+    </LogicalFolder>
+  </Items>
+</SqlWorkbenchSqlProject>

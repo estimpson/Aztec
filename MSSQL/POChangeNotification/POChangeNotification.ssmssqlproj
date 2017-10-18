@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<SqlWorkbenchSqlProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="POChangeNotification">
+  <Items>
+    <LogicalFolder Name="Connections" Type="2" Sorted="true">
+      <Items>
+        <ConnectionNode Name="aztecsql2.aztecmfgcorp.local\fx:estimpson">
+          <Created>2013-12-11T15:21:40.04483-05:00</Created>
+          <Type>SQL</Type>
+          <Server>aztecsql2.aztecmfgcorp.local\fx</Server>
+          <UserName>estimpson</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB>fxAztec</InitialDB>
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Queries" Type="0" Sorted="true">
+      <Items>
+        <FileNode Name="Procedure.Fx.custom.usp_NotifyOnPODetail_IUD.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.Fx.custom.usp_NotifyOnPODetail_IUD.sql</FullPath>
+        </FileNode>
+        <FileNode Name="TableTrigger.Fx.dbo.trPoDetailNotification.Table.dbo.po_detail.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>TableTrigger.Fx.dbo.trPoDetailNotification.Table.dbo.po_detail.sql</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Miscellaneous" Type="3" Sorted="true">
+      <Items />
+    </LogicalFolder>
+  </Items>
+</SqlWorkbenchSqlProject>

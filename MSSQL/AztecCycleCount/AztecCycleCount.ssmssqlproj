@@ -1,0 +1,250 @@
+<?xml version="1.0"?>
+<SqlWorkbenchSqlProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="AztecCycleCount">
+  <Items>
+    <LogicalFolder Name="Connections" Type="2" Sorted="true">
+      <Items>
+        <ConnectionNode Name="192.168.0.228\:sa">
+          <Created>2013-01-02T09:30:30.0588492-05:00</Created>
+          <Type>SQL</Type>
+          <Server>192.168.0.228\</Server>
+          <UserName>sa</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB>FIS_Empower_21st</InitialDB>
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+        <ConnectionNode Name="aztecsql2.aztecmfgcorp.local\fx:sa">
+          <Created>2013-03-12T15:24:37.7304853-04:00</Created>
+          <Type>SQL</Type>
+          <Server>aztecsql2.aztecmfgcorp.local\fx</Server>
+          <UserName>sa</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB>fxAztec</InitialDB>
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Queries" Type="0" Sorted="true">
+      <Items>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_Correct.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_Correct.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_CountObject.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_CountObject.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_CycleCount_AddFoundObject.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_CycleCount_AddFoundObject.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_CycleCount_AddListedObjects.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_InventoryControl_CycleCount_AddListedObjects.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_CycleCount_AddObject.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_CycleCount_AddObject.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_CycleCount_Begin.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_CycleCount_Begin.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_CycleCount_CorrectLocation.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_CycleCount_CorrectLocation.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_CycleCount_CorrectObjectLocations.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_CycleCount_CorrectObjectLocations.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_CycleCount_CorrectObjectQuantities.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_CycleCount_CorrectObjectQuantities.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_CycleCount_CorrectQuantity.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_CycleCount_CorrectQuantity.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_CycleCount_CountObjects.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_CycleCount_CountObjects.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_CycleCount_End.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_CycleCount_End.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_CycleCount_MarkListedObjects.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_InventoryControl_CycleCount_MarkListedObjects.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_CycleCount_MarkObject.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_CycleCount_MarkObject.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_CycleCount_MoveToLost.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_CycleCount_MoveToLost.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_CycleCount_NewHeader.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_CycleCount_NewHeader.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_CycleCount_RecoverObject.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_CycleCount_RecoverObject.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_CycleCount_RecoverObjects.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_CycleCount_RecoverObjects.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_CycleCount_UpdateHeaderCounts.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_CycleCount_UpdateHeaderCounts.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_ManualAdd.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:192.168.0.228\:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>192.168.0.228\</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_InventoryControl_ManualAdd.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_Transfer.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_Transfer.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.dbo.fn_Inventory_GetPartNetWeight.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>ScalarFunction.dbo.fn_Inventory_GetPartNetWeight.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.dbo.fn_SplitStringToArray.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>ScalarFunction.dbo.fn_SplitStringToArray.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.Insert.FT.StatusDefn.CycleCount_Headers.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.Insert.FT.StatusDefn.CycleCount_Headers.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.Insert.FT.StatusDefn.CycleCount_Objects.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.Insert.FT.StatusDefn.CycleCount_Objects.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.Insert.MenuItem.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.Insert.MenuItem.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.Insert.NumberSequence.Cycle Count.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.Insert.NumberSequence.Cycle Count.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.Insert.Report Library.Cycle Count.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.Insert.Report Library.Cycle Count.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.Insert.Report List.cycle Count.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.Insert.Report List.cycle Count.sql</FullPath>
+        </FileNode>
+        <FileNode Name="SQLQuery1.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>SQLQuery1.sql</FullPath>
+        </FileNode>
+        <FileNode Name="TableFunction.dbo.fn_SplitStringToRows.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>TableFunction.dbo.fn_SplitStringToRows.sql</FullPath>
+        </FileNode>
+        <FileNode Name="TableFunction.dbo.InventoryControl_CycleCount_GetSerialInfo.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>TableFunction.dbo.InventoryControl_CycleCount_GetSerialInfo.sql</FullPath>
+        </FileNode>
+        <FileNode Name="TableTrigger.Table.InventoryControl_CycleCountHeaders.Table.trInventoryControl_CycleCountHeaders_i.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>TableTrigger.Table.InventoryControl_CycleCountHeaders.Table.trInventoryControl_CycleCountHeaders_i.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.dbo.InventoryControl_CycleCountHeaders.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Table.dbo.InventoryControl_CycleCountHeaders.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.dbo.InventoryControl_CycleCountObjects.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Table.dbo.InventoryControl_CycleCountObjects.sql</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Miscellaneous" Type="3" Sorted="true">
+      <Items />
+    </LogicalFolder>
+  </Items>
+</SqlWorkbenchSqlProject>

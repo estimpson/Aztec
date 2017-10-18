@@ -1,0 +1,820 @@
+<?xml version="1.0"?>
+<SqlWorkbenchSqlProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="AztecMES">
+  <Items>
+    <LogicalFolder Name="Connections" Type="2" Sorted="true">
+      <Items>
+        <ConnectionNode Name="aztecsql2.aztecmfgcorp.local\fx:sa">
+          <Created>2012-01-23T16:09:34.6949495-05:00</Created>
+          <Type>SQL</Type>
+          <Server>aztecsql2.aztecmfgcorp.local\fx</Server>
+          <UserName>sa</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB />
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Queries" Type="0" Sorted="true">
+      <Items>
+        <FileNode Name="Index.dbo.part_machine.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Index.dbo.part_machine.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.custom.usp_InventoryListByLocation.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.custom.usp_InventoryListByLocation.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.custom.usp_InventoryValuation.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.custom.usp_InventoryValuation.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.custom.usp_MES_ChangeLetDownRate.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.custom.usp_MES_ChangeLetDownRate.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.custom.usp_MES_SetJobQtyRequired.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.custom.usp_MES_SetJobQtyRequired.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_Breakout.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_InventoryControl_Breakout.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_GetPartInventory.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_InventoryControl_GetPartInventory.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_MaterialIssue.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_InventoryControl_MaterialIssue.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_UpdatePartOnHand.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_InventoryControl_UpdatePartOnHand.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_.JCPreObject.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_MES_.JCPreObject.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_AllocateSerial.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_MES_AllocateSerial.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_AllocateSerial_toDepartment.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_MES_AllocateSerial_toDepartment.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_AllocateSerial_toJobID.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_MES_AllocateSerial_toJobID.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_AllocateSerial_toMachine.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_MES_AllocateSerial_toMachine.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_AllocateSerial_toStagingLocation.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_MES_AllocateSerial_toStagingLocation.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_BackFlush.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_MES_BackFlush.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_CancelPreObject.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_MES_CancelPreObject.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_CloseJob.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_MES_CloseJob.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_ClosePreObject.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_MES_ClosePreObject.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_CorrectObjectQty.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_MES_CorrectObjectQty.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_CorrectPreObject.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_MES_CorrectPreObject.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_GetAllocationDepartmentList_byComponentPart.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_MES_GetAllocationDepartmentList_byComponentPart.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_GetAllocationMachineList_byComponentPart.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_MES_GetAllocationMachineList_byComponentPart.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_GetAllocationStagingLocationList_byComponentPart.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_MES_GetAllocationStagingLocationList_byComponentPart.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_GetBackflushingDetails_bySerial.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_MES_GetBackflushingDetails_bySerial.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_GetInventoryInquiryHeader.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_MES_GetInventoryInquiryHeader.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_GetJobBomSubstitutions.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_MES_GetJobBomSubstitutions.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_GetJobDetails.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_MES_GetJobDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_GetJobList.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_MES_GetJobList.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_GetPickList.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_MES_GetPickList.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_GetScrapEntries_byWODID.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_MES_GetScrapEntries_byWODID.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_NewExcessQty.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_MES_NewExcessQty.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_NewPreObject.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_MES_NewPreObject.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_NewScrapEntry.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_MES_NewScrapEntry.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_OpenPreObject.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_MES_OpenPreObject.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_PutAwayMaterial.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_MES_PutAwayMaterial.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_PutAwayProduction.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_MES_PutAwayProduction.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_ReportAsFinishedPreObject.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_MES_ReportAsFinishedPreObject.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_ResetJobBOM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_MES_ResetJobBOM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_ScheduleManualJob.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_MES_ScheduleManualJob.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_SchedulePlanningJobs.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_MES_SchedulePlanningJobs.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_MES_SetSubstituteMaterial.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_MES_SetSubstituteMaterial.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_OutsideProcessing_AdjustVendorInventory.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_OutsideProcessing_AdjustVendorInventory.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_OutsideProcessing_AutocreateFirmPOLineItem.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_OutsideProcessing_AutocreateFirmPOLineItem.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_OutsideProcessing_GetVendorInventory.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_OutsideProcessing_GetVendorInventory.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_OutsideProcessing_NewExcessQty.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_OutsideProcessing_NewExcessQty.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_OutsideProcessing_NewShortageQty.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_OutsideProcessing_NewShortageQty.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_OutsideProcessing_UndoAutocreateFirmPOLineItem.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_OutsideProcessing_UndoAutocreateFirmPOLineItem.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_Scheduling_BuildXRt.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_Scheduling_BuildXRt.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_Scheduling_ScheduleJob.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_Scheduling_ScheduleJob.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_Scheduling_ScheduleNextBuild.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_Scheduling_ScheduleNextBuild.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_WorkOrders_CreateFirmWorkOrderHeader.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_WorkOrders_CreateFirmWorkOrderHeader.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_WorkOrders_CreateNextBuildWorkOrderHeader.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_WorkOrders_CreateNextBuildWorkOrderHeader.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_WorkOrders_CreateSubstituteMaterial.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_WorkOrders_CreateSubstituteMaterial.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_WorkOrders_CreateWODBillOfMaterials.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_WorkOrders_CreateWODBillOfMaterials.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_WorkOrders_CreateWorkOrderDetails.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_WorkOrders_CreateWorkOrderDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_WorkOrders_DeleteSubstituteMaterial.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_WorkOrders_DeleteSubstituteMaterial.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_WorkOrders_EditSubstituteMaterial.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_WorkOrders_EditSubstituteMaterial.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_WorkOrders_ReplaceWODBillOfMaterials.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_WorkOrders_ReplaceWODBillOfMaterials.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.dbo.fn_Inventory_GetPartNetWeight.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>ScalarFunction.dbo.fn_Inventory_GetPartNetWeight.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.dbo.fn_MES_GetFIFOLocation_forPart.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>ScalarFunction.dbo.fn_MES_GetFIFOLocation_forPart.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.dbo.udf_GetPartQtyOnHand.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>ScalarFunction.dbo.udf_GetPartQtyOnHand.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.dbo.udf_GetQtyFromStdQty.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>ScalarFunction.dbo.udf_GetQtyFromStdQty.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Scipt.ObjectHistory.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Scipt.ObjectHistory.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script Bucket BOMs.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script Bucket BOMs.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.AlterTableFunction.dbo.fn_MES_GetBackflushDetails.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.AlterTableFunction.dbo.fn_MES_GetBackflushDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.BillOfMaterial.1217R20B.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.BillOfMaterial.1217R20B.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.Calc.BackflushDetails.NetMPS.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.Calc.BackflushDetails.NetMPS.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.Calc.BackflushDetails.NetOut.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.Calc.BackflushDetails.NetOut.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.Calc.BackflushDetails.OnHand.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.Calc.BackflushDetails.OnHand.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.Calc.BackflushDetails.Results.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.Calc.BackflushDetails.Results.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.Calc.BackflushDetails.XRt.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.Calc.BackflushDetails.XRt.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.CalculateLetdownBOM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.CalculateLetdownBOM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.Create Part-Machine for Irwin.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.Create Part-Machine for Irwin.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.Create Part-Machine for buckets.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.Create Part-Machine for buckets.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.DeleteDuplicateObjectHistory.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.DeleteDuplicateObjectHistory.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.EliminateSpaceInLocationCode.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.EliminateSpaceInLocationCode.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.MachineInOut.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.MachineInOut.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.MissingBackflush.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.MissingBackflush.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.QueryInventoryBarcodes.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.QueryInventoryBarcodes.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.RecessedBucketBOM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.RecessedBucketBOM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.RecessedSeatBOMs.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.RecessedSeatBOMs.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.ReplaceJobBOM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.ReplaceJobBOM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.TestBackflush.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.TestBackflush.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.TestInLineCalculation.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.TestInLineCalculation.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.UpdateMachineILAssy.Bucket.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.UpdateMachineILAssy.Bucket.sql</FullPath>
+        </FileNode>
+        <FileNode Name="SQLQuery3.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>SQLQuery3.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.FT.XRt.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Table.FT.XRt.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.custom.MoldingColorLetdown.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Table.custom.MoldingColorLetdown.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.custom.WorkOrderDetailMattecSchedule.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Table.custom.WorkOrderDetailMattecSchedule.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.dbo.Defects.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Table.dbo.Defects.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.dbo.MES_CommodityBackflushingPrinciples.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Table.dbo.MES_CommodityBackflushingPrinciples.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.dbo.MES_GroupTechnologyBackflushingPrinciples.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Table.dbo.MES_GroupTechnologyBackflushingPrinciples.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.dbo.MES_PartBackflushingPrinciples.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Table.dbo.MES_PartBackflushingPrinciples.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.dbo.MES_PartMachineStagingLocations.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Table.dbo.MES_PartMachineStagingLocations.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.dbo.MES_ProductLineBackflushingPrinciples.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Table.dbo.MES_ProductLineBackflushingPrinciples.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.dbo.MES_StagingLocations.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Table.dbo.MES_StagingLocations.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.dbo.WorkOrderObjects.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>Table.dbo.WorkOrderObjects.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.dbo.print_queue.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Table.dbo.print_queue.sql</FullPath>
+        </FileNode>
+        <FileNode Name="TableFunction.dbo.fn_GetNetout.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>TableFunction.dbo.fn_GetNetout.sql</FullPath>
+        </FileNode>
+        <FileNode Name="TableFunction.dbo.fn_MES_GetBackflushDetails.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>TableFunction.dbo.fn_MES_GetBackflushDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="TableFunction.dbo.fn_MES_GetPartFIFO.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>TableFunction.dbo.fn_MES_GetPartFIFO.sql</FullPath>
+        </FileNode>
+        <FileNode Name="TableFunction.dbo.fn_MES_InventoryInquiry.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>TableFunction.dbo.fn_MES_InventoryInquiry.sql</FullPath>
+        </FileNode>
+        <FileNode Name="TableFunction.dbo.fn_MES_NetMPS.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>TableFunction.dbo.fn_MES_NetMPS.sql</FullPath>
+        </FileNode>
+        <FileNode Name="TableFunction.dbo.udf_GetInventory_FromDT.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>TableFunction.dbo.udf_GetInventory_FromDT.sql</FullPath>
+        </FileNode>
+        <FileNode Name="TableFunction.dbo.udf_MES_GetBackflushDetails.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>TableFunction.dbo.udf_MES_GetBackflushDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Tuning.MES_InventoryLookup.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Tuning.MES_InventoryLookup.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.MES_PartPackaging.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>View.MES_PartPackaging.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.custom.IrwinBOMVerify.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>View.custom.IrwinBOMVerify.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.custom.MES_MoldingJobColorLetDown.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>View.custom.MES_MoldingJobColorLetDown.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.custom.WorkOrderDetails.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>View.custom.WorkOrderDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.custom.WorkOrderHeaders.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>View.custom.WorkOrderHeaders.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.dbo.MES_AllocatedInventory.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>View.dbo.MES_AllocatedInventory.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.dbo.MES_BOMJobSubstitution.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>View.dbo.MES_BOMJobSubstitution.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.dbo.MES_BackflushDetails.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>View.dbo.MES_BackflushDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.dbo.MES_CurrentSchedules.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>View.dbo.MES_CurrentSchedules.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.dbo.MES_JobBillOfMaterials.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>View.dbo.MES_JobBillOfMaterials.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.dbo.MES_JobList.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>View.dbo.MES_JobList.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.dbo.MES_JobObjects.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>View.dbo.MES_JobObjects.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.dbo.MES_MachineList.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>View.dbo.MES_MachineList.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.dbo.MES_PartPackaging.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>View.dbo.MES_PartPackaging.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.dbo.MES_PickList.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>View.dbo.MES_PickList.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.dbo.MES_SetupBackflushingPrinciples.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>View.dbo.MES_SetupBackflushingPrinciples.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.dbo.OutsideProcessing_BlanketPOs.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>View.dbo.OutsideProcessing_BlanketPOs.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.dbo.OutsideProcessing_ProcessorParts.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>View.dbo.OutsideProcessing_ProcessorParts.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.dbo.OutsideProcessing_VendorInventory.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>View.dbo.OutsideProcessing_VendorInventory.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.dbo.Scheduling_InLineProcess.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>View.dbo.Scheduling_InLineProcess.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.dbo.Scheduling_NetRequirementsDetails.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>View.dbo.Scheduling_NetRequirementsDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.dbo.Scheduling_NetRequirementsSummary.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>View.dbo.Scheduling_NetRequirementsSummary.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.dbo.vwGetDate.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>View.dbo.vwGetDate.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.dbo.vwSOD.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>View.dbo.vwSOD.sql</FullPath>
+        </FileNode>
+        <FileNode Name="load.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>load.sql</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Miscellaneous" Type="3" Sorted="true">
+      <Items />
+    </LogicalFolder>
+  </Items>
+</SqlWorkbenchSqlProject>

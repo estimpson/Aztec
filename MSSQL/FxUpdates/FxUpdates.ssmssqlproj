@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<SqlWorkbenchSqlProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="FxUpdates">
+  <Items>
+    <LogicalFolder Name="Connections" Type="2" Sorted="true">
+      <Items>
+        <ConnectionNode Name="aztecsql2.aztecmfgcorp.local\fx:estimpson">
+          <Created>2014-09-25T15:47:40.4563701-04:00</Created>
+          <Type>SQL</Type>
+          <Server>aztecsql2.aztecmfgcorp.local\fx</Server>
+          <UserName>estimpson</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB />
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Queries" Type="0" Sorted="true">
+      <Items>
+        <FileNode Name="2013-02-13.dbo.bill_of_material.View.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2013-02-13.dbo.bill_of_material.View.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2013-02-13.FT.vwBOM.View.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2013-02-13.FT.vwBOM.View.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2013-02-14.Add location.QualityAlert.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2013-02-14.Add location.QualityAlert.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2013-02-14.ScalarFunction.Fx.dbo.udf_GetBaseUserDefinedStatus.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2013-02-14.ScalarFunction.Fx.dbo.udf_GetBaseUserDefinedStatus.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2013-02-14.Script.ModifyMenuItem.LocationSetups.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2013-02-14.Script.ModifyMenuItem.LocationSetups.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2013-02-14.TableTrigger.Fx.dbo.tr_object_LocationQualityAlertInsert.Table.dbo.object.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2013-02-14.TableTrigger.Fx.dbo.tr_object_LocationQualityAlertInsert.Table.dbo.object.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2013-02-14.TableTrigger.Fx.dbo.tr_object_LocationQualityAlertUpdate.Table.dbo.object.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2013-02-14.TableTrigger.Fx.dbo.tr_object_LocationQualityAlertUpdate.Table.dbo.object.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2013-02-20.Create Fx Schema.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2013-02-20.Create Fx Schema.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2013-02-20.Create Fx.Globals Table.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2013-02-20.Create Fx.Globals Table.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2013-02-20.Create Procedure to Check Change Destination Option in Shipping.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2013-02-20.Create Procedure to Check Change Destination Option in Shipping.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2013-02-20.Insert Default Option for Change Destination in Shipping.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2013-02-20.Insert Default Option for Change Destination in Shipping.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2013-03-05.Fix Update Counts on CycleCount.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2013-03-05.Fix Update Counts on CycleCount.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2013-04-09.Procedure.Fx.dbo.usp_ReceivingDock_UndoBackflush.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2013-04-09.Procedure.Fx.dbo.usp_ReceivingDock_UndoBackflush.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2013-04-09.Procedure.Fx.dbo.usp_ReceivingDock_UndoReceiveObject_againstReceiverObject.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2013-04-09.Procedure.Fx.dbo.usp_ReceivingDock_UndoReceiveObject_againstReceiverObject.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2013-04-09.TableFunction.dbo.InventoryControl_CycleCount_GetSerialInfo.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2013-04-09.TableFunction.dbo.InventoryControl_CycleCount_GetSerialInfo.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2014-06-07.Procedure.Fx.dbo.usp_Admin_LoginUser.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2014-06-07.Procedure.Fx.dbo.usp_Admin_LoginUser.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2014-06-07.Table.Fx.FxSYS.UserLogin.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2014-06-07.Table.Fx.FxSYS.UserLogin.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2014-06-07.Table.FxTSM.FxSYS.USP_Calls.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2014-06-07.Table.FxTSM.FxSYS.USP_Calls.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2014-09-25.Procedure.Fx.dbo.usp_OutsideProcessing_AdjustVendorInventory.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2014-09-25.Procedure.Fx.dbo.usp_OutsideProcessing_AdjustVendorInventory.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2014-09-25.Procedure.Fx.dbo.usp_OutsideProcessing_AutoCreateFirmPOLineItem.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2014-09-25.Procedure.Fx.dbo.usp_OutsideProcessing_AutoCreateFirmPOLineItem.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2014-09-25.Procedure.Fx.dbo.usp_OutsideProcessing_GetVendorInventory.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2014-09-25.Procedure.Fx.dbo.usp_OutsideProcessing_GetVendorInventory.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2014-09-25.Procedure.Fx.dbo.usp_OutsideProcessing_NewExcessQty.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2014-09-25.Procedure.Fx.dbo.usp_OutsideProcessing_NewExcessQty.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2014-09-25.Procedure.Fx.dbo.usp_OutsideProcessing_NewShortageQty.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2014-09-25.Procedure.Fx.dbo.usp_OutsideProcessing_NewShortageQty.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2014-09-25.Procedure.Fx.dbo.usp_OutsideProcessing_UndoAutoCreateFirmPOLineItem.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2014-09-25.Procedure.Fx.dbo.usp_OutsideProcessing_UndoAutoCreateFirmPOLineItem.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2014-09-25.Procedure.Fx.dbo.usp_ReceivingDock_Backflush.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2014-09-25.Procedure.Fx.dbo.usp_ReceivingDock_Backflush.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2014-09-25.View.Fx.dbo.Inventory_CycleCountList.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>2014-09-25.View.Fx.dbo.Inventory_CycleCountList.sql</FullPath>
+        </FileNode>
+        <FileNode Name="2015-02-25.Procedure.Fx.dbo.usp_ReceivingDock_UndoReceiveObjects.[fix subquery in part_venodr update].sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2015-02-25.Procedure.Fx.dbo.usp_ReceivingDock_UndoReceiveObjects.[fix subquery in part_venodr update].sql</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Miscellaneous" Type="3" Sorted="true">
+      <Items />
+    </LogicalFolder>
+  </Items>
+</SqlWorkbenchSqlProject>

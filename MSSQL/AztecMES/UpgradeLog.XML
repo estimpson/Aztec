@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="Aztec">
+</Property><Property Name="Solution File" Value="C:\Data\Temp\FX\Trunk\CustomerFiles\Aztec\MSSQL\dbo\Create Scripts\Aztec.ssmssln">
+</Property><Property Name="Date" Value="Thursday, December 20, 2012">
+</Property><Property Name="Time" Value="13:35 PM">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="Aztec.ssmssln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="Aztec.ssmssln" Description="Converted">
+</Event></UpgradeLog>

@@ -1,0 +1,112 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# SQL Server Management Studio Solution File, Format Version 11.00
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "AztecMES", "AztecMES\AztecMES.ssmssqlproj", "{CC8EF1FE-E88F-4543-9CF5-B412B5892A71}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "AztecCycleCount", "AztecCycleCount\AztecCycleCount.ssmssqlproj", "{8DD40CE7-395D-43E7-A5FE-9276DE9F0C45}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "AztecQualityControl", "AztecQualityControl\AztecQualityControl.ssmssqlproj", "{1CE7F4C1-A247-4D47-8B46-A0B5E1619C52}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "AztecPartPackaging", "AztecPartPackaging\AztecPartPackaging.ssmssqlproj", "{EEC76D56-E34E-4F80-B636-B71432F3DF38}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "Fx", "Fx\Fx.ssmssqlproj", "{A05C399E-BEE6-4068-96DA-AC857B294E55}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxUpdates", "FxUpdates\FxUpdates.ssmssqlproj", "{AB8C1365-BF69-40EE-B83F-45AA2922F3F3}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "AztecReceiving", "AztecReceiving\AztecReceiving.ssmssqlproj", "{D087010E-5B8E-41D0-A810-3CAFD32A6230}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "AztecQualityShipping", "AztecQualityShipping\AztecQualityShipping.ssmssqlproj", "{1AD3BFC9-8073-4CFF-8057-CB3FC482DAF9}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "ToyotaEDI", "ToyotaEDI\ToyotaEDI.ssmssqlproj", "{0B494053-FEF9-490F-96A5-EEBC98A44112}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "POChangeNotification", "POChangeNotification\POChangeNotification.ssmssqlproj", "{DB0DA859-7EEE-4403-8088-0266C0E3EABB}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "Receiving_OutsideProcess", "Receiving_OutsideProcess\Receiving_OutsideProcess.ssmssqlproj", "{16B34A47-DD43-49B2-92BD-4890ECF60C76}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxDBScripts", "..\..\..\G-Drive\Fx\FxDBScripts\FxDBScripts.ssmssqlproj", "{22BFFF26-C14E-47E2-AE74-592214B01006}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxUtilities", "D:\G-Drive\Projects\Aztec\MSSQL\FxUtilities\FxUtilities\FxUtilities.ssmssqlproj", "{775D07ED-F1D9-4802-AB49-AEDD5660BBD6}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.EDI_XML", "FxAztec\FxAztec.EDI_XML\FxAztec.EDI_XML.ssmssqlproj", "{594D64A7-A2F7-45B9-82DF-F05F46C152EA}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.EDI_XML_Ford_ASN", "FxAztec\FxAztec.EDI_XML_Ford_ASN\FxAztec.EDI_XML_Ford_ASN.ssmssqlproj", "{6FE049D1-A935-436A-AAB4-8042AB180D10}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.EDI_XML_Toyota_ASN", "FxAztec\FxAztec.EDI_XML_Toyota_ASN\FxAztec.EDI_XML_Toyota_ASN.ssmssqlproj", "{EF48DB2C-F41C-43EB-B1A5-8847EEA1E604}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.EDI_XML_Toyota_Invoice", "FxAztec\FxAztec.EDI_XML_Toyota_Invoice\FxAztec.EDI_XML_Toyota_Invoice.ssmssqlproj", "{B7D92176-1240-44D0-B070-EDEE64F09BD7}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.EDI_XML_V2002FORD", "FxAztec\FxAztec.EDI_XML_V2002FORD\FxAztec.EDI_XML_V2002FORD.ssmssqlproj", "{A696AF27-5E1A-4C16-9B30-ADAFFA615EC9}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.EDI_XML_V4010", "FxAztec\FxAztec.EDI_XML_V4010\FxAztec.EDI_XML_V4010.ssmssqlproj", "{556F3A6A-2753-4770-A311-475016293141}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxEDI.EDI_V2002FORD", "D:\G-Drive\Projects\Aztec\MSSQL\FxEDI\FxEDI.EDI_V2002FORD\FxEDI.EDI_V2002FORD.ssmssqlproj", "{3107404D-DA62-4DF8-AEE2-3B00914869E4}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxEDI.EDI_V4010", "D:\G-Drive\Projects\Aztec\MSSQL\FxEDI\FxEDI.EDI_V4010\FxEDI.EDI_V4010.ssmssqlproj", "{C28358F7-EBF4-41DB-96B3-191931AAD5D6}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxEDI.EDI", "FxEDI\FxEDI.EDI\FxEDI.EDI.ssmssqlproj", "{33CC4D62-26F9-4E0E-B099-C1175149D51C}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.dbo", "FxAztec\FxAztec.dbo\FxAztec.dbo.ssmssqlproj", "{E65CB05A-2143-45E7-85BB-AFC0EA55B3EA}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxEDI.EDI_DICT", "FxEDI\FxEDI.EDI_DICT\FxEDI.EDI_DICT.ssmssqlproj", "{2B329BF0-6AAB-40A1-9B63-7E638EDD69E1}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.EDI_XML_Chrysler_ASN", "FxAztec\FxAztec.EDI_XML_Chrysler_ASN\FxAztec.EDI_XML_Chrysler_ASN.ssmssqlproj", "{F870BD42-377E-45A7-93A8-38AC407C0EEB}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.EDI_XML_V2040", "FxAztec\FxAztec.EDI_XML_V2040\FxAztec.EDI_XML_V2040.ssmssqlproj", "{7FA10456-0F82-4948-9473-4D2FA3D3A4E7}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.EDI", "FxAztec\FxAztec.EDI\FxAztec.EDI.ssmssqlproj", "{BC3C409A-A5B5-4C67-9058-3890F5378336}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxEDI.FS", "D:\G-Drive\Projects\Aztec\MSSQL\FxEDI\FxEDI.FS\FxEDI.FS.ssmssqlproj", "{F775D720-180B-4AF9-A76C-EE47B5D3F2BE}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxEDI.FTP", "D:\G-Drive\Projects\Aztec\MSSQL\FxEDI\FxEDI.FTP\FxEDI.FTP.ssmssqlproj", "{D1CD908D-E3F7-41A8-A64E-F1CC387C0172}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.EDI_XML_Mazda_ASN", "FxAztec\FxAztec.EDI_XML_Mazda_ASN\FxAztec.EDI_XML_Mazda_ASN.ssmssqlproj", "{ADA8E834-A7E6-4480-968F-B08042E82781}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.SHIP", "FxAztec\FxAztec.SHIP\FxAztec.SHIP.ssmssqlproj", "{EE6FBB87-E993-4C66-9552-23D9509535B0}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxEDI.EDI_iConnect", "D:\G-Drive\Projects\Aztec\MSSQL\FxEDI\FxEDI.EDI_iConnect\FxEDI.EDI_iConnect.ssmssqlproj", "{1679D364-6965-43A6-AFAC-EC484E8853A2}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.EDI_iConnect", "FxAztec\FxAztec.EDI_iConnect\FxAztec.EDI_iConnect.ssmssqlproj", "{D2AD2586-AB16-4A5E-AF6D-CE8ED928A3B8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Default|Default = Default|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC8EF1FE-E88F-4543-9CF5-B412B5892A71}.Default|Default.ActiveCfg = Default
+		{8DD40CE7-395D-43E7-A5FE-9276DE9F0C45}.Default|Default.ActiveCfg = Default
+		{1CE7F4C1-A247-4D47-8B46-A0B5E1619C52}.Default|Default.ActiveCfg = Default
+		{EEC76D56-E34E-4F80-B636-B71432F3DF38}.Default|Default.ActiveCfg = Default
+		{A05C399E-BEE6-4068-96DA-AC857B294E55}.Default|Default.ActiveCfg = Default
+		{AB8C1365-BF69-40EE-B83F-45AA2922F3F3}.Default|Default.ActiveCfg = Default
+		{D087010E-5B8E-41D0-A810-3CAFD32A6230}.Default|Default.ActiveCfg = Default
+		{1AD3BFC9-8073-4CFF-8057-CB3FC482DAF9}.Default|Default.ActiveCfg = Default
+		{0B494053-FEF9-490F-96A5-EEBC98A44112}.Default|Default.ActiveCfg = Default
+		{DB0DA859-7EEE-4403-8088-0266C0E3EABB}.Default|Default.ActiveCfg = Default
+		{16B34A47-DD43-49B2-92BD-4890ECF60C76}.Default|Default.ActiveCfg = Default
+		{22BFFF26-C14E-47E2-AE74-592214B01006}.Default|Default.ActiveCfg = Default
+		{775D07ED-F1D9-4802-AB49-AEDD5660BBD6}.Default|Default.ActiveCfg = Default
+		{594D64A7-A2F7-45B9-82DF-F05F46C152EA}.Default|Default.ActiveCfg = Default
+		{6FE049D1-A935-436A-AAB4-8042AB180D10}.Default|Default.ActiveCfg = Default
+		{EF48DB2C-F41C-43EB-B1A5-8847EEA1E604}.Default|Default.ActiveCfg = Default
+		{B7D92176-1240-44D0-B070-EDEE64F09BD7}.Default|Default.ActiveCfg = Default
+		{A696AF27-5E1A-4C16-9B30-ADAFFA615EC9}.Default|Default.ActiveCfg = Default
+		{556F3A6A-2753-4770-A311-475016293141}.Default|Default.ActiveCfg = Default
+		{3107404D-DA62-4DF8-AEE2-3B00914869E4}.Default|Default.ActiveCfg = Default
+		{C28358F7-EBF4-41DB-96B3-191931AAD5D6}.Default|Default.ActiveCfg = Default
+		{33CC4D62-26F9-4E0E-B099-C1175149D51C}.Default|Default.ActiveCfg = Default
+		{E65CB05A-2143-45E7-85BB-AFC0EA55B3EA}.Default|Default.ActiveCfg = Default
+		{2B329BF0-6AAB-40A1-9B63-7E638EDD69E1}.Default|Default.ActiveCfg = Default
+		{F870BD42-377E-45A7-93A8-38AC407C0EEB}.Default|Default.ActiveCfg = Default
+		{7FA10456-0F82-4948-9473-4D2FA3D3A4E7}.Default|Default.ActiveCfg = Default
+		{BC3C409A-A5B5-4C67-9058-3890F5378336}.Default|Default.ActiveCfg = Default
+		{F775D720-180B-4AF9-A76C-EE47B5D3F2BE}.Default|Default.ActiveCfg = Default
+		{D1CD908D-E3F7-41A8-A64E-F1CC387C0172}.Default|Default.ActiveCfg = Default
+		{ADA8E834-A7E6-4480-968F-B08042E82781}.Default|Default.ActiveCfg = Default
+		{EE6FBB87-E993-4C66-9552-23D9509535B0}.Default|Default.ActiveCfg = Default
+		{1679D364-6965-43A6-AFAC-EC484E8853A2}.Default|Default.ActiveCfg = Default
+		{D2AD2586-AB16-4A5E-AF6D-CE8ED928A3B8}.Default|Default.ActiveCfg = Default
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

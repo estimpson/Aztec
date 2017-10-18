@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<SqlWorkbenchSqlProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="AztecQualityControl">
+  <Items>
+    <LogicalFolder Name="Connections" Type="2" Sorted="true">
+      <Items>
+        <ConnectionNode Name="AZTEC-SQL01:estimpson">
+          <Created>2017-03-30T16:53:11.3479138-04:00</Created>
+          <Type>SQL</Type>
+          <Server>AZTEC-SQL01</Server>
+          <UserName>estimpson</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB>FxAztec</InitialDB>
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Queries" Type="0" Sorted="true">
+      <Items>
+        <FileNode Name="2013-02-14.Add location.QualityAlert.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>2013-02-14.Add location.QualityAlert.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_DeleteObject.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_DeleteObject.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_Quality.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_Quality.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_QualityBatch_AddObject.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_QualityBatch_AddObject.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_QualityBatch_Begin.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_QualityBatch_Begin.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_QualityBatch_EndQualityBatch.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_QualityBatch_EndQualityBatch.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_QualityBatch_NewHeader.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AZTEC-SQL01:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AZTEC-SQL01</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.dbo.usp_InventoryControl_QualityBatch_NewHeader.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_QualityBatch_RemoveObject.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_QualityBatch_RemoveObject.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_QualityBatch_SetObjectState.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_QualityBatch_SetObjectState.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_QualityBatch_UpdateHeader.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_QualityBatch_UpdateHeader.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.dbo.usp_InventoryControl_QualityBatch_WriteObjectStatus.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.dbo.usp_InventoryControl_QualityBatch_WriteObjectStatus.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.Fx.dbo.udf_GetBaseUserDefinedStatus.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>ScalarFunction.Fx.dbo.udf_GetBaseUserDefinedStatus.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.Insert.MenuItem.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.Insert.MenuItem.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.Insert.NumberSequence.Quality Batch.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.Insert.NumberSequence.Quality Batch.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.ModifyMenuItem.LocationSetups.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.ModifyMenuItem.LocationSetups.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.dbo.InventoryControl_QualityBatchHeaders.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Table.dbo.InventoryControl_QualityBatchHeaders.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.dbo.InventoryControl_QualityBatchObjects.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Table.dbo.InventoryControl_QualityBatchObjects.sql</FullPath>
+        </FileNode>
+        <FileNode Name="TableTrigger.dbo.trInventoryControl_QualityBatchHeaders_i.Table.dbo.QualityBatchHeaders.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>TableTrigger.dbo.trInventoryControl_QualityBatchHeaders_i.Table.dbo.QualityBatchHeaders.sql</FullPath>
+        </FileNode>
+        <FileNode Name="TableTrigger.Fx.dbo.tr_object_LocationQualityAlertInsert.Table.dbo.object.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>TableTrigger.Fx.dbo.tr_object_LocationQualityAlertInsert.Table.dbo.object.sql</FullPath>
+        </FileNode>
+        <FileNode Name="TableTrigger.Fx.dbo.tr_object_LocationQualityAlertUpdate.Table.dbo.object.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>TableTrigger.Fx.dbo.tr_object_LocationQualityAlertUpdate.Table.dbo.object.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.Fx.dbo.Inventory_ObjectSource.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>View.Fx.dbo.Inventory_ObjectSource.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.dbo.InventoryControl_QualityBatch_Objects.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>View.dbo.InventoryControl_QualityBatch_Objects.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.dbo.Inventory_BreakOutHistory.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>View.dbo.Inventory_BreakOutHistory.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.Fx.dbo.Inventory_QualityInventoryList.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>View.Fx.dbo.Inventory_QualityInventoryList.sql</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Miscellaneous" Type="3" Sorted="true">
+      <Items />
+    </LogicalFolder>
+  </Items>
+</SqlWorkbenchSqlProject>

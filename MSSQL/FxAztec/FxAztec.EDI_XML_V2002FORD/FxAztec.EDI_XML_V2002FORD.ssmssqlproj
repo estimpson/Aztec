@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<SqlWorkbenchSqlProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="FxAztec.EDI_XML_V2002FORD">
+  <Items>
+    <LogicalFolder Name="Connections" Type="2" Sorted="true">
+      <Items>
+        <ConnectionNode Name="aztec:estimpson">
+          <Created>2016-05-18T14:20:12.8034552-04:00</Created>
+          <Type>SQL</Type>
+          <Server>aztec</Server>
+          <UserName>estimpson</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB>FxAztec</InitialDB>
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+        <ConnectionNode Name="aztecsql2.aztecmfgcorp.local\fx:estimpson">
+          <Created>2016-05-10T12:29:58.2247176-04:00</Created>
+          <Type>SQL</Type>
+          <Server>aztecsql2.aztecmfgcorp.local\fx</Server>
+          <UserName>estimpson</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB>fxAztec</InitialDB>
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Queries" Type="0" Sorted="true">
+      <Items>
+        <FileNode Name="ScalarFunction.FxAztec.EDI_XML_V2002FORD.CE.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ScalarFunction.FxAztec.EDI_XML_V2002FORD.CE.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxAztec.EDI_XML_V2002FORD.DE.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ScalarFunction.FxAztec.EDI_XML_V2002FORD.DE.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_BSN.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_BSN.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_CLD.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_CLD.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_CTT.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_CTT.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_DTM.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_DTM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_HL.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_HL.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_INFO.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_INFO.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_LIN.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_LIN.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_MEA.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_MEA.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_N1.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_N1.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_PRF.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_PRF.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_REF.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_REF.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_SN1.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_SN1.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_TD1.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_TD1.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_TD3.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_TD3.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_TD5.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ScalarFunction.FxAztec.EDI_XML_V2002FORD.SEG_TD5.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Schema.FxAztec.EDI_XML_V2002FORD.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Schema.FxAztec.EDI_XML_V2002FORD.sql</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Miscellaneous" Type="3" Sorted="true">
+      <Items />
+    </LogicalFolder>
+  </Items>
+</SqlWorkbenchSqlProject>

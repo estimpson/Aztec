@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<SqlWorkbenchSqlProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="FxAztec.EDI_XML_Chrysler_ASN">
+  <Items>
+    <LogicalFolder Name="Connections" Type="2" Sorted="true">
+      <Items>
+        <ConnectionNode Name="aztec:estimpson">
+          <Created>2016-05-18T14:05:03.9979979-04:00</Created>
+          <Type>SQL</Type>
+          <Server>aztec</Server>
+          <UserName>estimpson</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB>FxEDI</InitialDB>
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Queries" Type="0" Sorted="true">
+      <Items>
+        <FileNode Name="ScalarFunction.FxAztec.EDI_XML_Chrysler_ASN.SEG_ITA092.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ScalarFunction.FxAztec.EDI_XML_Chrysler_ASN.SEG_ITA092.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxAztec.EDI_XML_Chrysler_ASN.SEG_LIN.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ScalarFunction.FxAztec.EDI_XML_Chrysler_ASN.SEG_LIN.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxAztec.EDI_XML_Chrysler_ASN.udf_Root.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ScalarFunction.FxAztec.EDI_XML_Chrysler_ASN.udf_Root.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxAztec.EDI_XML_Chysler_ASN.LOOP_HL_OrderLines.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>ScalarFunction.FxAztec.EDI_XML_Chysler_ASN.LOOP_HL_OrderLines.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Schema.FxAztec.EDI_XML_Chrysler_ASN.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Schema.FxAztec.EDI_XML_Chrysler_ASN.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.Generate ASN (Old).sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Script.Generate ASN (Old).sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.Set Chrysler iConnectID.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Script.Set Chrysler iConnectID.sql</FullPath>
+        </FileNode>
+        <FileNode Name="TableFunction.FxAztec.EDI_XML_Chrysler_ASN.ASNLines.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>TableFunction.FxAztec.EDI_XML_Chrysler_ASN.ASNLines.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.FxAztec.EDI_XML_Chrysler_ASN.ASNHeaders.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>View.FxAztec.EDI_XML_Chrysler_ASN.ASNHeaders.sql</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Miscellaneous" Type="3" Sorted="true">
+      <Items />
+    </LogicalFolder>
+  </Items>
+</SqlWorkbenchSqlProject>

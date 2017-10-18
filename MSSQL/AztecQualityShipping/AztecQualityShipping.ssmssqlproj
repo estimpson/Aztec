@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<SqlWorkbenchSqlProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="AztecQualityShipping">
+  <Items>
+    <LogicalFolder Name="Connections" Type="2" Sorted="true">
+      <Items>
+        <ConnectionNode Name="AZTEC-SQL01:estimpson">
+          <Created>2017-03-30T16:51:56.3419138-04:00</Created>
+          <Type>SQL</Type>
+          <Server>AZTEC-SQL01</Server>
+          <UserName>estimpson</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB>FxAztec</InitialDB>
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Queries" Type="0" Sorted="true">
+      <Items>
+        <FileNode Name="Procedure.Fx.custom.usp_SQA_StagedShipmentNotificationNotice.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.Fx.custom.usp_SQA_StagedShipmentNotificationNotice.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.Fx.dbo.usp_SQA_SetPartAlert.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.Fx.dbo.usp_SQA_SetPartAlert.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.Fx.dbo.usp_SQA_StageObject.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.Fx.dbo.usp_SQA_StageObject.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.Fx.dbo.usp_SQA_UnstageObject.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.Fx.dbo.usp_SQA_UnstageObject.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.FxAztec.dbo.usp_InventoryControl_QualityBatch_NewHeader.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AZTEC-SQL01:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>AZTEC-SQL01</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxAztec.dbo.usp_InventoryControl_QualityBatch_NewHeader.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.Type definitions for quality batches.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Script.Type definitions for quality batches.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.Fx.dbo.SQA_Parts.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Table.Fx.dbo.SQA_Parts.sql</FullPath>
+        </FileNode>
+        <FileNode Name="TableTrigger.dbo.mtr_object_u.Table.dbo.object.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>TableTrigger.dbo.mtr_object_u.Table.dbo.object.sql</FullPath>
+        </FileNode>
+        <FileNode Name="TableTrigger.dbo.tr_SQA_object_u.table.dbo.object.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>TableTrigger.dbo.tr_SQA_object_u.table.dbo.object.sql</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Miscellaneous" Type="3" Sorted="true">
+      <Items />
+    </LogicalFolder>
+  </Items>
+</SqlWorkbenchSqlProject>
