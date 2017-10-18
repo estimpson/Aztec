@@ -1,0 +1,3 @@
+CREATE SCHEMA [EDI_iConnect]
+AUTHORIZATION [dbo]
+GO

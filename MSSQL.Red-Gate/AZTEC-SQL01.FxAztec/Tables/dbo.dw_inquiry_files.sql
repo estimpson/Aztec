@@ -1,0 +1,42 @@
+CREATE TABLE [dbo].[dw_inquiry_files]
+(
+[datawindow_name] [varchar] (30) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+[screen_title] [varchar] (40) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[table_name] [varchar] (20) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+[primary_column] [varchar] (20) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[change_buttons] [char] (1) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[chain_parameter] [varchar] (20) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[window_chain] [varchar] (30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[accept_args] [char] (1) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[sequence] [smallint] NULL,
+[retrieve_all] [char] (1) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[modifiable] [char] (1) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[print_button] [char] (1) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[auto_number_on_add] [char] (1) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[graph_chain] [varchar] (30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[secondary_column] [varchar] (20) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[append_title] [varchar] (30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[utility_1] [varchar] (30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[utility_2] [varchar] (30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[util_1_text] [varchar] (30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[util_1_icon] [varchar] (30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[util_2_text] [varchar] (30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[util_2_icon] [varchar] (30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[primary_column_3] [varchar] (20) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[primary_column_4] [varchar] (20) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[primary_column_5] [varchar] (20) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[key_other_than_primary] [smallint] NULL,
+[normal_open_dblclk] [char] (1) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[parm_field_on_add] [varchar] (30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[number_on_retrieve] [char] (1) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[add_chain] [varchar] (30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[util1_parameter] [varchar] (30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[util2_parameter] [varchar] (30) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[normal_open_on_add] [char] (1) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[normal_open_with_parm] [char] (1) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[dummy_col] [numeric] (6, 2) NULL,
+[default_operator] [varchar] (10) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[dw_inquiry_files] ADD CONSTRAINT [PK__dw_inquiry_files__403A8C7D] PRIMARY KEY CLUSTERED  ([datawindow_name]) ON [PRIMARY]
+GO

@@ -1,0 +1,8 @@
+CREATE TABLE [FT].[VarcharGlobals]
+(
+[Name] [varchar] (25) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+[Value] [varchar] (max) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+ALTER TABLE [FT].[VarcharGlobals] ADD CONSTRAINT [PK__VarcharG__737584F77DD69B5F] PRIMARY KEY CLUSTERED  ([Name]) ON [PRIMARY]
+GO

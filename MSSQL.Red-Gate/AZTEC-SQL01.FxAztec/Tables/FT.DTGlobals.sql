@@ -1,0 +1,8 @@
+CREATE TABLE [FT].[DTGlobals]
+(
+[Name] [varchar] (25) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+[Value] [datetime] NULL
+) ON [PRIMARY]
+GO
+ALTER TABLE [FT].[DTGlobals] ADD CONSTRAINT [PK__DTGlobal__737584F7762D5431] PRIMARY KEY CLUSTERED  ([Name]) ON [PRIMARY]
+GO

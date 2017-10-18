@@ -1,0 +1,3 @@
+CREATE SCHEMA [EDIShipNoticeXML_Ford]
+AUTHORIZATION [dbo]
+GO

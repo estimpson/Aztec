@@ -1,0 +1,3 @@
+CREATE SCHEMA [EDI_XML_Toyota_Invoice]
+AUTHORIZATION [dbo]
+GO
