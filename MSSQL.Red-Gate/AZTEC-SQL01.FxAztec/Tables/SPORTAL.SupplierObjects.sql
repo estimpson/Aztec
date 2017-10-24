@@ -1,16 +1,17 @@
 CREATE TABLE [SPORTAL].[SupplierObjects]
 (
 [Serial] [int] NULL,
-[Status] [int] NOT NULL CONSTRAINT [DF__SupplierO__Statu__730A2DE9] DEFAULT ((0)),
-[Type] [int] NOT NULL CONSTRAINT [DF__SupplierOb__Type__73FE5222] DEFAULT ((0)),
+[Status] [int] NOT NULL CONSTRAINT [DF__SupplierO__Statu__3AE5D057] DEFAULT ((0)),
+[Type] [int] NOT NULL CONSTRAINT [DF__SupplierOb__Type__3BD9F490] DEFAULT ((0)),
 [SupplierObjectBatch] [int] NOT NULL,
 [Quantity] [numeric] (20, 6) NOT NULL,
 [LotNumber] [varchar] (100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[ShipperNumber] [varchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 [RowID] [int] NOT NULL IDENTITY(1, 1),
-[RowCreateDT] [datetime] NULL CONSTRAINT [DF__SupplierO__RowCr__75E69A94] DEFAULT (getdate()),
-[RowCreateUser] [sys].[sysname] NOT NULL CONSTRAINT [DF__SupplierO__RowCr__76DABECD] DEFAULT (suser_name()),
-[RowModifiedDT] [datetime] NULL CONSTRAINT [DF__SupplierO__RowMo__77CEE306] DEFAULT (getdate()),
-[RowModifiedUser] [sys].[sysname] NOT NULL CONSTRAINT [DF__SupplierO__RowMo__78C3073F] DEFAULT (suser_name())
+[RowCreateDT] [datetime] NULL CONSTRAINT [DF__SupplierO__RowCr__3EB6613B] DEFAULT (getdate()),
+[RowCreateUser] [sys].[sysname] NOT NULL CONSTRAINT [DF__SupplierO__RowCr__3FAA8574] DEFAULT (suser_name()),
+[RowModifiedDT] [datetime] NULL CONSTRAINT [DF__SupplierO__RowMo__409EA9AD] DEFAULT (getdate()),
+[RowModifiedUser] [sys].[sysname] NOT NULL CONSTRAINT [DF__SupplierO__RowMo__4192CDE6] DEFAULT (suser_name())
 ) ON [PRIMARY]
 GO
 SET QUOTED_IDENTIFIER ON
@@ -174,9 +175,11 @@ Results {
 }
 */
 GO
-ALTER TABLE [SPORTAL].[SupplierObjects] ADD CONSTRAINT [PK__Supplier__FFEE745114976DCB] PRIMARY KEY CLUSTERED  ([RowID]) ON [PRIMARY]
+ALTER TABLE [SPORTAL].[SupplierObjects] ADD CONSTRAINT [PK__Supplier__FFEE7451D448B68D] PRIMARY KEY CLUSTERED  ([RowID]) ON [PRIMARY]
 GO
-ALTER TABLE [SPORTAL].[SupplierObjects] ADD CONSTRAINT [UQ__Supplier__1A00E093C28EE0B5] UNIQUE NONCLUSTERED  ([Serial]) ON [PRIMARY]
+ALTER TABLE [SPORTAL].[SupplierObjects] ADD CONSTRAINT [UQ__Supplier__1A00E0931D396131] UNIQUE NONCLUSTERED  ([Serial]) ON [PRIMARY]
 GO
-ALTER TABLE [SPORTAL].[SupplierObjects] ADD CONSTRAINT [FK__SupplierO__Suppl__74F2765B] FOREIGN KEY ([SupplierObjectBatch]) REFERENCES [SPORTAL].[SupplierObjectBatches] ([RowID])
+ALTER TABLE [SPORTAL].[SupplierObjects] ADD CONSTRAINT [FK__SupplierO__Suppl__3CCE18C9] FOREIGN KEY ([SupplierObjectBatch]) REFERENCES [SPORTAL].[SupplierObjectBatches] ([RowID])
+GO
+ALTER TABLE [SPORTAL].[SupplierObjects] ADD CONSTRAINT [FK__SupplierO__Shipp__3DC23D02] FOREIGN KEY ([ShipperNumber]) REFERENCES [SPORTAL].[SupplierShipments] ([ShipperNumber])
 GO
