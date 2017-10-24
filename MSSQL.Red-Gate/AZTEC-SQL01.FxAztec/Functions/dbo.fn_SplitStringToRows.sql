@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create function [dbo].[fn_SplitStringToRows]
+CREATE function [dbo].[fn_SplitStringToRows]
 (	@InputString varchar(8000)
 ,	@Splitter varchar(8000)
 )
@@ -20,7 +20,7 @@ begin
 		(	value
 		)
 		values
-		(	substring(@InputString, 1, charindex(@Splitter, @InputString) -1)
+		(	ltrim(rtrim(substring(@InputString, 1, charindex(@Splitter, @InputString) -1)))
 		)
 		
 		set	@InputString = substring(@InputString, charindex(@Splitter, @InputString) + datalength(@Splitter), 8000)
@@ -31,10 +31,11 @@ begin
 	(	value
 	)
 	values
-	(	@InputString
+	(	ltrim(rtrim(@InputString))
 	)--- </Body>
 
 ---	<Return>
 	return
 end
+
 GO
