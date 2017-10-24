@@ -43,6 +43,12 @@
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Procedure.FxAztec.SPORTAL.usp_Q_PartList_BySupplier.sql</FullPath>
         </FileNode>
+        <FileNode Name="Procedure.FxAztec.SPORTAL.usp_Q_Preobjects_ByAnyMethod.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxAztec.SPORTAL.usp_Q_Preobjects_ByAnyMethod.sql</FullPath>
+        </FileNode>
         <FileNode Name="Procedure.FxAztec.SPORTAL.usp_Q_Preobjects_BySupplier.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec:False:estimpson</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>Aztec</AssociatedConnSrvName>
@@ -84,6 +90,12 @@
           <AssociatedConnSrvName>Aztec</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Schema.FxAztec.SPORTAL.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.TestAll.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Script.TestAll.sql</FullPath>
         </FileNode>
         <FileNode Name="Table.FxAztec.SPORTAL.SupplierObjectBatches.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec:False:estimpson</AssociatedConnectionMoniker>
