@@ -22,6 +22,7 @@ if	objectproperty(object_id('SPORTAL.SupplierObjects'), 'IsTable') is null begin
 	,	SupplierObjectBatch int not null references SPORTAL.SupplierObjectBatches(RowID)
 	,	Quantity numeric(20,6) not null
 	,	LotNumber varchar(100) null
+	,	ShipperNumber varchar(50) null references SPORTAL.SupplierShipments(ShipperNumber)
 	,	RowID int identity(1,1) primary key clustered
 	,	RowCreateDT datetime default(getdate())
 	,	RowCreateUser sysname default(suser_name())
