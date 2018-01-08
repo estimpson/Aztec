@@ -6,7 +6,7 @@ Create Procedure.FxAztec.SPORTAL.usp_Q_Preobjects_BySupplierSerialList.sql
 use FxAztec
 go
 
-if	objectproperty(object_id('dbo.usp_Q_Preobjects_BySupplierSerialList'), 'IsProcedure') = 1 begin
+if	objectproperty(object_id('SPORTAL.usp_Q_Preobjects_BySupplierSerialList'), 'IsProcedure') = 1 begin
 	drop procedure SPORTAL.usp_Q_Preobjects_BySupplierSerialList
 end
 go
@@ -146,6 +146,7 @@ select
 ,	sob.InternalPartCode
 ,	so.Quantity
 ,	so.LotNumber
+,	spl.LabelFormatName
 ,	so.RowCreateDT
 ,	so.RowModifiedDT
 from
@@ -154,6 +155,10 @@ from
 		on sob.RowID = so.SupplierObjectBatch
 	join @Serials s
 		on s.Serial = so.Serial
+	join SPORTAL.SupplierPartList spl
+		on spl.SupplierCode = sob.SupplierCode
+		and spl.InternalPartCode = sob.InternalPartCode
+		and spl.Status = 0
 where
 	sob.SupplierCode = @SupplierCode
 	and so.Status = 0
