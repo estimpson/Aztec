@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create procedure [SPORTAL].[usp_Q_Preobjects_BySupplierSerialList]
+CREATE procedure [SPORTAL].[usp_Q_Preobjects_BySupplierSerialList]
 	@SupplierCode varchar(20)
 ,	@SerialList varchar(max)
 ,	@TranDT datetime = null out
@@ -130,22 +130,29 @@ end
 --- <Body>
 /*	Return pre-objects.*/
 select
-	so.Serial
-,	so.Status
-,	so.Type
-,	sob.SupplierCode
-,	sob.SupplierPartCode
-,	sob.InternalPartCode
-,	so.Quantity
-,	so.LotNumber
-,	so.RowCreateDT
-,	so.RowModifiedDT
+	Serial = so.Serial + 0
+,	Status = so.Status + ''
+,	Type = so.Type + ''
+,	SupplierCode = sob.SupplierCode + ''
+,	SupplierPartCode = sob.SupplierPartCode + ''
+,	InternalPartCode = sob.InternalPartCode + ''
+,	Quantity = so.Quantity + 0
+,	LotNumber = so.LotNumber + ''
+,	LabelFormatName = spl.LabelFormatName + ''
+,	PrimaryLocation = spl.PrimaryLocation + ''
+,	StdUnit = spl.StdUnit + ''
+,	RowCreateDT = so.RowCreateDT + 0
+,	RowModifiedDT = so.RowModifiedDT + 0
 from
 	SPORTAL.SupplierObjects so
 	join SPORTAL.SupplierObjectBatches sob
 		on sob.RowID = so.SupplierObjectBatch
 	join @Serials s
 		on s.Serial = so.Serial
+	join SPORTAL.SupplierPartList spl
+		on spl.SupplierCode = sob.SupplierCode
+		and spl.InternalPartCode = sob.InternalPartCode
+		and spl.Status = 0
 where
 	sob.SupplierCode = @SupplierCode
 	and so.Status = 0
@@ -216,4 +223,9 @@ go
 Results {
 }
 */
+
+GO
+GRANT EXECUTE ON  [SPORTAL].[usp_Q_Preobjects_BySupplierSerialList] TO [AZTEC\FxSP_IIS]
+GO
+GRANT EXECUTE ON  [SPORTAL].[usp_Q_Preobjects_BySupplierSerialList] TO [SupplierPortal]
 GO

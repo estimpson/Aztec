@@ -250,3 +250,5 @@ Results {
 }
 */
 GO
+GRANT EXECUTE ON  [SPORTAL].[usp_SupplierShipment_AddPreobjectList] TO [SupplierPortal]
+GO

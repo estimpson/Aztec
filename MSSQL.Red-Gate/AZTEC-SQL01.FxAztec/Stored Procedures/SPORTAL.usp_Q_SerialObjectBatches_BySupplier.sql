@@ -131,3 +131,5 @@ Results {
 }
 */
 GO
+GRANT EXECUTE ON  [SPORTAL].[usp_Q_SerialObjectBatches_BySupplier] TO [SupplierPortal]
+GO

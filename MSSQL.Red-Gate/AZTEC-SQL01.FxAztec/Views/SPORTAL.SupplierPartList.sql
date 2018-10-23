@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create view [SPORTAL].[SupplierPartList]
+CREATE view [SPORTAL].[SupplierPartList]
 as
 select
 	spl.SupplierCode
@@ -18,6 +18,8 @@ select
 ,	spl.PartSubClass
 ,	spl.HasBlanketPO
 ,	spl.LabelFormatName
+,	spl.PrimaryLocation
+,	spl.StdUnit
 from
 	(	select
 			sl.SupplierCode
@@ -43,6 +45,8 @@ from
 					else 0
 				end
 		,	LabelFormatName = pInv.label_format
+		,	PrimaryLocation = pInv.primary_location
+		,	StdUnit = pInv.standard_unit
 		from
 			dbo.part p
 			join dbo.part_inventory pInv
@@ -54,4 +58,5 @@ from
 		where
 			p.class != 'O'
 	) spl
+
 GO

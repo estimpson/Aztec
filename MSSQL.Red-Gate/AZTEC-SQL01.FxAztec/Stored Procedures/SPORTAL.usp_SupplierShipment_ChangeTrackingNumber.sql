@@ -179,3 +179,5 @@ Results {
 }
 */
 GO
+GRANT EXECUTE ON  [SPORTAL].[usp_SupplierShipment_ChangeTrackingNumber] TO [SupplierPortal]
+GO

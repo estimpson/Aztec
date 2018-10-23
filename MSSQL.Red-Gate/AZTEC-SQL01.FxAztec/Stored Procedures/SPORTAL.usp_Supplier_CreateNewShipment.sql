@@ -185,3 +185,5 @@ Results {
 }
 */
 GO
+GRANT EXECUTE ON  [SPORTAL].[usp_Supplier_CreateNewShipment] TO [SupplierPortal]
+GO

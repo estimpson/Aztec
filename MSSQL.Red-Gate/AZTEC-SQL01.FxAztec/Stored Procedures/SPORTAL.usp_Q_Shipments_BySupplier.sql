@@ -122,3 +122,5 @@ Results {
 }
 */
 GO
+GRANT EXECUTE ON  [SPORTAL].[usp_Q_Shipments_BySupplier] TO [SupplierPortal]
+GO

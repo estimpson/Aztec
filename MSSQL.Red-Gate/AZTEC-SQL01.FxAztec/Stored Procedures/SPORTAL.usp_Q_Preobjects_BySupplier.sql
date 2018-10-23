@@ -58,12 +58,17 @@ select
 ,	sob.InternalPartCode
 ,	so.Quantity
 ,	so.LotNumber
+,	spl.LabelFormatName
 ,	so.RowCreateDT
 ,	so.RowModifiedDT
 from
 	SPORTAL.SupplierObjects so
 	join SPORTAL.SupplierObjectBatches sob
 		on sob.RowID = so.SupplierObjectBatch
+	join SPORTAL.SupplierPartList spl
+		on spl.SupplierCode = sob.SupplierCode
+		and spl.InternalPartCode = sob.InternalPartCode
+		and spl.Status = 0
 where
 	sob.SupplierCode = @SupplierCode
 	and so.Status = 0
@@ -126,4 +131,6 @@ go
 Results {
 }
 */
+GO
+GRANT EXECUTE ON  [SPORTAL].[usp_Q_Preobjects_BySupplier] TO [SupplierPortal]
 GO

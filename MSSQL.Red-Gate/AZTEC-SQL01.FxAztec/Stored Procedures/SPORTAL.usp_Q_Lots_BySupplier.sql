@@ -127,3 +127,5 @@ Results {
 }
 */
 GO
+GRANT EXECUTE ON  [SPORTAL].[usp_Q_Lots_BySupplier] TO [SupplierPortal]
+GO

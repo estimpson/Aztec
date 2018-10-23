@@ -249,3 +249,5 @@ Results {
 }
 */
 GO
+GRANT EXECUTE ON  [SPORTAL].[usp_Q_Preobjects_ByAnyMethod] TO [SupplierPortal]
+GO

@@ -183,3 +183,5 @@ Results {
 }
 */
 GO
+GRANT EXECUTE ON  [SPORTAL].[usp_Preobject_ChangeLot] TO [SupplierPortal]
+GO

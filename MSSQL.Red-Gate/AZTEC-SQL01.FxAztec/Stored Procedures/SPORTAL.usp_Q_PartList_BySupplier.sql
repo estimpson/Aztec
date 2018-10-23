@@ -121,3 +121,5 @@ Results {
 }
 */
 GO
+GRANT EXECUTE ON  [SPORTAL].[usp_Q_PartList_BySupplier] TO [SupplierPortal]
+GO
