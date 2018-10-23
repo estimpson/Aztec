@@ -46,7 +46,8 @@ CREATE TABLE [dbo].[object]
 [dimension_qty_string] [varchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 [dim_qty_string_other] [varchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
 [varying_dimension_code] [numeric] (2, 0) NULL,
-[posted] [char] (1) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
+[posted] [char] (1) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[SupplierLicensePlate] [varchar] (50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
 ) ON [PRIMARY]
 GO
 SET QUOTED_IDENTIFIER ON
@@ -984,6 +985,8 @@ GO
 CREATE NONCLUSTERED INDEX [ix_object_3] ON [dbo].[object] ([shipper]) ON [PRIMARY]
 GO
 CREATE NONCLUSTERED INDEX [status_index] ON [dbo].[object] ([status]) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX [ix_object_licenseplate] ON [dbo].[object] ([SupplierLicensePlate], [serial]) ON [PRIMARY]
 GO
 CREATE NONCLUSTERED INDEX [ix_object_1] ON [dbo].[object] ([type], [status], [part]) INCLUDE ([std_quantity]) ON [PRIMARY]
 GO
