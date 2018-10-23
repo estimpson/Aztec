@@ -185,6 +185,44 @@ if	@ProcResult != 0 begin
 end
 --- </Call>
 
+/*	Update object with supplier license plate. */
+--- <Update rows="0..1">
+set	@TableName = 'dbo.object'
+
+update
+	o
+set
+	o.SupplierLicensePlate =
+		(	select
+				ro.SupplierLicensePlate
+			from
+				dbo.ReceiverObjects ro
+			where
+				ro.ReceiverObjectID = @ReceiverObjectID
+		)
+from
+	dbo.object o
+where
+	o.serial = @SerialNumber
+
+select
+	@Error = @@Error,
+	@RowCount = @@Rowcount
+
+if	@Error != 0 begin
+	set	@Result = 999999
+	RAISERROR ('Error updating table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
+	rollback tran @ProcName
+	return
+end
+if	@RowCount > 1 begin
+	set	@Result = 999999
+	RAISERROR ('Error updating %s in procedure %s.  Rows Updated: %d.  Expected rows: 0..1.', 16, 1, @TableName, @ProcName, @RowCount)
+	rollback tran @ProcName
+	return
+end
+--- </Update>
+
 /*	Update ReceiverObjects. */
 --- <Update>
 set	@TableName = 'dbo.ReceiverObjects'
