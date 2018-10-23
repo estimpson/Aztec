@@ -2,6 +2,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_NULLS ON
 GO
+
 CREATE PROCEDURE [dbo].[msp_shipout] (
 	@shipper	INTEGER,
 	@invdate	DATETIME=NULL )
@@ -23,6 +24,7 @@ AS
 --			02 JAN 2003, Harish G P		Made changes to bill of lading updation
 --			04 APR 2003, Harish G P		Changes to the shipper count where clause
 --			29 JUL 2016, ASB	FT				Return error and send email if pro number is not entered for and destination like AF[0-9]% Section 1a
+--			25 SEP 2018, ASB	FT		Added 24874 to check from Pro Number
 --
 --	Parameters:	@shipper	Mandatory
 --
@@ -71,7 +73,7 @@ Insert	@ShipmentAlert
 				'Ship-out failed. Pro Number not enetered on shipper. Enter pro number and ship'
 		FROM 
 	shipper 
-	Where	destination LIKE 'AF[0-9]%' AND
+	Where	(destination LIKE 'AF[0-9]%' or destination = '24874') AND
 				NULLIF(pro_number, '') IS NULL AND
 				id = @shipper 
 		
@@ -97,7 +99,7 @@ DECLARE
 		
 		DECLARE
 			@EmailBody NVARCHAR(MAX)
-		,	@EmailHeader NVARCHAR(MAX) = 'Failed Shipout due to missing pro number' 
+		,	@EmailHeader NVARCHAR(MAX) = 'Failed Shipout due to missing pro number - no action required' 
 
 		SELECT
 			@EmailBody =
@@ -493,5 +495,6 @@ commit transaction -- (1T)
 
 select 0
 return 0
+
 
 GO

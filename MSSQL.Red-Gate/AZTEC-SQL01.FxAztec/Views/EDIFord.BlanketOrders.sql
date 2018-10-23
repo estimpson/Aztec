@@ -6,9 +6,10 @@ GO
 
 
 
+
 CREATE VIEW [EDIFord].[BlanketOrders]
 AS
-SELECT
+SELECT DISTINCT
 	oh.model_year,
 	BlanketOrderNo = oh.order_no
 ,	ShipToCode = oh.destination
@@ -54,6 +55,8 @@ FROM
 WHERE
 	oh.order_type = 'B' 
 AND COALESCE(ProcessEDI,1) = 1
+and es.supplier_code like 'K856%'
+
 
 
 

@@ -6,15 +6,17 @@ GO
 
 
 
+
 CREATE VIEW [custom].[vw_sales_history]
 AS
 SELECT	shipper.id AS ShipperID,
 		shipper.invoice_number AS InvoiceNumber,
 		shipper.date_shipped AS DateShipped,
-		CONVERT(char(4), DATEPART(yyyy,shipper.date_shipped))+'/'+CONVERT(char(1), DATEPART(qq,shipper.date_shipped)) AS ShippedDateQtr,
-		CONVERT(char(4), DATEPART(yyyy,shipper.date_shipped)) +'/'+ CONVERT(char(2), DATEPART(mm,shipper.date_shipped)) AS ShippedDateMonth,
-		(CASE ISNULL(NULLIF(shipper.status,''),'O') WHEN 'O' then 'Open' WHEN 'C' THEN 'Shipped' When 'E' THEN 'Empty' when 'S' THEN 'Staged' when 'Z' then 'ASN Created' ELSE 'NotClassified' END) AS ShipperStatus,
-		(CASE ISNULL(NULLIF(shipper.type,''),'N') WHEN 'N' then 'Normal' WHEN 'R' THEN 'RMA' When 'Q' THEN 'QuickShipper' when 'M' THEN 'ManualInvoice' when 'V' then 'ReturnToVendor' ELSE 'NotClassified' END) AS ShipperType,
+		CONVERT(CHAR(4), DATEPART(yyyy,shipper.date_shipped))+'/'+CONVERT(CHAR(1), DATEPART(qq,shipper.date_shipped)) AS ShippedDateQtr,
+		CONVERT(CHAR(4), DATEPART(yyyy,shipper.date_shipped)) +'/'+ CONVERT(CHAR(2), DATEPART(mm,shipper.date_shipped)) AS ShippedDateMonth,
+		CONVERT(CHAR(4), DATEPART(yyyy,shipper.date_shipped)) AS ShippedDateYear,
+		(CASE ISNULL(NULLIF(shipper.status,''),'O') WHEN 'O' THEN 'Open' WHEN 'C' THEN 'Shipped' WHEN 'E' THEN 'Empty' WHEN 'S' THEN 'Staged' WHEN 'Z' THEN 'ASN Created' ELSE 'NotClassified' END) AS ShipperStatus,
+		(CASE ISNULL(NULLIF(shipper.type,''),'N') WHEN 'N' THEN 'Normal' WHEN 'R' THEN 'RMA' WHEN 'Q' THEN 'QuickShipper' WHEN 'M' THEN 'ManualInvoice' WHEN 'V' THEN 'ReturnToVendor' ELSE 'NotClassified' END) AS ShipperType,
 		shipper_detail.part_original AS Part,
 		part.name AS PartName,
 		shipper_detail.customer_part AS CustomerPart,
@@ -45,9 +47,10 @@ SELECT	shipper.id AS ShipperID,
 		Destination.address_4 AS DestinationAddress4,
 		Destination.address_5 AS DestinationAddress5,
 		Destination.address_6 AS DestinationAddress6,
-		Shipper.Plant as ShippingPlant,
-		shipper_detail.alternative_qty*ISNULL(shipper_detail.alternate_price,0)-shipper_detail.alternative_qty*ISNULL(part_standard.material_cum,0) as GrossProfit,
-		coalesce(part.user_defined_2,'') as [Platform]
+		Shipper.Plant AS ShippingPlant,
+		shipper_detail.alternative_qty*ISNULL(shipper_detail.alternate_price,0)-shipper_detail.alternative_qty*ISNULL(part_standard.material_cum,0) AS GrossProfit,
+		COALESCE(NULLIF(part.user_defined_2,''),'PlatformNotDefined') AS [Platform],
+		COALESCE(NULLIF(Customer.custom2,''), 'CustomerGroupNotDefined') AS [CustomerGroup]
 		
 FROM	dbo.shipper
 JOIN	dbo.shipper_detail ON dbo.shipper.id = dbo.shipper_detail.shipper
@@ -58,6 +61,7 @@ JOIN	dbo.destination ON dbo.shipper.destination = dbo.destination.destination
 JOIN	dbo.part ON dbo.shipper_detail.part_original = dbo.part.part
 JOIN	dbo.part_standard ON dbo.part.part = dbo.part_standard.part
 JOIN	dbo.part_inventory ON dbo.part.part = dbo.part_inventory.part
+
 
 
 

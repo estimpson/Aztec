@@ -7,10 +7,11 @@ GO
 
 
 
+
 CREATE VIEW [EDICHRY].[BlanketOrders]
 AS
 SELECT
-	oh.model_year,
+	isNULL(oh.model_year,'')as  model_year,
 	BlanketOrderNo = oh.order_no
 ,	ShipToCode = oh.destination
 ,	EDIShipToCode = COALESCE(NULLIF(es.EDIShipToID,''), NULLIF(es.parent_destination,''), es.destination)
@@ -23,7 +24,7 @@ SELECT
 ,	ModelYear862 = CASE WHEN COALESCE(RIGHT(oh.model_year,1),'') LIKE '%C%' THEN 'C' ELSE '' END
 ,	ModelYear830 = COALESCE(LEFT(oh.model_year,1),'')
 ,	CheckModelYearPlanning = CONVERT(BIT, CASE COALESCE(check_model_year, 'N') WHEN 'Y' THEN 1 ELSE 1 END)
-,	CheckModelYearShipSchedule = 1
+,	CheckModelYearShipSchedule = 0
 ,	PartCode = oh.blanket_part
 ,	OrderUnit = oh.shipping_unit
 ,	LastSID = oh.shipper
@@ -56,6 +57,7 @@ WHERE
 	oh.order_type = 'B' 
 AND COALESCE(ProcessEDI,1) = 1
 --	es.InboundProcessGroup in ( 'EDI2001' )
+
 
 
 

@@ -3,7 +3,8 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create function [EDI_XML_Chrysler_ASN].[udf_Root]
+
+CREATE function [EDI_XML_Chrysler_ASN].[udf_Root]
 (	@ShipperID int
 ,	@Purpose char(2)
 ,	@PartialComplete int
@@ -42,6 +43,7 @@ begin
 								,	EDI_XML_V2040.SEG_TD3('TL', ah.EquipInitial, ah.TruckNumber)
 								,	EDI_XML_V2040.SEG_REF('MB', ah.BOLNumber)
 								,	EDI_XML_V2040.SEG_REF('BM', ah.BOLNumber)
+								,   EDI_XML_V2040.SEG_REF('FR', ah.ProNumber)
 								,	(	select
 						 					EDI_XML.LOOP_INFO('N1')
 										,	EDI_XML_V2040.SEG_N1('SU', 92, ah.SupplierCode)
@@ -89,4 +91,5 @@ begin
 	return
 		@xmlOutput
 end
+
 GO

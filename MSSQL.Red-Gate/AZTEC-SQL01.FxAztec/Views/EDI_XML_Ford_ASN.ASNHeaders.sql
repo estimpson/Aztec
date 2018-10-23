@@ -58,10 +58,11 @@ FROM
 		ON s.destination = es.destination
 		AND es.asn_overlay_group LIKE 'FD%'
 	JOIN dbo.destination d
-		ON d.destination = s.destination
+		ON d.destination = s.destination 
 WHERE
 	COALESCE(s.type, 'N') IN ('N', 'M')
-	--AND s.date_shipped >= DATEADD(dd, -8, GETDATE())
-	--and s.id = 76341
+	AND s.date_shipped >= DATEADD(dd, -1, GETDATE())
+	--and s.id = 83453
+
 
 GO
