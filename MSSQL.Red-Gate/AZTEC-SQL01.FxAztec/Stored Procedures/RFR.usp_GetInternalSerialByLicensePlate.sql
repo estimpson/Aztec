@@ -285,8 +285,8 @@ begin
 
 		/*	Handle pallet (TBD)...*/
 
-		/*	Look up License Plate in supplier objects table, create receiver header / line / object, do receipt, return serial. */
-		set @TocMsg = 'Look up License Plate in supplier objects table, create receiver header / line / object, do receipt, return serial'
+		/*	Look up License Plate in supplier objects table, find receiver header / create line / object, do receipt, return serial. */
+		set @TocMsg = 'Look up License Plate in supplier objects table, find receiver header / create line / object, do receipt, return serial'
 		declare
 			@partCode varchar(25) =
 			(	select top(1)
@@ -346,101 +346,39 @@ begin
 				)
 
 			if	@receiverID is null begin
-				--- <Insert rows="1">
-				set	@TableName = 'dbo.ReceiverHeaders'
-				
-				insert
-					dbo.ReceiverHeaders
-				(	ReceiverNumber
-				,	Type
-				,	Status
-				,	ShipFrom
-				,	Plant
-				,	ExpectedReceiveDT
-				,	Note
-				,	LastUser
-				,	LastDT
-				)
-				select top(1)
-					ReceiverNumber = '0'
-				,	Type = 0
-				,	Status = 0
-				,	ShipFrom = @supplierCode
-				,	Plant = ph.plant
-				,	ExpectedReceiveDT = @poDueDT
-				,	Note = 'Created from license plate scan.'
-				,	LastUser = @User
-				,	LastDT = @TranDT
-				from
-					dbo.po_header ph
-				where
-					ph.vendor_code =
-						(	select
-								max(d.vendor)
-							from
-								dbo.destination d
-							where
-								d.destination = @supplierCode
-						)
-					and ph.blanket_part = @partCode
-				order by
-					ph.po_number desc			
-				
-				select
-					@Error = @@Error,
-					@RowCount = @@Rowcount
-				
-				if	@Error != 0 begin
-					set	@Result = 999999
-					RAISERROR ('Error inserting into table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
-					rollback tran @ProcName
-					return
-				end
-				if	@RowCount != 1 begin
-					set	@Result = 999999
-					RAISERROR ('Error inserting into table %s in procedure %s.  Rows inserted: %d.  Expected rows: 1.', 16, 1, @TableName, @ProcName, @RowCount)
-					rollback tran @ProcName
-					return
-				end
-				--- </Insert>
-				
-				set
-					@receiverID = 
-					(	select
-							rh.ReceiverID
-						from
-							dbo.ReceiverHeaders rh
-						where
-							rh.ReceiverID = scope_identity()
-					)
+				RAISERROR ('Error: License plate %s was found but there is not an open receiver for supplier %s.  Open a Receiver in Receiving Dock and try again.', 16, 1, @LicensePlate, @supplierCode)
 			end
-			else begin
-				--- <Update rows="1">
-				set	@TableName = 'dbo.ReceiverHeaders'
+
+			/*	Adjust the expected receive date to include the next requirement. */
+			--- <Update rows="1">
+			set	@TableName = 'dbo.ReceiverHeaders'
 				
-				update
-					rh
-				set
-					ExpectedReceiveDT = @poDueDT
-				from
-					dbo.ReceiverHeaders rh
-				where
-					rh.ReceiverID = @receiverID
+			update
+				rh
+			set
+				ExpectedReceiveDT =
+					case
+						when @poDueDT > coalesce(rh.ExpectedReceiveDT, '2001-01-01') then @poDueDT
+						else coalesce(rh.ExpectedReceiveDT, @poDueDT)
+					end
+			from
+				dbo.ReceiverHeaders rh
+			where
+				rh.ReceiverID = @receiverID
 				
-				select
-					@Error = @@Error,
-					@RowCount = @@Rowcount
+			select
+				@Error = @@Error,
+				@RowCount = @@Rowcount
 				
-				if	@Error != 0 begin
-					set	@Result = 999999
-					RAISERROR ('Error updating table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
-				end
-				if	@RowCount != 1 begin
-					set	@Result = 999999
-					RAISERROR ('Error updating %s in procedure %s.  Rows Updated: %d.  Expected rows: 1.', 16, 1, @TableName, @ProcName, @RowCount)
-				end
-				--- </Update>
+			if	@Error != 0 begin
+				set	@Result = 999999
+				RAISERROR ('Error updating table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
 			end
+			if	@RowCount != 1 begin
+				set	@Result = 999999
+				RAISERROR ('Error updating %s in procedure %s.  Rows Updated: %d.  Expected rows: 1.', 16, 1, @TableName, @ProcName, @RowCount)
+			end
+			--- </Update>
 
 			/*	Create receiver lines. */
 			--- <Call>	
