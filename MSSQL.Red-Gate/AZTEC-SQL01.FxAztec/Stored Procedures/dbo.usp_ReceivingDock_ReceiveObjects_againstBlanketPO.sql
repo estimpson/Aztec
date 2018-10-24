@@ -234,38 +234,44 @@ where
 	part = @PartCode
 
 --	II.	Generate Inventory.
---		A.	Get serial numbers.
---- <Call>
+--		A.	Get serial numbers (unless already specified).
 declare
 	@NewSerial int
 
-set	@CallProcName = 'monitor.usp_NewSerialBlock'
-execute
-	@ProcReturn = monitor.usp_NewSerialBlock
-	@SerialBlockSize = @NewObjects
-,	@FirstNewSerial = @NewSerial out
-,	@Result = @ProcResult out
+if	@SerialNumber is null begin
+	--- <Call>
 
-set	@Error = @@Error
-if	@Error != 0 begin
-	set	@Result = 900501
-	RAISERROR ('Error encountered in %s.  Error: %d while calling %s', 16, 1, @ProcName, @Error, @CallProcName)
-	rollback tran @ProcName
-	return	@Result
+	set	@CallProcName = 'monitor.usp_NewSerialBlock'
+	execute
+		@ProcReturn = monitor.usp_NewSerialBlock
+		@SerialBlockSize = @NewObjects
+	,	@FirstNewSerial = @NewSerial out
+	,	@Result = @ProcResult out
+
+	set	@Error = @@Error
+	if	@Error != 0 begin
+		set	@Result = 900501
+		RAISERROR ('Error encountered in %s.  Error: %d while calling %s', 16, 1, @ProcName, @Error, @CallProcName)
+		rollback tran @ProcName
+		return	@Result
+	end
+	if	@ProcReturn != 0 begin
+		set	@Result = 900502
+		RAISERROR ('Error encountered in %s.  ProcReturn: %d while calling %s', 16, 1, @ProcName, @ProcReturn, @CallProcName)
+		rollback tran @ProcName
+		return	@Result
+	end
+	if	@ProcResult != 0 begin
+		set	@Result = 900502
+		RAISERROR ('Error encountered in %s.  ProcResult: %d while calling %s', 16, 1, @ProcName, @ProcResult, @CallProcName)
+		rollback tran @ProcName
+		return	@Result
+	end
+	--- </Call>
 end
-if	@ProcReturn != 0 begin
-	set	@Result = 900502
-	RAISERROR ('Error encountered in %s.  ProcReturn: %d while calling %s', 16, 1, @ProcName, @ProcReturn, @CallProcName)
-	rollback tran @ProcName
-	return	@Result
+else begin
+	set @Newserial = @SerialNumber
 end
-if	@ProcResult != 0 begin
-	set	@Result = 900502
-	RAISERROR ('Error encountered in %s.  ProcResult: %d while calling %s', 16, 1, @ProcName, @ProcResult, @CallProcName)
-	rollback tran @ProcName
-	return	@Result
-end
---- </Call>
 
 --		B.	Create inventory.
 select
@@ -690,6 +696,4 @@ end
 set	@Result = 0
 return
 	@Result
-
-
 GO
