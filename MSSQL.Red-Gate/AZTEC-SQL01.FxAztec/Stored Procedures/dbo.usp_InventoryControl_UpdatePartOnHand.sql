@@ -2,8 +2,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_NULLS ON
 GO
-
-create procedure [dbo].[usp_InventoryControl_UpdatePartOnHand]
+CREATE procedure [dbo].[usp_InventoryControl_UpdatePartOnHand]
 	@PartCode varchar(25)
 ,	@TranDT datetime out
 ,	@Result integer out
@@ -133,12 +132,6 @@ if	@RowCount != @expectedRowCount
 		rollback tran @ProcName
 		return
 	end
-	--if	@RowCount != 1 begin
-	--	set	@Result = 999999
-	--	RAISERROR ('Error inserting into table %s in procedure %s.  Rows inserted: %d.  Expected rows: 1.', 16, 1, @TableName, @ProcName, @RowCount)
-	--	rollback tran @ProcName
-	--	return
-	--end
 	--- </Insert>
 	
 end
