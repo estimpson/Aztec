@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create procedure [dbo].[usp_InventoryControl_Quality]
+CREATE procedure [dbo].[usp_InventoryControl_Quality]
 	@User varchar(10)
 ,	@Serial int
 ,	@NewUserDefinedStatus varchar(30)
@@ -39,7 +39,9 @@ set	@TranCount = @@TranCount
 if	@TranCount = 0 begin
 	begin tran @ProcName
 end
-save tran @ProcName
+else begin
+	save tran @ProcName
+end
 set	@TranDT = coalesce(@TranDT, GetDate())
 --- </Tran>
 
@@ -332,11 +334,16 @@ if	@DeleteScrapped = 1 begin
 end
 --- </Body>
 
----	<Return>
+--<CloseTran Required=Yes AutoCreate=Yes>
+if	@TranCount = 0 begin
+	commit transaction @ProcName
+end
+--</CloseTran Required=Yes AutoCreate=Yes>
+
+--	Success.
 set	@Result = 0
 return
 	@Result
---- </Return>
 
 /*
 Example:
