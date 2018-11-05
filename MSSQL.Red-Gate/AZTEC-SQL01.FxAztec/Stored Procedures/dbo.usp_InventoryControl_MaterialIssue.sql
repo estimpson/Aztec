@@ -2,8 +2,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_NULLS ON
 GO
-
-
 CREATE procedure [dbo].[usp_InventoryControl_MaterialIssue]
 	@Operator varchar(5)
 ,	@Serial int
@@ -39,7 +37,9 @@ set	@TranCount = @@TranCount
 if	@TranCount = 0 begin
 	begin tran @ProcName
 end
-save tran @ProcName
+else begin
+	save tran @ProcName
+end
 set	@TranDT = coalesce(@TranDT, GetDate())
 --- </Tran>
 
@@ -226,85 +226,90 @@ END
 --- <Update rows="1">
 SET	@TableName = 'dbo.object'
 
-UPDATE
+update
 	o
-SET
+set
 	std_quantity = std_quantity - @QtyIssue
 ,	quantity = quantity - dbo.udf_GetQtyFromStdQty(o.part, @QtyIssue, o.unit_measure)
 ,	weight = dbo.fn_Inventory_GetPartNetWeight(o.part, std_quantity - @QtyIssue)
 ,	last_date = @TranDT
 ,	last_time = @TranDT
-FROM
+from
 	dbo.object o
-WHERE
+where
 	serial = @Serial
 
-SELECT
+select
 	@Error = @@Error,
 	@RowCount = @@Rowcount
 
-IF	@Error != 0 BEGIN
-	SET	@Result = 999999
-	RAISERROR ('Error updating table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
-	ROLLBACK TRAN @ProcName
-	RETURN
-END
-IF	@RowCount != 1 BEGIN
-	SET	@Result = 999999
-	RAISERROR ('Error updating %s in procedure %s.  Rows Updated: %d.  Expected rows: 1.', 16, 1, @TableName, @ProcName, @RowCount)
-	ROLLBACK TRAN @ProcName
-	RETURN
+if	@Error != 0 begin
+	set	@Result = 999999
+	raiserror ('Error updating table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
+	rollback tran @ProcName
+	return
+end
+if	@RowCount != 1 begin
+	set	@Result = 999999
+	raiserror ('Error updating %s in procedure %s.  Rows Updated: %d.  Expected rows: 1.', 16, 1, @TableName, @ProcName, @RowCount)
+	rollback tran @ProcName
+	return
 END
 --- </Update>
 
 /*	Record part on hand. (dbo.usp_InventoryControl_UpdatePartOnHand) */
-DECLARE
-	@partCode VARCHAR(25)
-
-SET	@partCode =
-	(
-		SELECT
+declare
+	@partCode varchar(25) =
+	(	select
 			part
-		FROM
+		from
 			dbo.object o
-		WHERE
+		where
 			serial = @Serial
 	)
 
 --- <Call>	
-SET	@CallProcName = 'dbo.usp_InventoryControl_UpdatePartOnHand'
-EXECUTE
+set	@CallProcName = 'dbo.usp_InventoryControl_UpdatePartOnHand'
+execute
 	@ProcReturn = dbo.usp_InventoryControl_UpdatePartOnHand
 	@PartCode = @partCode
-,	@TranDT = @TranDT OUT
-,	@Result = @ProcResult OUT
+,	@TranDT = @TranDT out
+,	@Result = @ProcResult out
 
-SET	@Error = @@Error
-IF	@Error != 0 BEGIN
-	SET	@Result = 900501
-	RAISERROR ('Error encountered in %s.  Error: %d while calling %s', 16, 1, @ProcName, @Error, @CallProcName)
-	ROLLBACK TRAN @ProcName
-	RETURN	@Result
-END
-IF	@ProcReturn != 0 BEGIN
-	SET	@Result = 900502
-	RAISERROR ('Error encountered in %s.  ProcReturn: %d while calling %s', 16, 1, @ProcName, @ProcReturn, @CallProcName)
-	ROLLBACK TRAN @ProcName
-	RETURN	@Result
-END
-IF	@ProcResult != 0 BEGIN
-	SET	@Result = 900502
-	RAISERROR ('Error encountered in %s.  ProcResult: %d while calling %s', 16, 1, @ProcName, @ProcResult, @CallProcName)
-	ROLLBACK TRAN @ProcName
-	RETURN	@Result
-END
+set @Error = @@error
+if	@Error != 0 begin
+	set @Result = 900501
+	raiserror('Error encountered in %s.  Error: %d while calling %s', 16, 1, @ProcName, @Error, @CallProcName)
+	rollback tran @ProcName
+	return @Result
+end
+
+if	@ProcReturn != 0 begin
+	set @Result = 900502
+	raiserror('Error encountered in %s.  ProcReturn: %d while calling %s', 16, 1, @ProcName, @ProcReturn, @CallProcName)
+	rollback tran @ProcName
+	return @Result
+end
+
+if	@ProcResult != 0 begin
+	set @Result = 900502
+	raiserror('Error encountered in %s.  ProcResult: %d while calling %s', 16, 1, @ProcName, @ProcResult, @CallProcName)
+	rollback tran @ProcName
+	return @Result
+end
 --- </Call>
 
 --- </Body>
 
+---	<CloseTran AutoCommit=Yes>
+if	@TranCount = 0 begin
+	commit tran @ProcName
+end
+---	</CloseTran AutoCommit=Yes>
+
 ---	<Return>
-SET	@Result = 0
-RETURN
+set	@Result = 0
+return
 	@Result
 --- </Return>
 
@@ -361,6 +366,4 @@ go
 Results {
 }
 */
-
-
 GO
