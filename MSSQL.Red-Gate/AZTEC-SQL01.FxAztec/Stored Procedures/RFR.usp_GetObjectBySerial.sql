@@ -2,8 +2,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_NULLS ON
 GO
-
-create procedure [RFR].[usp_GetObjectBySerial]
+CREATE procedure [RFR].[usp_GetObjectBySerial]
 	@User varchar(5)
 ,	@LookupSerial int
 ,	@Serial int out
@@ -48,7 +47,7 @@ begin
 	,	BeginDT = getdate()
 	,	InArguments =
 			'@User = ' + coalesce('''' + @User + '''', 'null')
-			+ ', @LookupSerial = ' + coalesce(@LookupSerial, 'null')
+			+ ', @LookupSerial = ' + coalesce(convert(varchar, @LookupSerial), 'null')
 			+ ', @TranDT = ' + coalesce(convert(varchar, @TranDT, 121), '<null>')
 			+ ', @Result = ' + coalesce(convert(varchar, @Result), '<null>')
 			+ ', @Debug = ' + coalesce(convert(varchar, @Debug), '<null>')
@@ -433,8 +432,9 @@ set statistics time on
 go
 
 declare
-	@FinishedPart varchar(25) = 'ALC0598-HC02'
-,	@ParentHeirarchID hierarchyid
+	@User varchar(5) = '142'
+,	@LookupSerial int = 921235
+,	@Serial int
 
 begin transaction Test
 
@@ -446,8 +446,9 @@ declare
 
 execute
 	@ProcReturn = RFR.usp_GetObjectBySerial
-	@FinishedPart = @FinishedPart
-,	@ParentHeirarchID = @ParentHeirarchID
+	@User = @User
+,	@LookupSerial = @LookupSerial
+,	@Serial = @Serial out
 ,	@TranDT = @TranDT out
 ,	@Result = @ProcResult out
 
