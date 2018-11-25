@@ -2,7 +2,8 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_NULLS ON
 GO
-CREATE procedure [RFR].[usp_GetObjectBySerial]
+
+create procedure [RFR].[usp_GetObjectBySerial]
 	@User varchar(5)
 ,	@LookupSerial int
 ,	@Serial int out
@@ -180,7 +181,7 @@ begin
 						dbo.ReceiverHeaders rh
 					where
 						rh.ShipFrom = @supplierCode
-						and rh.Type in (3, 4) --(3) Purchase Order or (4) Outside Process
+						and rh.Type in (1, 3) --(1) Purchase Order or (3) Outside Process
 						and rh.Status in (0, 1, 2, 3, 4) -- (0) New, (1) Confirmed, (2) Shipped, (3) Arrived, or (4) Received
 					order by
 						rh.ReceiverID desc
@@ -433,10 +434,19 @@ go
 
 declare
 	@User varchar(5) = '142'
-,	@LookupSerial int = 921235
+,	@LookupSerial int = 924159
 ,	@Serial int
 
 begin transaction Test
+
+update
+	rh
+set
+	Status = 0
+from
+	dbo.ReceiverHeaders rh
+where
+	rh.ReceiverID = 15983
 
 declare
 	@ProcReturn integer
@@ -455,7 +465,7 @@ execute
 set	@Error = @@error
 
 select
-	@Error, @ProcReturn, @TranDT, @ProcResult
+	@Error, @ProcReturn, @TranDT, @ProcResult, @Serial
 go
 
 if	@@trancount > 0 begin

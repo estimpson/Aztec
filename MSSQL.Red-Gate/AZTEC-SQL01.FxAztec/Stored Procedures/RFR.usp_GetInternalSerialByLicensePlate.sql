@@ -339,7 +339,7 @@ begin
 						dbo.ReceiverHeaders rh
 					where
 						rh.ShipFrom = @supplierCode
-						and rh.Type in (3, 4) --(3) Purchase Order or (4) Outside Process
+						and rh.Type in (1, 3) --(1) Purchase Order or (3) Outside Process
 						and rh.Status in (0, 1, 2, 3, 4) -- (0) New, (1) Confirmed, (2) Shipped, (3) Arrived, or (4) Received
 					order by
 						rh.ReceiverID desc
@@ -588,8 +588,11 @@ set statistics time on
 go
 
 declare
-	@FinishedPart varchar(25) = 'ALC0598-HC02'
-,	@ParentHeirarchID hierarchyid
+	@User varchar(5) = '142'
+,	@LicensePlate varchar(50) = 'SX_123'
+,	@Serial int
+,	@Debug int = 1
+,	@DebugMsg varchar(max) = null
 
 begin transaction Test
 
@@ -601,15 +604,18 @@ declare
 
 execute
 	@ProcReturn = RFR.usp_GetInternalSerialByLicensePlate
-	@FinishedPart = @FinishedPart
-,	@ParentHeirarchID = @ParentHeirarchID
+	@User = @User
+,	@LicensePlate = @LicensePlate
+,	@Serial = @Serial out
 ,	@TranDT = @TranDT out
 ,	@Result = @ProcResult out
+,	@Debug = @Debug
+,	@DebugMsg = @DebugMsg out
 
 set	@Error = @@error
 
 select
-	@Error, @ProcReturn, @TranDT, @ProcResult
+	@Error, @ProcReturn, @TranDT, @ProcResult, @DebugMsg, @Serial
 go
 
 if	@@trancount > 0 begin
