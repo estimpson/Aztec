@@ -2,9 +2,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_NULLS ON
 GO
-
-
-
 CREATE procedure [dbo].[usp_ReceivingDock_CreateReceiverLines_fromPOReceiverHeader]
 	@ReceiverID int,
 	@Result int output
@@ -449,7 +446,16 @@ insert
 ,	CrAccount)
 select
 	rl.ReceiverLineID
-,	[LineNo] = r.RowNumber
+,	[LineNo] = r.RowNumber + coalesce
+		(	(	select
+					max(ro.[LineNo])
+				from
+					dbo.ReceiverObjects ro
+				where
+					ro.ReceiverLineID = rl.ReceiverLineID
+			)
+		,	0
+		)
 ,	rl.Status
 ,	rl.PONumber
 ,	rl.POLineNo
