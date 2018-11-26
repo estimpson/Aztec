@@ -131,10 +131,12 @@ begin
 		declare
 			@partCode varchar(25)
 		,	@supplierCode varchar(10)
+		,	@objectQty numeric(20,6)
 		
 		select top(1)
 			@partCode = sob.InternalPartCode
 		,	@supplierCode = sob.SupplierCode
+		,	@objectQty = so.Quantity
 		from
 			SPORTAL.SupplierObjects so
 			join SPORTAL.SupplierObjectBatches sob
@@ -288,6 +290,7 @@ begin
 			set
 				ro.Serial = @LookupSerial
 			,	ro.SupplierLicensePlate = @licensePlate
+			,	ro.QtyObject = coalesce(@objectQty, ro.QtyObject)
 			from
 				dbo.ReceiverObjects ro
 			where
@@ -434,7 +437,7 @@ go
 
 declare
 	@User varchar(5) = '142'
-,	@LookupSerial int = 924159
+,	@LookupSerial int = 924133
 ,	@Serial int
 
 begin transaction Test
@@ -446,7 +449,7 @@ set
 from
 	dbo.ReceiverHeaders rh
 where
-	rh.ReceiverID = 15983
+	rh.ReceiverID = 16004
 
 declare
 	@ProcReturn integer
@@ -466,6 +469,20 @@ set	@Error = @@error
 
 select
 	@Error, @ProcReturn, @TranDT, @ProcResult, @Serial
+
+select
+	*
+from
+	dbo.ReceiverObjects ro
+where
+	ro.Serial = @Serial
+
+select
+	*
+from
+	dbo.audit_trail at
+where
+	at.serial = @Serial
 go
 
 if	@@trancount > 0 begin

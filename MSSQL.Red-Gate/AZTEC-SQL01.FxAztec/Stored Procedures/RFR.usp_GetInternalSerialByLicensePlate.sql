@@ -288,19 +288,21 @@ begin
 		/*	Look up License Plate in supplier objects table, find receiver header / create line / object, do receipt, return serial. */
 		set @TocMsg = 'Look up License Plate in supplier objects table, find receiver header / create line / object, do receipt, return serial'
 		declare
-			@partCode varchar(25) =
-			(	select top(1)
-					sob.InternalPartCode
-				from
-					SPORTAL.SupplierObjects so
-					join SPORTAL.SupplierObjectBatches sob
-						on sob.RowID = so.SupplierObjectBatch
-				where
-					sob.SupplierCode = @supplierCode
-					and so.Serial = @supplierSerial
-				order by
-					so.RowID desc
-			)
+			@partCode varchar(25)
+		,	@objectQty numeric(20,6)
+		
+		select top(1)
+			@partCode = sob.InternalPartCode
+		,	@objectQty = so.Quantity
+		from
+			SPORTAL.SupplierObjects so
+			join SPORTAL.SupplierObjectBatches sob
+				on sob.RowID = so.SupplierObjectBatch
+		where
+			sob.SupplierCode = @supplierCode
+			and so.Serial = @supplierSerial
+		order by
+			so.RowID desc
 
 		if	@partCode is not null begin
 			/*	Check for open requirement. */
@@ -442,6 +444,7 @@ begin
 				ro
 			set
 				ro.SupplierLicensePlate = @LicensePlate
+			,	ro.QtyObject = coalesce(@objectQty, ro.QtyObject)
 			from
 				dbo.ReceiverObjects ro
 			where
