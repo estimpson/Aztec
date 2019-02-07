@@ -69,6 +69,10 @@ Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.EDI_iConnect", "FxA
 EndProject
 Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.SPORTAL", "FxAztec\FxAztec.SPORTAL\FxAztec.SPORTAL.ssmssqlproj", "{4C3F942E-888B-4C81-92EE-9C2D659342CB}"
 EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.RFR", "FxAztec.RFR\FxAztec.RFR.ssmssqlproj", "{1F492CE1-D7DF-46FC-9C17-8F91C5F4A085}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.FXSYS", "FxAztec.FXSYS\FxAztec.FXSYS.ssmssqlproj", "{004801E8-F6E4-42BE-AC83-17DF4BF54C18}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Default|Default = Default|Default
@@ -108,7 +112,9 @@ Global
 		{1679D364-6965-43A6-AFAC-EC484E8853A2}.Default|Default.ActiveCfg = Default
 		{D2AD2586-AB16-4A5E-AF6D-CE8ED928A3B8}.Default|Default.ActiveCfg = Default
 		{4C3F942E-888B-4C81-92EE-9C2D659342CB}.Default|Default.ActiveCfg = Default
-		{47E7C925-DD13-43A7-A2CF-4B1AD0EC224D}.Default|Default.ActiveCfg = Default
+		{0D6A1D95-04AE-47A9-AA70-842521CD1A88}.Default|Default.ActiveCfg = Default
+		{1F492CE1-D7DF-46FC-9C17-8F91C5F4A085}.Default|Default.ActiveCfg = Default
+		{004801E8-F6E4-42BE-AC83-17DF4BF54C18}.Default|Default.ActiveCfg = Default
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

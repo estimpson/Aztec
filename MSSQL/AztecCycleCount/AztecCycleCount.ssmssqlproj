@@ -15,6 +15,18 @@
           <ConnectionProtocol>NotSpecified</ConnectionProtocol>
           <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
         </ConnectionNode>
+        <ConnectionNode Name="Aztec:estimpson">
+          <Created>2017-10-24T13:10:26.7985399-04:00</Created>
+          <Type>SQL</Type>
+          <Server>Aztec</Server>
+          <UserName>estimpson</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB />
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
         <ConnectionNode Name="aztecsql2.aztecmfgcorp.local\fx:sa">
           <Created>2013-03-12T15:24:37.7304853-04:00</Created>
           <Type>SQL</Type>
@@ -188,9 +200,9 @@
           <FullPath>Script.Insert.MenuItem.sql</FullPath>
         </FileNode>
         <FileNode Name="Script.Insert.NumberSequence.Cycle Count.sql">
-          <AssociatedConnectionMoniker />
-          <AssociatedConnSrvName />
-          <AssociatedConnUserName />
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Script.Insert.NumberSequence.Cycle Count.sql</FullPath>
         </FileNode>
         <FileNode Name="Script.Insert.Report Library.Cycle Count.sql">
