@@ -31,7 +31,7 @@ where
 			from
 				FT.REFERENTIAL_CONSTRAINTS_COLUMN_USAGE
 		)
-	and CONSTRAINT_NAME not in ('FK__BackflushHeaders__72729D3D', 'FK__WorkOrderDetailB__0FA30D71', 'FK__WorkOrderObjects__1610DF35')
+	and CONSTRAINT_NAME not in ('FK__BackflushHeaders__21DB904F', 'FK__WorkOrderDetailB__22CFB488', 'FK__WorkOrderObjects__23C3D8C1')
 
 open
 	ForeignKeys
