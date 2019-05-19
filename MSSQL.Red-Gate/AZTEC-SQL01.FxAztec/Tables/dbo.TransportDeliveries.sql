@@ -426,8 +426,6 @@ ALTER TABLE [dbo].[TransportDeliveries] ADD CONSTRAINT [FK__Transport__Arriv__34
 GO
 ALTER TABLE [dbo].[TransportDeliveries] ADD CONSTRAINT [FK__Transport__Depar__33621651] FOREIGN KEY ([DeparturePlant]) REFERENCES [dbo].[destination] ([destination])
 GO
-ALTER TABLE [dbo].[TransportDeliveries] ADD CONSTRAINT [FK__Transport__Recei__3826CB6E] FOREIGN KEY ([ReceiverNumber]) REFERENCES [dbo].[ReceiverHeaders] ([ReceiverNumber])
-GO
 ALTER TABLE [dbo].[TransportDeliveries] ADD CONSTRAINT [FK__Transport__Shipp__3732A735] FOREIGN KEY ([ShipperID]) REFERENCES [dbo].[shipper] ([id])
 GO
 ALTER TABLE [dbo].[TransportDeliveries] ADD CONSTRAINT [FK__Transport__Trans__363E82FC] FOREIGN KEY ([TransportMode]) REFERENCES [dbo].[trans_mode] ([code])
