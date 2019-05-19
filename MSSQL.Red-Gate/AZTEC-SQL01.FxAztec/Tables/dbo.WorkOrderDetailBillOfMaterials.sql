@@ -71,5 +71,3 @@ ALTER TABLE [dbo].[WorkOrderDetailBillOfMaterials] ADD CONSTRAINT [FK__WorkOrder
 GO
 ALTER TABLE [dbo].[WorkOrderDetailBillOfMaterials] ADD CONSTRAINT [FK__WorkOrder__SubFo__0ADE5854] FOREIGN KEY ([SubForRowID]) REFERENCES [dbo].[WorkOrderDetailBillOfMaterials] ([RowID])
 GO
-ALTER TABLE [dbo].[WorkOrderDetailBillOfMaterials] ADD CONSTRAINT [FK__WorkOrderDetailB__22CFB488] FOREIGN KEY ([WorkOrderNumber], [WorkOrderDetailLine]) REFERENCES [dbo].[WorkOrderDetails] ([WorkOrderNumber], [Line])
-GO

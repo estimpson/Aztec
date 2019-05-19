@@ -22,6 +22,250 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_NULLS ON
 GO
+--exec sp_rename 'dbo.trBackflushHeaders_i', 'tr_BackflushHeaders_NumberMask'
+--alter table dbo.BackflushHeaders drop constraint UQ__Backflus__1DA70F8B69DD573C
+--alter table dbo.BackflushDetails drop constraint FK__Backflush__Backf__7CF02BB0
+--alter table dbo.WorkOrderObjects drop constraint FK__WorkOrder__Backf__105805DF
+--alter table dbo.WorkOrderObjects drop constraint FK__WorkOrder__UndoB__114C2A18
+
+CREATE trigger [dbo].[tr_BackflushHeaders_NumberMask] on [dbo].[BackflushHeaders] for insert
+as
+declare
+	@TranDT datetime
+,	@Result int
+
+set xact_abort off
+set nocount on
+set ansi_warnings off
+set	@Result = 999999
+
+--- <Error Handling>
+declare
+
+	@CallProcName sysname,
+	@TableName sysname,
+	@ProcName sysname,
+	@ProcReturn integer,
+	@ProcResult integer,
+	@Error integer,
+	@RowCount integer
+
+set	@ProcName = user_name(objectproperty(@@procid, 'OwnerId')) + '.' + object_name(@@procid)  -- e.g. dbo.usp_Test
+--- </Error Handling>
+
+begin try
+	--- <Tran Required=Yes AutoCreate=Yes TranDTParm=Yes>
+	declare
+		@TranCount smallint
+
+	set	@TranCount = @@TranCount
+	set	@TranDT = coalesce(@TranDT, GetDate())
+	save tran @ProcName
+	--- </Tran>
+
+	---	<ArgumentValidation>
+
+	---	</ArgumentValidation>
+
+	--- <Body>
+/*	Check if any new rows require a new backflush number. */
+	if	exists
+			(	select
+					*
+				from
+					inserted i
+				where
+					i.BackflushNumber = '0'
+			) begin
+
+/*			Get the number of new backflush numbers needed. */
+		declare
+			@NumberCount int
+
+		select
+			@NumberCount = Count(*)
+		from
+			inserted i
+		where
+			i.BackflushNumber = '0'
+
+/*			Set the new backflush numbers. */
+		--- <Update rows="n">
+
+		set	@TableName = 'dbo.BackflushHeaders'
+
+		update
+			bh
+		set
+			bh.BackflushNumber = NewValues.NewValue
+		from
+			dbo.BackflushHeaders bh
+			join
+			(	select
+					i.RowID
+				,	NewValue = FT.udf_NumberFromMaskAndValue
+						(	ns.NumberMask
+						,	ns.NextValue + row_number() over (order by i.RowID) - 1
+						,	i.RowModifiedDT
+						)
+				from
+					inserted i
+					join FT.NumberSequenceKeys nsk
+						join FT.NumberSequence ns with(updlock)
+							on ns.NumberSequenceID = nsk.NumberSequenceID
+						on nsk.KeyName = 'dbo.BackflushHeaders.BackflushNumber'
+				where
+					i.BackflushNumber = '0'
+			) NewValues
+				on NewValues.RowID = bh.RowID
+
+		select
+			@Error = @@Error,
+			@RowCount = @@Rowcount
+
+		if	@Error != 0 begin
+			set	@Result = 999999
+			RAISERROR ('Error updating table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
+			rollback tran @ProcName
+			return
+		end
+		if	@RowCount != @NumberCount begin
+			set	@Result = 999999
+			RAISERROR ('Error updating %s in procedure %s.  Rows Updated: %d.  Expected rows: %d.', 16, 1, @TableName, @ProcName, @RowCount, @NumberCount)
+			rollback tran @ProcName
+			return
+		end
+		--- </Update>
+
+/*			Increment the next delivery number. */
+
+		--- <Update rows="1">
+		set	@TableName = 'FT.NumberSequence'
+
+		update
+			ns
+		set
+			NextValue = ns.NextValue + @NumberCount
+		from
+			FT.NumberSequenceKeys nsk
+			join FT.NumberSequence ns with(updlock)
+				on ns.NumberSequenceID = nsk.NumberSequenceID
+		where
+			nsk.KeyName = 'dbo.BackflushHeaders.BackflushNumber'
+
+		select
+			@Error = @@Error,
+			@RowCount = @@Rowcount
+
+		if	@Error != 0 begin
+			set	@Result = 999999
+			RAISERROR ('Error updating table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
+			rollback tran @ProcName
+			return
+		end
+		if	@RowCount != 1 begin
+			set	@Result = 999999
+			RAISERROR ('Error updating %s in procedure %s.  Rows Updated: %d.  Expected rows: 1.', 16, 1, @TableName, @ProcName, @RowCount)
+			rollback tran @ProcName
+			return
+		end
+		--- </Update>
+	end
+	--- </Body>
+end try
+begin catch
+	declare
+		@errorName int
+	,	@errorSeverity int
+	,	@errorState int
+	,	@errorLine int
+	,	@errorProcedures sysname
+	,	@errorMessage nvarchar(2048)
+	,	@xact_state int
+
+	select
+		@errorName = error_number()
+	,	@errorSeverity = error_severity()
+	,	@errorState = error_state ()
+	,	@errorLine = error_line()
+	,	@errorProcedures = error_procedure()
+	,	@errorMessage = error_message()
+	,	@xact_state = xact_state()
+
+	if	xact_state() = -1 begin
+		print 'Error number: ' + convert(varchar, @errorName)
+		print 'Error severity: ' + convert(varchar, @errorSeverity)
+		print 'Error state: ' + convert(varchar, @errorState)
+		print 'Error line: ' + convert(varchar, @errorLine)
+		print 'Error procedure: ' + @errorProcedures
+		print 'Error message: ' + @errorMessage
+		print 'xact_state: ' + convert(varchar, @xact_state)
+
+		rollback transaction
+	end
+	else begin
+		/*	Capture any errors in SP Logging. */
+		rollback tran @ProcName
+	end
+end catch
+
+---	<Return>
+set	@Result = 0
+return
+--- </Return>
+/*
+Example:
+Initial queries
+{
+
+}
+
+Test syntax
+{
+
+set statistics io on
+set statistics time on
+go
+
+begin transaction Test
+go
+
+insert
+	dbo.BacklushHeaders
+...
+
+update
+	...
+from
+	dbo.BacklushHeaders
+...
+
+delete
+	...
+from
+	dbo.BacklushHeaders
+...
+go
+
+if	@@trancount > 0 begin
+	rollback
+end
+go
+
+set statistics io off
+set statistics time off
+go
+
+}
+
+Results {
+}
+*/
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_NULLS ON
+GO
 
 
 create trigger [dbo].[trBackflushHeaders_d] on [dbo].[BackflushHeaders] instead of delete
@@ -37,98 +281,6 @@ from
 	dbo.BackflushHeaders bh
 	join deleted d on
 		bh.RowID = d.RowID
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_NULLS ON
-GO
-
-create trigger [dbo].[trBackflushHeaders_i] on [dbo].[BackflushHeaders] for insert
-as
-set nocount on
-set ansi_warnings off
-declare
-	@Result int
-
---- <Error Handling>
-declare
-	@CallProcName sysname,
-	@TableName sysname,
-	@ProcName sysname,
-	@ProcReturn integer,
-	@ProcResult integer,
-	@Error integer,
-	@RowCount integer
-
-set	@ProcName = user_name(objectproperty(@@procid, 'OwnerId')) + '.' + object_name(@@procid)  -- e.g. FT.usp_Test
---- </Error Handling>
-
---- <Tran Required=No AutoCreate=No TranDTParm=No>
-declare
-	@TranDT datetime
-set	@TranDT = coalesce(@TranDT, GetDate())
---- </Tran>
-
---- <Body>
-declare
-	@NextNumber varchar(50)
-
---- <Call>	
-set	@CallProcName = 'FT.usp_NextNumberInSequnce'
-execute
-	@ProcReturn = FT.usp_NextNumberInSequnce
-	@KeyName = 'dbo.BackflushHeaders.BackflushNumber'
-,	@NextNumber = @NextNumber out
-,	@TranDT = @TranDT out
-,	@Result = @ProcResult out
-
-set	@Error = @@Error
-if	@Error != 0 begin
-	set	@Result = 900501
-	RAISERROR ('Error encountered in %s.  Error: %d while calling %s', 16, 1, @ProcName, @Error, @CallProcName)
-	rollback tran
-	return
-end
-if	@ProcReturn != 0 begin
-	set	@Result = 900502
-	RAISERROR ('Error encountered in %s.  ProcReturn: %d while calling %s', 16, 1, @ProcName, @ProcReturn, @CallProcName)
-	rollback tran
-	return
-end
-if	@ProcResult != 0 begin
-	set	@Result = 900502
-	RAISERROR ('Error encountered in %s.  ProcResult: %d while calling %s', 16, 1, @ProcName, @ProcResult, @CallProcName)
-	rollback tran
-	return
-end
---- </Call>
-
---- <Update rows="*">
-set	@TableName = 'dbo.BackflushHeaders'
-
-update
-	bh
-set
-	BackflushNumber = @NextNumber
-from
-	dbo.BackflushHeaders bh
-	join inserted i on
-		bh.RowID = i.RowID
-where
-	bh.BackflushNumber = '0'
-
-select
-	@Error = @@Error,
-	@RowCount = @@Rowcount
-
-if	@Error != 0 begin
-	set	@Result = 999999
-	RAISERROR ('Error inserting table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
-	rollback tran
-	return
-end
---- </Update>
---- </Body>
 GO
 SET QUOTED_IDENTIFIER ON
 GO
@@ -153,8 +305,4 @@ if	not update(RowModifiedDT)
 end
 GO
 ALTER TABLE [dbo].[BackflushHeaders] ADD CONSTRAINT [PK__Backflus__FFEE74516700EA91] PRIMARY KEY CLUSTERED  ([RowID]) ON [PRIMARY]
-GO
-ALTER TABLE [dbo].[BackflushHeaders] ADD CONSTRAINT [UQ__Backflus__1DA70F8B69DD573C] UNIQUE NONCLUSTERED  ([BackflushNumber]) ON [PRIMARY]
-GO
-ALTER TABLE [dbo].[BackflushHeaders] ADD CONSTRAINT [FK__BackflushHeaders__21DB904F] FOREIGN KEY ([WorkOrderNumber], [WorkOrderDetailLine]) REFERENCES [dbo].[WorkOrderDetails] ([WorkOrderNumber], [Line])
 GO

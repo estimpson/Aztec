@@ -67,5 +67,3 @@ ALTER TABLE [dbo].[BackflushDetails] ADD CONSTRAINT [PK__Backflus__FFEE7451782B7
 GO
 ALTER TABLE [dbo].[BackflushDetails] ADD CONSTRAINT [UQ__Backflus__6625724D7B07E33E] UNIQUE NONCLUSTERED  ([BackflushNumber], [Line]) ON [PRIMARY]
 GO
-ALTER TABLE [dbo].[BackflushDetails] ADD CONSTRAINT [FK__Backflush__Backf__7CF02BB0] FOREIGN KEY ([BackflushNumber]) REFERENCES [dbo].[BackflushHeaders] ([BackflushNumber])
-GO

@@ -24,9 +24,3 @@ ALTER TABLE [dbo].[WorkOrderObjects] ADD CONSTRAINT [PK__WorkOrde__FFEE745108B6E
 GO
 ALTER TABLE [dbo].[WorkOrderObjects] ADD CONSTRAINT [UQ__WorkOrde__1A00E0930B9350C2] UNIQUE NONCLUSTERED  ([Serial]) ON [PRIMARY]
 GO
-ALTER TABLE [dbo].[WorkOrderObjects] ADD CONSTRAINT [FK__WorkOrder__Backf__105805DF] FOREIGN KEY ([BackflushNumber]) REFERENCES [dbo].[BackflushHeaders] ([BackflushNumber])
-GO
-ALTER TABLE [dbo].[WorkOrderObjects] ADD CONSTRAINT [FK__WorkOrder__UndoB__114C2A18] FOREIGN KEY ([UndoBackflushNumber]) REFERENCES [dbo].[BackflushHeaders] ([BackflushNumber])
-GO
-ALTER TABLE [dbo].[WorkOrderObjects] ADD CONSTRAINT [FK__WorkOrderObjects__23C3D8C1] FOREIGN KEY ([WorkOrderNumber], [WorkOrderDetailLine]) REFERENCES [dbo].[WorkOrderDetails] ([WorkOrderNumber], [Line])
-GO
