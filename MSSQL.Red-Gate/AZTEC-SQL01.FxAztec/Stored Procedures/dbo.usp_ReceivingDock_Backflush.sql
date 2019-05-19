@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create procedure [dbo].[usp_ReceivingDock_Backflush]
+CREATE procedure [dbo].[usp_ReceivingDock_Backflush]
 	@Operator varchar(5)
 ,	@BackflushNumber varchar(50)
 ,	@ReceiverObjectID int
@@ -45,25 +45,6 @@ set	@TranDT = coalesce(@TranDT, GetDate())
 
 --- <Body>
 /*	Calculate quantity to issue. */
-declare
-	@WODID int
-,	@workOrderNumber varchar(50)
-,	@workOrderDetailLine float
-,	@qtyRequested numeric(20,6)
-
-select
-	@WODID = wod.RowID
-,	@workOrderNumber = bh.WorkOrderNumber
-,	@workOrderDetailLine = bh.WorkOrderDetailLine
-,	@qtyRequested = bh.QtyProduced
-from
-	dbo.BackflushHeaders bh
-	join dbo.WorkOrderDetails wod
-		on wod.WorkOrderNumber = bh.WorkOrderNumber
-		and wod.Line = bh.WorkOrderDetailLine
-where
-	BackflushNumber = @BackflushNumber
-
 declare
 	@InventoryConsumption table
 (
@@ -238,7 +219,7 @@ while
 		@Operator = @Operator
 	,	@Serial = @issueSerial
 	,	@QtyIssue = @qtyIssue
-	,	@WorkOrderNumber = @workOrderNumber
+	,	@WorkOrderNumber = null
 	,	@Notes = 'Material issue by backflush.'
 	,	@TranDT = @TranDT out
 	,	@Result = @ProcResult out
@@ -417,4 +398,5 @@ go
 Results {
 }
 */
+
 GO
