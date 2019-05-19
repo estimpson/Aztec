@@ -6,6 +6,7 @@ GO
 
 
 
+
 CREATE FUNCTION [EDIShipNoticeXML_Ford].[udf_LOOP_HLITEM_SEG_LIN__QtyShipped]
 (		@ShipperID INT
 	,	@CustomerPart VARCHAR(50)
@@ -67,6 +68,16 @@ BEGIN
 			
 				FROM
 					shipper_detail sd
+				Cross Apply 
+					( Select sum(sd2.qty_packed) as PriorShipmentQty
+						from shipper_detail sd2 
+						join shipper s on s.id =  sd2.shipper
+						Join edi_setups es on es.destination = s.destination and isNULL(es.prev_cum_in_asn,'N') = 'Y'
+						where sd2.order_no =  sd.Order_no and 
+								sd2.date_shipped < sd.date_shipped and
+								sd2.date_shipped >= [FT].[fn_TruncDate]('d', getdate()) and
+								s.date_shipped is not NULL and
+								s.status in ('C', 'Z') )  PriorShipmentsToday
 				WHERE
 					sd.shipper = @ShipperID
 				AND
@@ -82,6 +93,7 @@ BEGIN
 		@outputXML
 END
  
+
 
 
 

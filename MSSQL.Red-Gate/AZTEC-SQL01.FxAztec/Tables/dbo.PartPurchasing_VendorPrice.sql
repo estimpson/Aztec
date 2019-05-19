@@ -16,7 +16,7 @@ ALTER TABLE [dbo].[PartPurchasing_VendorPrice] ADD CONSTRAINT [PK__PartPurc__FFE
 GO
 ALTER TABLE [dbo].[PartPurchasing_VendorPrice] ADD CONSTRAINT [UQ__PartPurc__A429CB68A580EDEF] UNIQUE NONCLUSTERED  ([PartCode], [VendorCode]) ON [PRIMARY]
 GO
-ALTER TABLE [dbo].[PartPurchasing_VendorPrice] ADD CONSTRAINT [FK__PartPurch__PartC__543FB883] FOREIGN KEY ([PartCode]) REFERENCES [dbo].[part] ([part]) ON DELETE CASCADE ON UPDATE CASCADE
+ALTER TABLE [dbo].[PartPurchasing_VendorPrice] ADD CONSTRAINT [FK__PartPurch__PartC__543FB883] FOREIGN KEY ([PartCode]) REFERENCES [dbo].[part] ([part])
 GO
-ALTER TABLE [dbo].[PartPurchasing_VendorPrice] ADD CONSTRAINT [FK__PartPurch__Vendo__5533DCBC] FOREIGN KEY ([VendorCode]) REFERENCES [dbo].[vendor] ([code]) ON DELETE CASCADE ON UPDATE CASCADE
+ALTER TABLE [dbo].[PartPurchasing_VendorPrice] ADD CONSTRAINT [FK__PartPurch__Vendo__5533DCBC] FOREIGN KEY ([VendorCode]) REFERENCES [dbo].[vendor] ([code])
 GO

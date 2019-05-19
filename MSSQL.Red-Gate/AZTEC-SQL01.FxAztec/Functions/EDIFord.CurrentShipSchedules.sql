@@ -6,6 +6,7 @@ GO
 
 
 
+
 CREATE FUNCTION [EDIFord].[CurrentShipSchedules]
 ()
 RETURNS @CurrentSS TABLE
@@ -20,6 +21,8 @@ RETURNS @CurrentSS TABLE
 ,	NewDocument INT
 )
 AS
+
+--ASB FT, LLC 01/10/2019 : Added criteria to only return documents where document date is within current year. Done becasue Ford Service does not send 862s after accum roll back and system was getting last 862 (prior year) to blend with 830
 BEGIN
 --- <Body>
 	INSERT
@@ -71,6 +74,7 @@ BEGIN
 			JOIN EDIFORD.ShipSchedules ss
 			ON ss.RawDocumentGUID = ssh.RawDocumentGUID
 			ON ss.ShipToCode = cl.ShipToCode
+			AND datepart(YEAR,ssh.DocumentDT) =  datepart(YEAR,getdate()) --added 01/10/2019 ASB FT, LLC
 			AND COALESCE(ss.ShipFromCode, '') = cl.ShipFromCode
 			AND ss.CustomerPart = cl.CustomerPart
 			AND COALESCE(ss.CustomerModelYear,'') = cl.CustomerModelYear
@@ -84,6 +88,7 @@ BEGIN
 ---	<Return>
 	RETURN
 END
+
 
 
 

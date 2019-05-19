@@ -6,6 +6,7 @@ GO
 
 
 
+
 CREATE FUNCTION [EDIFord].[CurrentPlanningReleases]
 ()
 RETURNS @CurrentPlanningReleases TABLE
@@ -21,6 +22,7 @@ RETURNS @CurrentPlanningReleases TABLE
 )
 AS
 BEGIN
+--ASB FT, LLC 01/10/2019 : Added criteria to only return documents where document date is within current year. Done becasue all accums are rolled to zero Jan 1 and we do not want a document from prior year to update sales order.
 --- <Body>
 	INSERT
 		@CurrentPlanningReleases
@@ -82,6 +84,7 @@ BEGIN
 			LEFT JOIN
 			EDIFord.BlanketOrders bo ON bo.EDIShipToCode = pr.ShipToCode AND
             bo.SupplierCode = pr.SupplierCode
+			AND datepart(YEAR,ph.DocumentDT) =  datepart(YEAR,getdate()) --added 01/10/2019 ASB FT, LLC
 			WHERE ph.RowCreateDT>= DATEADD(dd, COALESCE(bo.PlanningReleaseHorizonDaysBack,-30), GETDATE())
 			AND COALESCE(bo.ProcessPlanningRelease,1) = 1
 --- </Body>
@@ -89,6 +92,7 @@ BEGIN
 ---	<Return>
 	RETURN
 END
+
 
 
 

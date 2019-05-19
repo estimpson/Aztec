@@ -3,7 +3,8 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create function [EDI_XML_Ford_ASN].[ASNReturnables]
+
+CREATE function [EDI_XML_Ford_ASN].[ASNReturnables]
 (	@ShipperID int
 )
 returns @Returnables table
@@ -37,6 +38,7 @@ begin
 				at.shipper = convert(varchar, @ShipperID)
 				and at.part != '3366'
 				and at.package_type not like '%PB12L12%'
+				and at.type = 'S'
 			group by
 				at.package_type
 			union
@@ -59,4 +61,5 @@ begin
 ---	<Return>
 	return
 end
+
 GO

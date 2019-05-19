@@ -4,6 +4,8 @@ SET ANSI_NULLS ON
 GO
 
 
+
+
 CREATE FUNCTION [EDI_XML_Ford_ASN].[ASNLines]
 (	@shipperID INT
 )
@@ -76,12 +78,13 @@ BEGIN
 	,	CustomerPart = sd.customer_part
 	,	QtyPacked = CONVERT(INT, ROUND(sd.alternative_qty, 0))
 	,	UnitPacked = sd.alternative_unit
-	,	AccumQty =
-			CASE
-				WHEN es.prev_cum_in_asn = 'Y'
-					THEN CONVERT(INT, ROUND(sd.accum_shipped - sd.alternative_qty, 0))
-				ELSE CONVERT(INT, ROUND(sd.accum_shipped, 0))
-			END
+	--,	AccumQty =
+	--		CASE
+	--			WHEN es.prev_cum_in_asn = 'Y'
+	--				THEN CONVERT(INT, ROUND(sd.accum_shipped - sd.alternative_qty, 0))
+	--			ELSE CONVERT(INT, ROUND(sd.accum_shipped, 0))
+	--		END
+	,	AccumQty = sd.accum_shipped - coalesce(PriorShipmentQty,0)
 	,	CustomerPO = sd.customer_po
 	,	GrossWeight = CONVERT(INT, ROUND(sd.gross_weight, 0))
 	,	NetWeight = CONVERT(INT, ROUND(sd.net_weight, 0))
@@ -104,6 +107,16 @@ BEGIN
 				ON oh.order_no = sd.order_no
 				AND oh.blanket_part = sd.part
 			ON sd.shipper = s.id
+		Cross Apply 
+					( Select sum(sd2.qty_packed) as PriorShipmentQty
+						from shipper_detail sd2 
+						join shipper s on s.id =  sd2.shipper
+						Join edi_setups es on es.destination = s.destination and isNULL(es.prev_cum_in_asn,'N') = 'Y'
+						where sd2.order_no =  sd.Order_no and 
+								sd2.date_shipped < sd.date_shipped and
+								sd2.date_shipped >= [FT].[fn_TruncDate]('d', getdate()) and
+								s.date_shipped is not NULL and
+								s.status in ('C', 'Z') )  PriorShipmentsToday
 		--JOIN @at at
 		--	ON at.Part = sd.part
 	WHERE
@@ -114,5 +127,7 @@ BEGIN
 ---	<Return>
 	RETURN
 END
+
+
 
 GO
