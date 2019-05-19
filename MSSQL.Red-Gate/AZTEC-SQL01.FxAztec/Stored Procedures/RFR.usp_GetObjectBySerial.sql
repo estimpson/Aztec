@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create procedure [RFR].[usp_GetObjectBySerial]
+CREATE procedure [RFR].[usp_GetObjectBySerial]
 	@User varchar(5)
 ,	@LookupSerial int
 ,	@Serial int out
@@ -291,6 +291,14 @@ begin
 				ro.Serial = @LookupSerial
 			,	ro.SupplierLicensePlate = @licensePlate
 			,	ro.QtyObject = coalesce(@objectQty, ro.QtyObject)
+			,	ro.Lot =
+				(	select
+						max(rh.ConfirmedSID)
+					from
+						dbo.ReceiverHeaders rh
+					where
+						rh.ReceiverID = @receiverID
+				)
 			from
 				dbo.ReceiverObjects ro
 			where

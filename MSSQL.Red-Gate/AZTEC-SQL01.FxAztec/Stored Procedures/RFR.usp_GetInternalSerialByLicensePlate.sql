@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create procedure [RFR].[usp_GetInternalSerialByLicensePlate]
+CREATE procedure [RFR].[usp_GetInternalSerialByLicensePlate]
 	@User varchar(5)
 ,	@LicensePlate varchar(50)
 ,	@Serial int out
@@ -445,6 +445,14 @@ begin
 			set
 				ro.SupplierLicensePlate = @LicensePlate
 			,	ro.QtyObject = coalesce(@objectQty, ro.QtyObject)
+			,	ro.Lot =
+				(	select
+						max(rh.ConfirmedSID)
+					from
+						dbo.ReceiverHeaders rh
+					where
+						rh.ReceiverID = @receiverID
+				)
 			from
 				dbo.ReceiverObjects ro
 			where
