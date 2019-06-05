@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create procedure [FXSYS].[usp_PrintError]
+CREATE procedure [FXSYS].[usp_PrintError]
 as
 begin
 	set nocount on
@@ -34,11 +34,6 @@ set statistics io on
 set statistics time on
 go
 
-declare
-	@Param1 [scalar_data_type]
-
-set	@Param1 = [test_value]
-
 begin transaction Test
 
 declare
@@ -49,9 +44,6 @@ declare
 
 execute
 	@ProcReturn = FXSYS.usp_PrintError
-	@Param1 = @Param1
-,	@TranDT = @TranDT out
-,	@Result = @ProcResult out
 
 set	@Error = @@error
 
@@ -73,4 +65,5 @@ go
 Results {
 }
 */
+
 GO

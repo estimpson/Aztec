@@ -254,8 +254,12 @@ begin
 			into
 				@newReceiverHeaders
 			select distinct
-				Type = 1 -- Purchase Order
-			,	Status = 0 -- New
+				Type =
+					case
+						when v.code is null then 1  -- (select dbo.udf_TypeValue ('ReceiverHeaders', 'Purchase Order'))
+						else 3 -- (select dbo.udf_TypeValue ('ReceiverHeaders', 'Outside Process'))
+					end
+			,	Status = 0 -- (select dbo.udf_StatusValue ('ReceiverHeaders', 'New'))
 			,	ShipFrom = sn.ShipFromCode
 			,	Plant = sn.ShipToCode
 			,	ExpectedReceiveDT = sn.ShipDT + 365
@@ -269,6 +273,10 @@ begin
 			,	SupplierASNGuid = sn.RawDocumentGUID
 			from
 				@ShipNotices sn
+				left join dbo.destination d
+					join dbo.vendor v
+						on v.code = d.vendor
+					on d.destination = sn.ShipToCode
 
 			--- <TOC>
 			if	@Debug & 0x01 = 0x01 begin
@@ -409,6 +417,7 @@ begin
 		declare
 			@newReceiverObjects table
 		(	ReceiverObjectID int primary key
+		,	SupplierLicensePlate varchar(50)
 		)
 
 		set @TocMsg = 'Create receiver object'
@@ -441,6 +450,7 @@ begin
 			)
 			output
 				Inserted.ReceiverObjectID
+			,	Inserted.SupplierLicensePlate
 			into
 				@newReceiverObjects
 			select
@@ -579,30 +589,43 @@ begin
 			update
 				sno
 			set
-				sno.ObjectSerial = sn.ObjectSerial
-			,	sno.Status = 1
+				sno.Status = ro.Status
 			from
 				SUPPLIEREDI.ShipNoticeObjects sno
 				join @ShipNotices sn
+					join @newReceiverObjects nro
+						join dbo.ReceiverObjects ro
+							on ro.ReceiverObjectID = nro.ReceiverObjectID
+						on nro.SupplierLicensePlate = sn.ShipFromCode + '_' + sn.SupplierSerial
 					on sn.RawDocumentGUID = sno.RawDocumentGUID
 					and sn.SNORowID = sno.RowID
 			
 			update
 				snl
 			set
-				snl.Status = 1
+				snl.Status = rl.Status
 			from
 				SUPPLIEREDI.ShipNoticeLines snl
 				join @ShipNotices sn
+					join @newReceiverLines nrl
+						join dbo.ReceiverLines rl
+							join dbo.ReceiverHeaders rh
+								on rh.ReceiverID = rl.ReceiverID
+							on rl.ReceiverLineID = nrl.ReceiverLineId
+						on nrl.PONumber = sn.PurchaseOrderNumber
+						and nrl.PartCode = sn.PartCode
+						and rh.SupplierASNGuid = sn.RawDocumentGUID
 					on sn.SNLRowID = snl.RowID
 
 			update
 				sn
 			set
-				sn.Status = 1
+				sn.Status = rh.Status
 			from
 				SUPPLIEREDI.ShipNotices sn
 				join @ShipNotices sn2
+					join dbo.ReceiverHeaders rh
+						on rh.SupplierASNGuid = sn2.RawDocumentGUID
 					on sn2.SNRowID = sn.RowID
 			
 			--- <TOC>
@@ -693,6 +716,10 @@ begin
 			rollback transaction @ProcName
 			execute FXSYS.usp_LogError
 		end
+
+		execute FXSYS.usp_EmailError
+			@Recipients = 'edialerts@aztecmfgcorp.com'
+		,	@CopyRecipients = 'rjohnson@aztecmfgcorp.com;estimpson@fore-thought.com'
 
 		raiserror(@errorMessage, @errorSeverity, @errorState)
 	end catch

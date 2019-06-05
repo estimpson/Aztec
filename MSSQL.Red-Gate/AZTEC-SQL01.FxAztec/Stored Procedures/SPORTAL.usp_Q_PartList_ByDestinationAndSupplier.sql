@@ -47,4 +47,7 @@ begin
 	
 	end catch
 end
+
+GO
+GRANT EXECUTE ON  [SPORTAL].[usp_Q_PartList_ByDestinationAndSupplier] TO [SupplierPortal]
 GO

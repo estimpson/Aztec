@@ -46,4 +46,11 @@ begin
 
 	end catch
 end
+
+GO
+GRANT EXECUTE ON  [SPORTAL].[usp_Q_DestinationList_BySupplier] TO [Aztec]
+GO
+GRANT EXECUTE ON  [SPORTAL].[usp_Q_DestinationList_BySupplier] TO [AZTEC\FxSP_IIS]
+GO
+GRANT EXECUTE ON  [SPORTAL].[usp_Q_DestinationList_BySupplier] TO [SupplierPortal]
 GO

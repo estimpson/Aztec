@@ -257,6 +257,45 @@ if	@RowCount != 1 begin
 END
 --- </Update>
 
+
+-- 05/23/2019 - delete object if it has been material issued down to zero quantity - per Rick J.
+if ( (
+		select
+			o.quantity
+		from
+			dbo.object o
+		where
+			o.serial = @Serial ) = 0 ) begin
+
+	/*	Delete zero-ed out object. (d1) */
+	--- <Delete rows="1">
+	set	@TableName = 'dbo.object'
+
+	delete from
+		dbo.object
+	where
+		serial = @Serial
+
+	select
+	@Error = @@Error,
+	@RowCount = @@Rowcount
+
+	if	@Error != 0 begin
+		set	@Result = 999999
+		raiserror ('Error deleting from table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
+		rollback tran @ProcName
+		return
+	end
+	if	@RowCount != 1 begin
+		set	@Result = 999999
+		raiserror ('Error deleting from %s in procedure %s.  Rows attempted to delete: %d.  Expected rows: 1.', 16, 1, @TableName, @ProcName, @RowCount)
+		rollback tran @ProcName
+		return
+	end
+--- </Delete>
+end
+
+
 /*	Record part on hand. (dbo.usp_InventoryControl_UpdatePartOnHand) */
 declare
 	@partCode varchar(25) =

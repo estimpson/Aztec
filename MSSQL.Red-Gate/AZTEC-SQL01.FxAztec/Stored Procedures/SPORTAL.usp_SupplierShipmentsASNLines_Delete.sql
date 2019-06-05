@@ -2,10 +2,9 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_NULLS ON
 GO
-create procedure [SPORTAL].[usp_SupplierShipmentsASNLines_Delete]
-	@SupplierShipmentsASNRowID int	
-,	@Part varchar(25)
-,	@Quantity decimal(20,6)
+CREATE procedure [SPORTAL].[usp_SupplierShipmentsASNLines_Delete]
+	@SupplierShipmentsASNRowID int
+,	@LineID int	
 as
 begin
 	set nocount on
@@ -17,8 +16,7 @@ begin
 			SPORTAL.SupplierShipmentsASNLines
 		where
 			SupplierShipmentsASNRowID = @SupplierShipmentsASNRowID
-			and Part = @Part
-			and @Quantity = @Quantity;
+			and RowID = @LineID
 
 		commit transaction
 	end try
@@ -30,4 +28,6 @@ begin
 	end catch
 
 end
+GO
+GRANT EXECUTE ON  [SPORTAL].[usp_SupplierShipmentsASNLines_Delete] TO [SupplierPortal]
 GO

@@ -11,7 +11,8 @@ CREATE TABLE [SPORTAL].[SupplierShipmentsASN]
 [RowCreateUser] [sys].[sysname] NOT NULL CONSTRAINT [DF__SupplierS__RowCr__5F560ABC] DEFAULT (suser_name()),
 [RowModifiedDT] [datetime2] NOT NULL CONSTRAINT [DF__SupplierS__RowMo__604A2EF5] DEFAULT (sysdatetime()),
 [RowModifiedUser] [sys].[sysname] NOT NULL CONSTRAINT [DF__SupplierS__RowMo__613E532E] DEFAULT (suser_name()),
-[RowGUID] [uniqueidentifier] NULL CONSTRAINT [DF__SupplierS__RowGU__17DA5B01] DEFAULT (newid())
+[RowGUID] [uniqueidentifier] NULL CONSTRAINT [DF__SupplierS__RowGU__17DA5B01] DEFAULT (newid()),
+[ShippedDate] [datetime2] NULL CONSTRAINT [DF__SupplierS__Shipp__17A550D7] DEFAULT (sysdatetime())
 ) ON [PRIMARY]
 GO
 ALTER TABLE [SPORTAL].[SupplierShipmentsASN] ADD CONSTRAINT [PK__Supplier__FFEE74512E482776] PRIMARY KEY CLUSTERED  ([RowID]) ON [PRIMARY]

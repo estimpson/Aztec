@@ -429,4 +429,7 @@ go
 Results {
 }
 */
+
+GO
+GRANT EXECUTE ON  [SPORTAL].[usp_SupplierShipments_ProcessASN] TO [SupplierPortal]
 GO
