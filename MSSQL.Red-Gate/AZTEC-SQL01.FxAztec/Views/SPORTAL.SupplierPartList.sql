@@ -47,6 +47,7 @@ from
 							where
 								ph.blanket_part = p.part
 								and ph.vendor_code = sl.SupplierCode
+								and ph.status = 'A'
 						) then 1
 					else 0
 				end
@@ -64,5 +65,6 @@ from
 		where
 			p.class != 'O'
 	) spl
+
 
 GO
