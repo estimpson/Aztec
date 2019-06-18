@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create procedure [dbo].[usp_ReceivingDock_CreateReceiverLines_fromOutPReceiverHeader]
+CREATE procedure [dbo].[usp_ReceivingDock_CreateReceiverLines_fromOutPReceiverHeader]
 	@ReceiverID int,
 	@Result int output
 as
@@ -547,7 +547,6 @@ drop table #ReceiverLines
 --		Create new receiver objects.
 --- <Insert>
 set	@TableName = 'dbo.ReceiverLines'
-
 insert
 	dbo.ReceiverObjects
 (	ReceiverLineID
@@ -577,7 +576,7 @@ select
 		)
 	,	1
 	)
-,	rl.Status
+,	Status = 0
 ,	rl.PONumber
 ,	rl.POLineNo
 ,	rl.POLineDueDate
@@ -621,4 +620,5 @@ end
 set	@Result = 0
 return	@Result
 --- </Return>
+
 GO
