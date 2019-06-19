@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<SqlWorkbenchSqlProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="FxAztec.SUPPLIEREDI">
+  <Items>
+    <LogicalFolder Name="Connections" Type="2" Sorted="true">
+      <Items>
+        <ConnectionNode Name="aztec:estimpson">
+          <Created>2019-05-10T15:31:18.5421424-04:00</Created>
+          <Type>SQL</Type>
+          <Server>aztec</Server>
+          <UserName>estimpson</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB />
+          <LoginTimeout>30</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Queries" Type="0" Sorted="true">
+      <Items>
+        <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_Process.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_Process.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_ProcessReceiver_byReceiverObjectList.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_ProcessReceiver_byReceiverObjectList.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_Purchasing_AddReceipt_byReceiverObjectList.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_Purchasing_AddReceipt_byReceiverObjectList.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_ReceivingDock_Backflush_byReceiverObjectList.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_ReceivingDock_Backflush_byReceiverObjectList.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Schema.FxAztec.SUPPLIEREDI.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Schema.FxAztec.SUPPLIEREDI.sql</FullPath>
+        </FileNode>
+        <FileNode Name="SQLQuery1.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>SQLQuery1.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.FxAztec.SUPPLIEREDI.ShipNoticeLines.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Table.FxAztec.SUPPLIEREDI.ShipNoticeLines.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.FxAztec.SUPPLIEREDI.ShipNoticeObjects.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Table.FxAztec.SUPPLIEREDI.ShipNoticeObjects.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.FxAztec.SUPPLIEREDI.ShipNotices.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Table.FxAztec.SUPPLIEREDI.ShipNotices.sql</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Miscellaneous" Type="3" Sorted="true">
+      <Items />
+    </LogicalFolder>
+  </Items>
+</SqlWorkbenchSqlProject>

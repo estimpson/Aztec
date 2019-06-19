@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# SQL Server Management Studio Solution File, Format Version 11.00
+Microsoft Visual Studio Solution File, Format Version 12.00
+# SQL Server Management Studio Solution File, Format Version 14.00
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "AztecMES", "AztecMES\AztecMES.ssmssqlproj", "{CC8EF1FE-E88F-4543-9CF5-B412B5892A71}"
 EndProject
 Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "AztecCycleCount", "AztecCycleCount\AztecCycleCount.ssmssqlproj", "{8DD40CE7-395D-43E7-A5FE-9276DE9F0C45}"
@@ -73,6 +75,8 @@ Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.RFR", "FxAztec.RFR\
 EndProject
 Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.FXSYS", "FxAztec.FXSYS\FxAztec.FXSYS.ssmssqlproj", "{004801E8-F6E4-42BE-AC83-17DF4BF54C18}"
 EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.SUPPLIEREDI", "FxAztec.SUPPLIEREDI\FxAztec.SUPPLIEREDI.ssmssqlproj", "{C54BFCA6-ED47-4EF0-A369-01AFBF496E41}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Default|Default = Default|Default
@@ -112,9 +116,10 @@ Global
 		{1679D364-6965-43A6-AFAC-EC484E8853A2}.Default|Default.ActiveCfg = Default
 		{D2AD2586-AB16-4A5E-AF6D-CE8ED928A3B8}.Default|Default.ActiveCfg = Default
 		{4C3F942E-888B-4C81-92EE-9C2D659342CB}.Default|Default.ActiveCfg = Default
-		{0D6A1D95-04AE-47A9-AA70-842521CD1A88}.Default|Default.ActiveCfg = Default
 		{1F492CE1-D7DF-46FC-9C17-8F91C5F4A085}.Default|Default.ActiveCfg = Default
 		{004801E8-F6E4-42BE-AC83-17DF4BF54C18}.Default|Default.ActiveCfg = Default
+		{59634E51-7593-4091-AE3E-762C28EF7028}.Default|Default.ActiveCfg = Default
+		{C54BFCA6-ED47-4EF0-A369-01AFBF496E41}.Default|Default.ActiveCfg = Default
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

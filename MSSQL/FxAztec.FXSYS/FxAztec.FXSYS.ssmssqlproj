@@ -19,16 +19,22 @@
     </LogicalFolder>
     <LogicalFolder Name="Queries" Type="0" Sorted="true">
       <Items>
-        <FileNode Name="Procedure.FxAztec.FXSYS.usp_LogError.sql">
+        <FileNode Name="Procedure.FxAztec.FXSYS.usp_EmailError.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxAztec.FXSYS.usp_EmailError.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.FxAztec.FXSYS.usp_LogError.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
           <FullPath>Procedure.FxAztec.FXSYS.usp_LogError.sql</FullPath>
         </FileNode>
         <FileNode Name="Procedure.FxAztec.FXSYS.usp_PrintError.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
-          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
           <FullPath>Procedure.FxAztec.FXSYS.usp_PrintError.sql</FullPath>
         </FileNode>
         <FileNode Name="Schema.FxAztec.FXSYS.sql">
@@ -38,10 +44,16 @@
           <FullPath>Schema.FxAztec.FXSYS.sql</FullPath>
         </FileNode>
         <FileNode Name="Table.FxAztec.FXSYS.ErrorLog.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Table.FxAztec.FXSYS.ErrorLog.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.FxAztec.FXSYS.SPCalls_dbo_GetObjectBySerial.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
-          <FullPath>Table.FxAztec.FXSYS.ErrorLog.sql</FullPath>
+          <FullPath>View.FxAztec.FXSYS.SPCalls_dbo_GetObjectBySerial.sql</FullPath>
         </FileNode>
       </Items>
     </LogicalFolder>

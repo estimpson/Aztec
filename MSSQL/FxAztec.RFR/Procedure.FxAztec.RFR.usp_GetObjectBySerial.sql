@@ -172,6 +172,7 @@ begin
 						and d.vendor = pd.vendor_code
 			where
 				pd.balance > 0
+				and pd.part_number = @partCode
 			order by
 				pd.date_due asc
 			,	pd.po_number desc
