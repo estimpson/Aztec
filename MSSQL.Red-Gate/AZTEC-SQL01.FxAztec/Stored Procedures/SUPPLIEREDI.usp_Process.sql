@@ -41,7 +41,8 @@ begin
 	,	InArguments
 	)
 	select
-		USP_Name = user_name(objectproperty(@@procid, 'OwnerId')) + '.' + object_name(@@procid)
+		--USP_Name = user_name(objectproperty(@@procid, 'OwnerId')) + '.' + object_name(@@procid)
+		USP_Name = 'SUPPLIEREDI.usp_Process'
 	,	BeginDT = getdate()
 	,	InArguments = convert
 			(	varchar(max)
@@ -96,6 +97,16 @@ begin
 		--- </Tran>
 
 		--- <Body>
+		/*	Create structure for email report. */
+		if	object_id('tempdb..#emailReport') is null begin
+			create table
+				#emailReport
+			(	RowID int not null IDENTITY(1, 1) primary key
+			,	ShortStatus varchar(15)
+			,	Description varchar(255)
+			)
+		end
+
 		/*	Get data for all Ship Notices that are ready to process. */
 		set @TocMsg = 'Get a list of Ship Notices that are ready to process'
 		begin
@@ -187,6 +198,181 @@ begin
 				and snl.PartCode is not null
 				and sno.ObjectQuantity is not null
 
+			insert
+				#emailReport
+			(	ShortStatus
+			,	Description
+			)
+			select
+				ShortStatus = 'N/A'
+			,	Description = 'Process ' +
+					case
+						when summary.FileCount = 1 then '1 file'
+						else convert(varchar(3), summary.FileCount) + ' files'
+					end
+			from
+				(	select
+						FileCount = count(distinct sn.RawDocumentGUID)
+					from
+						SUPPLIEREDI.ShipNotices sn
+					where
+						sn.Status = 0
+				) summary
+
+			insert
+				#emailReport
+			(	ShortStatus
+			,	Description
+			)
+			select
+				ShortStatus = 'N/A'
+			,	Description = 'Contains ' +
+					case
+						when summary.FileCount = 1 then '1 file'
+						else convert(varchar(3), summary.FileCount) + ' files'
+					end +
+					' from ' + summary.ShipFromCode + ' to ' + summary.ShipToCode
+			from
+				(	select
+						sn.ShipFromCode
+					,	sn.ShipToCode
+					,	FileCount = count(distinct sn.RawDocumentGUID)
+					from
+						SUPPLIEREDI.ShipNotices sn
+					where
+						sn.Status = 0
+					group by
+						sn.ShipFromCode
+					,	sn.ShipToCode
+				) summary
+
+			insert
+				#emailReport
+			(	ShortStatus
+			,	Description
+			)
+			select
+				ShortStatus = 'FAILURE'
+			,	Description = 'Contains ' +
+					case
+						when summary.FileCount = 1 then '1 file'
+						else convert(varchar(3), summary.FileCount) + ' files'
+					end +
+					' from ' + summary.ShipFromCode + ' to ' + summary.ShipToCode + ' with missing line quantity. '
+			from
+				(	select
+						sn.ShipFromCode
+					,	sn.ShipToCode
+					,	FileCount = count(distinct sn.RawDocumentGUID)
+					from
+						SUPPLIEREDI.ShipNotices sn with (tablockx)
+						join SUPPLIEREDI.ShipNoticeLines snl with (tablockx)
+							on snl.RawDocumentGUID = sn.RawDocumentGUID
+						join SUPPLIEREDI.ShipNoticeObjects sno with (tablockx)
+							on sno.RawDocumentGUID = sn.RawDocumentGUID
+							and sno.SupplierPart = snl.SupplierPart
+					where
+						sn.Status = 0
+						and snl.Quantity is null
+					group by
+						sn.ShipFromCode
+					,	sn.ShipToCode
+				) summary
+			union all
+			select
+				ShortStatus = 'FAILURE'
+			,	Description = 'Contains ' +
+					case
+						when summary.FileCount = 1 then '1 file'
+						else convert(varchar(3), summary.FileCount) + ' files'
+					end +
+					' from ' + summary.ShipFromCode + ' to ' + summary.ShipToCode + ' with missing purchase order number. '
+			from
+				(	select
+						sn.ShipFromCode
+					,	sn.ShipToCode
+					,	FileCount = count(distinct sn.RawDocumentGUID)
+					from
+						SUPPLIEREDI.ShipNotices sn with (tablockx)
+						join SUPPLIEREDI.ShipNoticeLines snl with (tablockx)
+							on snl.RawDocumentGUID = sn.RawDocumentGUID
+						join SUPPLIEREDI.ShipNoticeObjects sno with (tablockx)
+							on sno.RawDocumentGUID = sn.RawDocumentGUID
+							and sno.SupplierPart = snl.SupplierPart
+					where
+						sn.Status = 0
+						and snl.PurchaseOrderNumber is null
+					group by
+						sn.ShipFromCode
+					,	sn.ShipToCode
+				) summary
+			union all
+			select
+				ShortStatus = 'FAILURE'
+			,	Description = 'Contains ' +
+					case
+						when summary.FileCount = 1 then '1 file'
+						else convert(varchar(3), summary.FileCount) + ' files'
+					end +
+					' from ' + summary.ShipFromCode + ' to ' + summary.ShipToCode + ' with missing part number. '
+			from
+				(	select
+						sn.ShipFromCode
+					,	sn.ShipToCode
+					,	FileCount = count(distinct sn.RawDocumentGUID)
+					from
+						SUPPLIEREDI.ShipNotices sn with (tablockx)
+						join SUPPLIEREDI.ShipNoticeLines snl with (tablockx)
+							on snl.RawDocumentGUID = sn.RawDocumentGUID
+						join SUPPLIEREDI.ShipNoticeObjects sno with (tablockx)
+							on sno.RawDocumentGUID = sn.RawDocumentGUID
+							and sno.SupplierPart = snl.SupplierPart
+					where
+						sn.Status = 0
+						and snl.PartCode is null
+					group by
+						sn.ShipFromCode
+					,	sn.ShipToCode
+				) summary
+			union all
+			select
+				ShortStatus = 'FAILURE'
+			,	Description = 'Contains ' +
+					case
+						when summary.FileCount = 1 then '1 file'
+						else convert(varchar(3), summary.FileCount) + ' files'
+					end +
+					' from ' + summary.ShipFromCode + ' to ' + summary.ShipToCode + ' with missing object quantity. '
+			from
+				(	select
+						sn.ShipFromCode
+					,	sn.ShipToCode
+					,	FileCount = count(distinct sn.RawDocumentGUID)
+					from
+						SUPPLIEREDI.ShipNotices sn with (tablockx)
+						join SUPPLIEREDI.ShipNoticeLines snl with (tablockx)
+							on snl.RawDocumentGUID = sn.RawDocumentGUID
+						join SUPPLIEREDI.ShipNoticeObjects sno with (tablockx)
+							on sno.RawDocumentGUID = sn.RawDocumentGUID
+							and sno.SupplierPart = snl.SupplierPart
+					where
+						sn.Status = 0
+						and sno.ObjectQuantity is null
+					group by
+						sn.ShipFromCode
+					,	sn.ShipToCode
+				) summary
+
+			if	not exists
+				(	select
+		  				*
+		  			from
+		  				@ShipNotices sn
+		  		) begin
+				goto done
+			end
+
+
 			--- <TOC>
 			if	@Debug & 0x01 = 0x01 begin
 				set @TocDT = getdate()
@@ -203,14 +389,6 @@ begin
 			set @DebugMsg += coalesce(char(13) + char(10) + @cDebugMsg, N'')
 			set @cDebugMsg = null
 			--- </TOC>
-		end
-		if	not exists
-			(	select
-		  			*
-		  		from
-		  			@ShipNotices sn
-		  	) begin
-			goto done
 		end
 
 		/*	Create receiver headers. */
@@ -229,7 +407,8 @@ begin
 
 			insert
 				dbo.ReceiverHeaders
-			(	Type
+			(	ReceiverNumber
+			,	Type
 			,	Status
 			,	ShipFrom
 			,	Plant
@@ -254,7 +433,8 @@ begin
 			into
 				@newReceiverHeaders
 			select distinct
-				Type =
+				ReceiverNumber = 0
+			,	Type =
 					case
 						when v.code is null then 1  -- (select dbo.udf_TypeValue ('ReceiverHeaders', 'Purchase Order'))
 						else 3 -- (select dbo.udf_TypeValue ('ReceiverHeaders', 'Outside Process'))
@@ -647,6 +827,45 @@ begin
 		end
 		
 		/*	Send email report.*/
+		insert
+			#emailReport
+		(	ShortStatus
+		,	Description
+		)
+		select
+			ShortStatus = 'FAILURE'
+		,	Description = 'Contains ' +
+				case
+					when summary.FileCount = 1 then '1 file'
+					else convert(varchar(3), summary.FileCount) + ' files'
+				end +
+				' from ' + summary.ShipFromCode + ' to ' + summary.ShipToCode + ' with invalid PO ' + convert(varchar(12), summary.PurchaseOrderNumber) + ' and/or part ' + summary.PartCode + ' combination or no releases. '
+		from
+			(	select
+					sn.ShipFromCode
+				,	sn.ShipToCode
+				,	sn.PurchaseOrderNumber
+				,	sn.PartCode
+				,	FileCount = count(distinct sn.RawDocumentGUID)
+				from
+					@ShipNotices sn
+				where
+					not exists
+						(	select
+								*
+							from
+								dbo.po_detail pd
+							where
+								pd.po_number = sn.PurchaseOrderNumber
+								and pd.part_number = sn.PartCode
+								and pd.balance > 0
+						)
+				group by
+					sn.ShipFromCode
+				,	sn.ShipToCode
+				,	sn.PurchaseOrderNumber
+				,	sn.PartCode
+			) summary
 		
 		--- </Body>
 

@@ -4,6 +4,7 @@ SET ANSI_NULLS ON
 GO
 
 
+
 CREATE view [SPORTAL].[SupplierPartList]
 as
 select
@@ -12,6 +13,7 @@ select
 ,	spl.SupplierPartCode
 ,	Status =
 		case 
+			when spl.SupplierCode = 'MID0010' and spl.InternalPartCode like '2488%' then -1
 			when spl.SupplierCode = 'MID0010' and spl.SupplierPartCode > '' and spl.InternalPartCount > 0 and HasBlanketPO = 1 then 0
 			when spl.SupplierPartCode > '' and spl.InternalPartCount = 1 and HasBlanketPO = 1 then 0 
 			else -1 

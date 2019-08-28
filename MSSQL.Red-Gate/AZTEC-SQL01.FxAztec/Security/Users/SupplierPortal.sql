@@ -1,0 +1,2 @@
+CREATE USER [SupplierPortal] FOR LOGIN [SupplierPortal] WITH DEFAULT_SCHEMA=[SPORTAL]
+GO

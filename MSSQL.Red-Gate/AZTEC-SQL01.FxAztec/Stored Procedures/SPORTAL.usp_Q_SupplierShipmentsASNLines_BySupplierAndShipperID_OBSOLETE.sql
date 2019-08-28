@@ -2,7 +2,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_NULLS ON
 GO
-CREATE procedure [SPORTAL].[usp_Q_SupplierShipmentsASNLines_BySupplierAndShipperID]
+CREATE procedure [SPORTAL].[usp_Q_SupplierShipmentsASNLines_BySupplierAndShipperID_OBSOLETE]
 	@SupplierCode varchar(10)	
 ,	@ShipperID varchar(50)
 as

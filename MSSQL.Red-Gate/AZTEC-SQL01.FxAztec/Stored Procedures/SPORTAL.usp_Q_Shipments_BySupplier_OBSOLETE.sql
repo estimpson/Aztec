@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create procedure [SPORTAL].[usp_Q_Shipments_BySupplier]
+create procedure [SPORTAL].[usp_Q_Shipments_BySupplier_OBSOLETE]
 	@SupplierCode varchar(20)
 ,	@TranDT datetime = null out
 ,	@Result integer = null out
@@ -122,5 +122,5 @@ Results {
 }
 */
 GO
-GRANT EXECUTE ON  [SPORTAL].[usp_Q_Shipments_BySupplier] TO [SupplierPortal]
+GRANT EXECUTE ON  [SPORTAL].[usp_Q_Shipments_BySupplier_OBSOLETE] TO [SupplierPortal]
 GO

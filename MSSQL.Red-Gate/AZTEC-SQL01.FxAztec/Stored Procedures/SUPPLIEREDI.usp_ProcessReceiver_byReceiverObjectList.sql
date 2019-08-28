@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create procedure [SUPPLIEREDI].[usp_ProcessReceiver_byReceiverObjectList]
+CREATE procedure [SUPPLIEREDI].[usp_ProcessReceiver_byReceiverObjectList]
 	@User varchar(5)
 ,	@ReceiverID int = null -- Pass working table or receiver ID or receiver object ID
 ,	@ReceiverObjectID int = null -- see @ReceiverID note
@@ -45,7 +45,8 @@ begin
 		,	InArguments
 		)
 		select
-			USP_Name = user_name(objectproperty(@@procid, 'OwnerId')) + '.' + object_name(@@procid)
+			--USP_Name = user_name(objectproperty(@@procid, 'OwnerId')) + '.' + object_name(@@procid)
+			USP_Name = 'SUPPLIEREDI.usp_ProcessReceiver_byReceiverObjectList'
 		,	BeginDT = getdate()
 		,	InArguments = convert
 				(	varchar(max)
@@ -70,7 +71,8 @@ begin
 		,	InArguments
 		)
 		select
-			USP_Name = user_name(objectproperty(@@procid, 'OwnerId')) + '.' + object_name(@@procid)
+			--USP_Name = user_name(objectproperty(@@procid, 'OwnerId')) + '.' + object_name(@@procid)
+			USP_Name = 'SUPPLIEREDI.usp_ProcessReceiver_byReceiverObjectList'
 		,	BeginDT = getdate()
 		,	InArguments = convert
 				(	varchar(max)

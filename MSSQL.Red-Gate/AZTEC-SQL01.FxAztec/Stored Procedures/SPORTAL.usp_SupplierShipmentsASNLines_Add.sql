@@ -8,6 +8,14 @@ CREATE procedure [SPORTAL].[usp_SupplierShipmentsASNLines_Add]
 ,	@Quantity decimal(20,6)
 as
 begin
+
+	exec FxAztec_Temp.SPORTAL.usp_SupplierShipmentsASNLines_Add
+		@SupplierShipmentsASNRowID = @SupplierShipmentsASNRowID
+	,	@Part = @Part
+	,	@Quantity = @Quantity
+
+	return
+
 	set nocount on
 
 	declare 

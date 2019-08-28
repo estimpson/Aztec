@@ -7,6 +7,13 @@ CREATE procedure [SPORTAL].[usp_SupplierShipmentsASNLines_Delete]
 ,	@LineID int	
 as
 begin
+
+	exec FxAztec_Temp.SPORTAL.usp_SupplierShipmentsASNLines_Delete
+		@SupplierShipmentsASNRowID = @SupplierShipmentsASNRowID
+	,	@LineID = @LineID
+
+	return
+
 	set nocount on
 
 	begin try

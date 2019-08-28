@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create procedure [SUPPLIEREDI].[usp_ReceivingDock_Backflush_byReceiverObjectList]
+CREATE procedure [SUPPLIEREDI].[usp_ReceivingDock_Backflush_byReceiverObjectList]
 	@User varchar(5)
 ,	@ReceiverObjectID int = null -- Specify this or a list using #receiverObjectList
 ,	@TranDT datetime = null out
@@ -44,7 +44,8 @@ begin
 		,	InArguments
 		)
 		select
-			USP_Name = user_name(objectproperty(@@procid, 'OwnerId')) + '.' + object_name(@@procid)
+			--USP_Name = user_name(objectproperty(@@procid, 'OwnerId')) + '.' + object_name(@@procid)
+			USP_Name = 'SUPPLIEREDI.usp_ReceivingDock_Backflush_byReceiverObjectList'
 		,	BeginDT = getdate()
 		,	InArguments = convert
 				(	varchar(max)
@@ -68,7 +69,8 @@ begin
 		,	InArguments
 		)
 		select
-			USP_Name = user_name(objectproperty(@@procid, 'OwnerId')) + '.' + object_name(@@procid)
+			--USP_Name = user_name(objectproperty(@@procid, 'OwnerId')) + '.' + object_name(@@procid)
+			USP_Name = 'SUPPLIEREDI.usp_ReceivingDock_Backflush_byReceiverObjectList'
 		,	BeginDT = getdate()
 		,	InArguments = convert
 				(	varchar(max)
