@@ -135,4 +135,7 @@ go
 Results {
 }
 */
+
+GO
+GRANT EXECUTE ON  [SPORTAL].[usp_Q_PartList_BySupplierAndDestination] TO [SupplierPortal]
 GO
