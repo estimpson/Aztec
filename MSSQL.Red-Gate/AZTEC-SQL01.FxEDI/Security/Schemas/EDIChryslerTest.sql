@@ -1,0 +1,3 @@
+CREATE SCHEMA [EDIChryslerTest]
+AUTHORIZATION [dbo]
+GO

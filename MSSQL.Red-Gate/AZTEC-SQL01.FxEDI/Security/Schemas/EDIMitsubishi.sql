@@ -1,0 +1,3 @@
+CREATE SCHEMA [EDIMitsubishi]
+AUTHORIZATION [dbo]
+GO
