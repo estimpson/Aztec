@@ -49,7 +49,8 @@ begin
 	,	InArguments
 	)
 	select
-		USP_Name = user_name(objectproperty(@@procid, 'OwnerId')) + '.' + object_name(@@procid)
+		--USP_Name = user_name(objectproperty(@@procid, 'OwnerId')) + '.' + object_name(@@procid)
+		USP_Name = 'SUPPLIEREDI.usp_Process'
 	,	BeginDT = getdate()
 	,	InArguments = convert
 			(	varchar(max)
@@ -379,7 +380,6 @@ begin
 				goto done
 			end
 
-
 			--- <TOC>
 			if	@Debug & 0x01 = 0x01 begin
 				set @TocDT = getdate()
@@ -414,7 +414,8 @@ begin
 
 			insert
 				dbo.ReceiverHeaders
-			(	Type
+			(	ReceiverNumber
+			,	Type
 			,	Status
 			,	ShipFrom
 			,	Plant
@@ -439,7 +440,8 @@ begin
 			into
 				@newReceiverHeaders
 			select distinct
-				Type =
+				ReceiverNumber = 0
+			,	Type =
 					case
 						when v.code is null then 1  -- (select dbo.udf_TypeValue ('ReceiverHeaders', 'Purchase Order'))
 						else 3 -- (select dbo.udf_TypeValue ('ReceiverHeaders', 'Outside Process'))
@@ -832,47 +834,119 @@ begin
 		end
 		
 		/*	Send email report.*/
-
-		insert
-			#emailReport
-		(	ShortStatus
-		,	Description
-		)
-		select
-			ShortStatus = 'FAILURE'
-		,	Description = 'Contains ' +
-				case
-					when summary.FileCount = 1 then '1 file'
-					else convert(varchar(3), summary.FileCount) + ' files'
-				end +
-				' from ' + summary.ShipFromCode + ' to ' + summary.ShipToCode + ' with invalid PO ' + summary.PurchaseOrderNumber + ' and/or part ' + summary.PartCode + ' combination or no releases. '
-		from
-			(	select
-					sn.ShipFromCode
-				,	sn.ShipToCode
-				,	sn.PurchaseOrderNumber
-				,	sn.PartCode
-				,	FileCount = count(distinct sn.RawDocumentGUID)
-				from
-					@ShipNotices sn
-				where
-					not exists
-						(	select
-								*
-							from
-								dbo.po_detail pd
-							where
-								pd.po_number = sn.PurchaseOrderNumber
-								and pd.part_number = sn.PartCode
-								and pd.balance > 0
-						)
-				group by
-					sn.ShipFromCode
-				,	sn.ShipToCode
-				,	sn.PurchaseOrderNumber
-				,	sn.PartCode
-			) summary
+		set @TocMsg = 'Send email report'
+		begin
+			insert
+				#emailReport
+			(	ShortStatus
+			,	Description
+			)
+			select
+				ShortStatus = 'FAILURE'
+			,	Description = 'Contains ' +
+					case
+						when summary.FileCount = 1 then '1 file'
+						else convert(varchar(3), summary.FileCount) + ' files'
+					end +
+					' from ' + summary.ShipFromCode + ' to ' + summary.ShipToCode + ' with invalid PO ' + convert(varchar(12), summary.PurchaseOrderNumber) + ' and/or part ' + summary.PartCode + ' combination or no releases. '
+			from
+				(	select
+						sn.ShipFromCode
+					,	sn.ShipToCode
+					,	sn.PurchaseOrderNumber
+					,	sn.PartCode
+					,	FileCount = count(distinct sn.RawDocumentGUID)
+					from
+						@ShipNotices sn
+					where
+						not exists
+							(	select
+									*
+								from
+									dbo.po_detail pd
+								where
+									pd.po_number = sn.PurchaseOrderNumber
+									and pd.part_number = sn.PartCode
+									and pd.balance > 0
+							)
+					group by
+						sn.ShipFromCode
+					,	sn.ShipToCode
+					,	sn.PurchaseOrderNumber
+					,	sn.PartCode
+				) summary
 		
+				declare
+					@html nvarchar(max)
+			
+			--- <Call>	
+			set	@CallProcName = 'FT.usp_TableToHTML'
+			execute
+				@ProcReturn = FT.usp_TableToHTML
+					@TableName = '#emailReport'
+				,	@OrderBy = N'AlertType'
+				,	@Html = @html out
+				,	@IncludeRowNumber = 0
+				,	@CamelCaseHeaders = 1
+			
+			set	@Error = @@Error
+			if	@Error != 0 begin
+				set	@Result = 900501
+				RAISERROR ('Error encountered in %s.  Error: %d while calling %s', 16, 1, @ProcName, @Error, @CallProcName)
+			end
+			if	@ProcReturn != 0 begin
+				set	@Result = 900502
+				RAISERROR ('Error encountered in %s.  ProcReturn: %d while calling %s', 16, 1, @ProcName, @ProcReturn, @CallProcName)
+			end
+			if	@ProcResult != 0 begin
+				set	@Result = 900502
+				RAISERROR ('Error encountered in %s.  ProcResult: %d while calling %s', 16, 1, @ProcName, @ProcResult, @CallProcName)
+			end
+			--- </Call>
+
+			if	@Debug & 0x01 = 0x01 begin
+				exec FXSYS.usp_LongPrint @html
+			end
+
+			declare
+				@emailHeader nvarchar(max) =
+					case
+						when db_name(db_id()) = 'FxAztec' then ''
+						else 'TEST DB: '
+					end + N'Procces ASN Report from Fx Supplier Portal'
+
+			declare
+				@emailBody nvarchar(max) = N'<H1>' + @emailHeader + N'</H1>' + @html
+			,	@profileName sysname = 'fxAlerts'
+			,	@recipients sysname = 'estimpson@fore-thought.com'
+			,	@copyRecipients sysname
+
+			exec msdb.dbo.sp_send_dbmail
+				@profile_name = @profileName
+			,	@recipients = @recipients
+			,	@copy_recipients = @copyRecipients
+			,	@subject = @emailHeader
+			,	@body = @emailBody
+			,	@body_format = 'HTML'
+			,	@importance = 'HIGH'
+
+			--- <TOC>
+			if	@Debug & 0x01 = 0x01 begin
+				set @TocDT = getdate()
+				set @TimeDiff =
+					case
+						when datediff(day, @TocDT - @TicDT, convert(datetime, '1900-01-01')) > 1
+							then convert(varchar, datediff(day, @TocDT - @TicDT, convert(datetime, '1900-01-01'))) + ' day(s) ' + convert(char(12), @TocDT - @TicDT, 114)
+						else
+							convert(varchar(12), @TocDT - @TicDT, 114)
+					end
+				set @DebugMsg = @DebugMsg + char(13) + char(10) + replicate(' -', (@Debug & 0x3E) / 2) + @TocMsg + ': ' + @TimeDiff
+				set @TicDT = @TocDT
+			end
+			set @DebugMsg += coalesce(char(13) + char(10) + @cDebugMsg, N'')
+			set @cDebugMsg = null
+			--- </TOC>
+		end
 		--- </Body>
 
 		done:

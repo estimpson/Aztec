@@ -3,6 +3,18 @@
   <Items>
     <LogicalFolder Name="Connections" Type="2" Sorted="true">
       <Items>
+        <ConnectionNode Name="aztec:estimpson">
+          <Created>2019-09-03T16:35:25.4943413-04:00</Created>
+          <Type>SQL</Type>
+          <Server>aztec</Server>
+          <UserName>estimpson</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB />
+          <LoginTimeout>30</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
         <ConnectionNode Name="aztecsql2.aztecmfgcorp.local\fx:estimpson">
           <Created>2014-09-25T15:58:56.072925-04:00</Created>
           <Type>SQL</Type>
@@ -26,8 +38,8 @@
           <FullPath>Procedure.Fx.dbo.dbo.usp_ReceivingDock_CreateReceiverLines_fromPOReceiverHeader.sql</FullPath>
         </FileNode>
         <FileNode Name="Procedure.Fx.dbo.usp_ReceivingDock_Backflush.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:estimpson</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Procedure.Fx.dbo.usp_ReceivingDock_Backflush.sql</FullPath>
         </FileNode>
@@ -42,6 +54,12 @@
           <AssociatedConnSrvName />
           <AssociatedConnUserName />
           <FullPath>Procedure.Fx.dbo.usp_ReceivingDock_UndoReceiveObject_againstReceiverObject.sql</FullPath>
+        </FileNode>
+        <FileNode Name="TableFunction.FxAztec.dbo.fn_ReceivingDock_GetBackflushDetails.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>TableFunction.FxAztec.dbo.fn_ReceivingDock_GetBackflushDetails.sql</FullPath>
         </FileNode>
       </Items>
     </LogicalFolder>

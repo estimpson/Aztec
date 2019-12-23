@@ -3,8 +3,8 @@
 Create Procedure.Fx.dbo.usp_ReceivingDock_Backflush.sql
 */
 
---use Fx
---go
+use FxAztec
+go
 
 if	objectproperty(object_id('dbo.usp_ReceivingDock_Backflush'), 'IsProcedure') = 1 begin
 	drop procedure dbo.usp_ReceivingDock_Backflush

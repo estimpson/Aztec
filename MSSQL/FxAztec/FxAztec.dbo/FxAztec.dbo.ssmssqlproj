@@ -19,11 +19,11 @@
     </LogicalFolder>
     <LogicalFolder Name="Queries" Type="0" Sorted="true">
       <Items>
-        <FileNode Name="SQLQuery1.sql">
+        <FileNode Name="Table.FxAztec.custom.MaterialCostChangeLog.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
-          <FullPath>SQLQuery1.sql</FullPath>
+          <FullPath>Table.FxAztec.custom.MaterialCostChangeLog.sql</FullPath>
         </FileNode>
         <FileNode Name="Table.FxAztec.dbo.CustomerEDI_GenerationLog.sql">
           <AssociatedConnectionMoniker />
@@ -42,6 +42,12 @@
           <AssociatedConnSrvName />
           <AssociatedConnUserName />
           <FullPath>TableIndex.FxAztec.dbo.audit_trail.ix_audit_trail_shipper.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Trigger.FxAztec.dbo.tr_part_standard_MaterialCostChangeLog_iud.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Trigger.FxAztec.dbo.tr_part_standard_MaterialCostChangeLog_iud.sql</FullPath>
         </FileNode>
         <FileNode Name="View.FxAztec.dbo.Shipping_DepartedShipperList(SYNONYM).sql">
           <AssociatedConnectionMoniker />

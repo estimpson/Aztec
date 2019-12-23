@@ -109,12 +109,6 @@
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Schema.FxEDI.EDI.sql</FullPath>
         </FileNode>
-        <FileNode Name="SQLQuery1.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:AZTEC-SQL01:False:estimpson</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>AZTEC-SQL01</AssociatedConnSrvName>
-          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
-          <FullPath>SQLQuery1.sql</FullPath>
-        </FileNode>
         <FileNode Name="Table.FxAztec.EDI_iConnect.ShipNoticeAcknowledgements.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>aztec</AssociatedConnSrvName>

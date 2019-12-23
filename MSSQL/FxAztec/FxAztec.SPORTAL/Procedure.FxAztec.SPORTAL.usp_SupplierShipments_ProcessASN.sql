@@ -20,6 +20,18 @@ create procedure SPORTAL.usp_SupplierShipments_ProcessASN
 ,	@DebugMsg varchar(max) = null out
 as
 begin
+	
+	if	db_name(db_id()) = 'FxAztec' begin
+		exec FxAztec_Temp.SPORTAL.usp_SupplierShipments_ProcessASN
+			@SupplierCode = @SupplierCode
+		,	@ShipperID = @ShipperID
+		,	@TranDT = @TranDT output	 -- datetime
+		,	@Result = @Result output	 -- int
+		,	@Debug = 0					 -- int
+		,	@DebugMsg = @DebugMsg output -- varchar(max)
+	
+		return
+	end
 
 	--set xact_abort on
 	set nocount on
@@ -51,7 +63,8 @@ begin
 	,	InArguments
 	)
 	select
-		USP_Name = user_name(objectproperty(@@procid, 'OwnerId')) + '.' + object_name(@@procid)
+		--USP_Name = user_name(objectproperty(@@procid, 'OwnerId')) + '.' + object_name(@@procid)
+		USP_Name = 'SPORTAL.usp_SupplierShipments_ProcessASN'
 	,	BeginDT = getdate()
 	,	InArguments = convert
 			(	varchar(max)
@@ -159,8 +172,8 @@ begin
 						from
 							dbo.po_header ph
 						where
-							ph.ship_to_destination = ssa.Destination
-							and ph.plant = ssa.SupplierCode
+							ph.plant = ssa.Destination
+							and ph.vendor_code = ssa.SupplierCode
 							and ph.blanket_part = ssal.Part
 						order by
 							ph.po_number desc
@@ -285,8 +298,8 @@ begin
 						from
 							dbo.po_header ph
 						where
-							ph.ship_to_destination = ssa.Destination
-							and ph.plant = ssa.SupplierCode
+							ph.plant = ssa.Destination
+							and ph.vendor_code = ssa.SupplierCode
 							and ph.blanket_part = ssal.Part
 						order by
 							ph.po_number desc

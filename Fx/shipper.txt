@@ -1,0 +1,77 @@
+SELECT shipper.id,   
+         shipper.aetc_number,   
+         shipper.ship_via,   
+         shipper.staged_objs,   
+         shipper.staged_pallets,
+         shipper.freight_type,   
+         customer.name,   
+         customer.address_1,   
+         customer.address_2,   
+         customer.address_3,   
+         customer.customer,   
+         destination.name,   
+         destination.address_1,   
+         destination.address_2,   
+         destination.address_3,   
+         destination.destination,   
+         edi_setups.supplier_code,   
+         destination_shipping.fob,   
+         destination_shipping.freight_type,   
+         shipper_detail.customer_po,   
+         shipper_detail.release_no,   
+         shipper_detail.note,   
+         shipper_detail.boxes_staged,   
+         order_header.customer_part,   
+         order_header.our_cum,   
+         part.cross_ref,   
+         part.name,   
+         part.part,   
+         order_header.order_date,   
+         shipper_detail.alternative_qty,   
+         order_header.the_cum,   
+         carrier.name,   
+         shipper.terms,   
+         parameters.company_name,   
+         parameters.address_1,   
+         parameters.address_2,   
+         parameters.address_3,   
+         shipper_detail.alternative_unit,   
+         shipper.gross_weight,
+			shipper.net_weight,   
+         parameters.phone_number,   
+         shipper.notes,   
+         shipper_detail.qty_required,   
+         order_header.package_type,   
+         shipper_detail.part,   
+         shipper_detail.customer_part,   
+         shipper_detail.qty_original,   
+         shipper_detail.qty_packed,   
+         shipper_detail.order_no,
+         shipper.shipping_dock,
+         order_header.plant,   
+	 plantname.address_1,   
+         plantname.address_2,   
+         plantname.address_3
+    FROM customer,   
+         destination,   
+         destination_shipping,   
+         edi_setups,   
+         order_header,   
+         part,   
+         shipper,   
+         shipper_detail,   
+         carrier,   
+         parameters,
+	 destination as plantname
+   WHERE ( shipper.destination = destination_shipping.destination ) and  
+         ( shipper.destination = edi_setups.destination ) and  
+         ( shipper.ship_via = carrier.scac ) and  
+         ( customer.customer = shipper.customer ) and  
+         ( shipper.id = shipper_detail.shipper ) and  
+         ( shipper.destination = destination.destination ) and  
+         ( order_header.order_no = shipper_detail.order_no ) and  
+         ( part.part = shipper_detail.part_original ) and  
+         ( plantname.destination = order_header.plant ) and 
+		((case when shipper.destination in( 'AF1JA', 'AF30A', 'AF31A' ) then shipper.seal_number else 'Print' end )) = 'Print' and
+         ( ( shipper.id =  :Shipper ) )  and
+		not exists ( select 1 from object where shipper = shipper.id and object.user_defined_status != 'Approved')  

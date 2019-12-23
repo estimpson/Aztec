@@ -1,0 +1,2 @@
+Aztec - Live	aztec	fxAztec	0	sa	Azt3c!@#	
+Aztec - Test	AZTEC-SQL01	fxAztec_Test		sa	Azt3c!@#	

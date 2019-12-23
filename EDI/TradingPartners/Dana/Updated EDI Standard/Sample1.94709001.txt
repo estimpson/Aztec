@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TRN-830>
+  <TRN-INFO name="Release" trading_partner="**Unknown Trading Partner**" standard="X" agency="X" version="004010" type="830" ICN="1" />
+  <SEG-BFR>
+    <SEG-INFO code="BFR" name="BEGINNING SEGMENT (PLANNING SCHEDULE)" />
+    <DE code="0353" name="TRANSACTION SET PURPOSE" type="ID" desc="Replace">05</DE>
+    <DE code="0328" name="RELEASE NUMBER" type="ID" desc="">3</DE>
+    <DE code="0675" name="FORECAST TYPE QUALIFIER" type="ID" desc="Delivery Based">DL</DE>
+    <DE code="0676" name="FORECAST QUANTITY QUALIFIER" type="ID" desc="Actual Discrete Quantities">A</DE>
+    <DE code="0373" name="DATE" type="ID" desc="">20190701</DE>
+    <DE code="0373" name="DATE" type="ID" desc="">20200830</DE>
+    <DE code="0373" name="DATE" type="ID" desc="">20190720</DE>
+    <DE code="0373" name="DATE" type="ID" desc=""></DE>
+    <DE code="0367" name="CONTRACT NUMBER" type="ID" desc=""></DE>
+    <DE code="0324" name="PURCHASE ORDER NUMBER" type="ID" desc="">5500008703</DE>
+    <DE code="0127" name="REFERENCE NUMBER" type="ID" desc=""></DE>
+  </SEG-BFR>
+  <LOOP-N1>
+    <LOOP-INFO name="N1 LOOP" />
+    <SEG-N1>
+      <SEG-INFO code="N1" name="NAME" />
+      <DE code="0098" name="ORGANIZATION IDENTIFIER" type="ID" desc="Bill-to-Party">BT</DE>
+      <DE code="0093" name="NAME" type="ID" desc="">Ft. Wayne 1628</DE>
+      <DE code="0066" name="IDENTIFICATION CODE QUALIFIER" type="ID" desc="Assigned by Buyer or Buyer's Agent">92</DE>
+      <DE code="0067" name="IDENTIFICATION CODE" type="ID" desc="">1628</DE>
+    </SEG-N1>
+    <SEG-N3>
+      <SEG-INFO code="N3" name="ADDRESS INFORMATION" />
+      <DE code="0166" name="ADDRESS INFORMATION" type="ID" desc="">1029 MAIN STREET</DE>
+      <DE code="0166" name="ADDRESS INFORMATION" type="ID" desc=""></DE>
+    </SEG-N3>
+    <SEG-N4>
+      <SEG-INFO code="N4" name="GEOGRAPHIC LOCATION" />
+      <DE code="0019" name="CITY NAME" type="ID" desc="">ANYTOWN</DE>
+      <DE code="0156" name="STATE OR PROVINCE CODE" type="ID" desc="">OH</DE>
+      <DE code="0116" name="POSTAL CODE" type="ID" desc="">43210</DE>
+      <DE code="0026 " name="COUNTRY CODE" type="ID" desc="">US</DE>
+    </SEG-N4>
+  </LOOP-N1>
+  <LOOP-N1>
+    <LOOP-INFO name="N1 LOOP" />
+    <SEG-N1>
+      <SEG-INFO code="N1" name="NAME" />
+      <DE code="0098" name="ORGANIZATION IDENTIFIER" type="ID" desc="Ship From">SF</DE>
+      <DE code="0093" name="NAME" type="ID" desc="">Aztec Manufacturing</DE>
+      <DE code="0066" name="IDENTIFICATION CODE QUALIFIER" type="ID" desc="Assigned by Buyer or Buyer's Agent">92</DE>
+      <DE code="0067" name="IDENTIFICATION CODE" type="ID" desc="">0000100733</DE>
+    </SEG-N1>
+    <SEG-N3>
+      <SEG-INFO code="N3" name="ADDRESS INFORMATION" />
+      <DE code="0166" name="ADDRESS INFORMATION" type="ID" desc="">1234 SUPPLIER STREET</DE>
+      <DE code="0166" name="ADDRESS INFORMATION" type="ID" desc=""></DE>
+    </SEG-N3>
+    <SEG-N4>
+      <SEG-INFO code="N4" name="GEOGRAPHIC LOCATION" />
+      <DE code="0019" name="CITY NAME" type="ID" desc="">SUPPLIERCITY</DE>
+      <DE code="0156" name="STATE OR PROVINCE CODE" type="ID" desc="">OH</DE>
+      <DE code="0116" name="POSTAL CODE" type="ID" desc="">99999</DE>
+      <DE code="0026 " name="COUNTRY CODE" type="ID" desc="">US</DE>
+    </SEG-N4>
+  </LOOP-N1>
+  <LOOP-N1>
+    <LOOP-INFO name="N1 LOOP" />
+    <SEG-N1>
+      <SEG-INFO code="N1" name="NAME" />
+      <DE code="0098" name="ORGANIZATION IDENTIFIER" type="ID" desc="Supplier/Manufacturer">SU</DE>
+      <DE code="0093" name="NAME" type="ID" desc="">Aztec Manufacturing</DE>
+      <DE code="0066" name="IDENTIFICATION CODE QUALIFIER" type="ID" desc="Assigned by Buyer or Buyer's Agent">92</DE>
+      <DE code="0067" name="IDENTIFICATION CODE" type="ID" desc="">0000100733</DE>
+    </SEG-N1>
+    <SEG-N3>
+      <SEG-INFO code="N3" name="ADDRESS INFORMATION" />
+      <DE code="0166" name="ADDRESS INFORMATION" type="ID" desc="">1234 SUPPLIER STREET</DE>
+      <DE code="0166" name="ADDRESS INFORMATION" type="ID" desc=""></DE>
+    </SEG-N3>
+    <SEG-N4>
+      <SEG-INFO code="N4" name="GEOGRAPHIC LOCATION" />
+      <DE code="0019" name="CITY NAME" type="ID" desc="">SUPPLIERCITY</DE>
+      <DE code="0156" name="STATE OR PROVINCE CODE" type="ID" desc="">OH</DE>
+      <DE code="0116" name="POSTAL CODE" type="ID" desc="">99999</DE>
+      <DE code="0026 " name="COUNTRY CODE" type="ID" desc="">US</DE>
+    </SEG-N4>
+  </LOOP-N1>
+  <LOOP-N1>
+    <LOOP-INFO name="N1 LOOP" />
+    <SEG-N1>
+      <SEG-INFO code="N1" name="NAME" />
+      <DE code="0098" name="ORGANIZATION IDENTIFIER" type="ID" desc="Ship To">ST</DE>
+      <DE code="0093" name="NAME" type="ID" desc="">Ft. Wayne</DE>
+      <DE code="0066" name="IDENTIFICATION CODE QUALIFIER" type="ID" desc="Assigned by Buyer or Buyer's Agent">92</DE>
+      <DE code="0067" name="IDENTIFICATION CODE" type="ID" desc="">1628</DE>
+    </SEG-N1>
+    <SEG-N3>
+      <SEG-INFO code="N3" name="ADDRESS INFORMATION" />
+      <DE code="0166" name="ADDRESS INFORMATION" type="ID" desc="">1029 MAIN STREET</DE>
+      <DE code="0166" name="ADDRESS INFORMATION" type="ID" desc=""></DE>
+    </SEG-N3>
+    <SEG-N4>
+      <SEG-INFO code="N4" name="GEOGRAPHIC LOCATION" />
+      <DE code="0019" name="CITY NAME" type="ID" desc="">ANYTOWN</DE>
+      <DE code="0156" name="STATE OR PROVINCE CODE" type="ID" desc="">OH</DE>
+      <DE code="0116" name="POSTAL CODE" type="ID" desc="">43210</DE>
+      <DE code="0026 " name="COUNTRY CODE" type="ID" desc="">US</DE>
+    </SEG-N4>
+  </LOOP-N1>
+  <LOOP-LIN>
+    <LOOP-INFO name="LIN LOOP" />
+    <SEG-LIN>
+      <SEG-INFO code="LIN" name="ITEM IDENTIFICATION DETAIL" />
+      <DE code="0350" name="ASSIGNED IDENTIFICATION" type="ID" desc="">00010</DE>
+      <DE code="0235" name="PRODUCT/SERVICE ID QUALIFIER" type="ID" desc="Buyer Part Number">BP</DE>
+      <DE code="0234" name="PRODUCT/SERVICE ID" type="ID" desc="">2-4-5092</DE>
+      <DE code="0235" name="PRODUCT/SERVICE ID QUALIFIER" type="ID" desc="Not Defined"></DE>
+      <DE code="0234" name="PRODUCT/SERVICE ID" type="ID" desc=""></DE>
+      <DE code="0235" name="PRODUCT/SERVICE ID QUALIFIER" type="ID" desc="Not Defined"></DE>
+      <DE code="0234" name="PRODUCT/SERVICE ID" type="ID" desc=""></DE>
+      <DE code="0235" name="PRODUCT/SERVICE ID QUALIFIER" type="ID" desc="Not Defined"></DE>
+      <DE code="0234" name="PRODUCT/SERVICE ID" type="ID" desc=""></DE>
+      <DE code="0235" name="PRODUCT/SERVICE ID QUALIFIER" type="ID" desc="Not Defined"></DE>
+      <DE code="0234" name="PRODUCT/SERVICE ID" type="ID" desc=""></DE>
+      <DE code="0235" name="PRODUCT/SERVICE ID QUALIFIER" type="ID" desc="Not Defined"></DE>
+      <DE code="0234" name="PRODUCT/SERVICE ID" type="ID" desc=""></DE>
+      <DE code="0235" name="PRODUCT/SERVICE ID QUALIFIER" type="ID" desc="Not Defined"></DE>
+      <DE code="0234" name="PRODUCT/SERVICE ID" type="ID" desc=""></DE>
+    </SEG-LIN>
+    <SEG-UNT>
+      <SEG-INFO code="UNT" name="UNIT DETAIL" />
+      <DE code="0355" name="UNIT OF MEASUREMENT CODE" type="ID" desc="Each">EA</DE>
+    </SEG-UNT>
+    <SEG-PID>
+      <SEG-INFO code="PID" name="PRODUCT/ITEM DESCRIPTION" />
+      <DE code="0349" name="ITEM DESCRIPTION TYPE" type="ID" desc="Free-form">F</DE>
+      <DE code="0750" name="PRODUCT/PROCESS CHARACTERISTIC CODE" type="ID" desc=""></DE>
+      <DE code="0348" name="ITEM DESCRIPTION QUALIFIER" type="ID" desc=""></DE>
+      <DE code="0751" name="PRODUCT DESCRIPTION CODE" type="ID" desc=""></DE>
+      <DE code="0352" name="DESCRIPTION" type="ID" desc="">PRODUCT DESCRIPTION</DE>
+    </SEG-PID>
+    <SEG-PER>
+      <SEG-INFO code="PER" name="ADMINISTRATIVE COMMUNICATIONS CONTACT" />
+      <DE code="0366" name="CONTACT FUNCTION CODE" type="ID" desc="Buyer Name or Department">BD</DE>
+      <DE code="0093" name="NAME" type="ID" desc="">JOHN DOE</DE>
+      <DE code="0365" name="COMMUNICATION NUMBER QUALIFIER" type="ID" desc="Telephone">TE</DE>
+      <DE code="0364" name="COMMUNICATION NUMBER" type="ID" desc="">4195554357</DE>
+    </SEG-PER>
+    <LOOP-SDP>
+      <LOOP-INFO name="SDP LOOP" />
+      <SEG-SDP>
+        <SEG-INFO code="SDP" name="SHIP/DELIVERY PATTERN" />
+        <DE code="0678" name="SHIP/DELIVERY PATTERN" type="ID" desc="Mutually Defined">Z</DE>
+        <DE code="0679" name="SHIP/DELIVERY PATTERN TIME" type="ID" desc="Mutually Defined">Z</DE>
+      </SEG-SDP>
+      <SEG-FST>
+        <SEG-INFO code="FST" name="FORECAST SCHEDULE" />
+        <DE code="0380" name="QUANTITY" type="ID" desc="">600</DE>
+        <DE code="0680" name="FORECAST QUALIFIER" type="ID" desc="Firm">C</DE>
+        <DE code="0681" name="FORECAST TIMING QUALIFIE" type="ID" desc="Discrete">D</DE>
+        <DE code="0373" name="DATE" type="ID" desc="">20191009</DE>
+        <DE code="0373" name="DATE" type="ID" desc=""></DE>
+        <DE code="0374" name="DATE/TIME QUALIFIER" type="ID" desc=""></DE>
+        <DE code="0337" name="TIME" type="ID" desc=""></DE>
+        <DE code="0128" name="REFERENCE IDENTIFICATION QUALIFIER" type="ID" desc=""></DE>
+        <DE code="0127" name="REFERENCE IDENTIFICATION" type="ID" desc=""></DE>
+        <DE code="0783" name="PLANNING SCHEDULE CODE" type="ID" desc=""></DE>
+        <DE code="0673" name="QUANTITY QUALIFIER" type="ID" desc=""></DE>
+        <DE code="0426" name="ADJUSTMENT REASON CODE" type="ID" desc=""></DE>
+        <DE code="0352" name="DESCRIPTION" type="ID" desc=""></DE>
+      </SEG-FST>
+      <SEG-FST>
+        <SEG-INFO code="FST" name="FORECAST SCHEDULE" />
+        <DE code="0380" name="QUANTITY" type="ID" desc="">400</DE>
+        <DE code="0680" name="FORECAST QUALIFIER" type="ID" desc="Firm">C</DE>
+        <DE code="0681" name="FORECAST TIMING QUALIFIE" type="ID" desc="Discrete">D</DE>
+        <DE code="0373" name="DATE" type="ID" desc="">20191012</DE>
+        <DE code="0373" name="DATE" type="ID" desc=""></DE>
+        <DE code="0374" name="DATE/TIME QUALIFIER" type="ID" desc=""></DE>
+        <DE code="0337" name="TIME" type="ID" desc=""></DE>
+        <DE code="0128" name="REFERENCE IDENTIFICATION QUALIFIER" type="ID" desc=""></DE>
+        <DE code="0127" name="REFERENCE IDENTIFICATION" type="ID" desc=""></DE>
+        <DE code="0783" name="PLANNING SCHEDULE CODE" type="ID" desc=""></DE>
+        <DE code="0673" name="QUANTITY QUALIFIER" type="ID" desc=""></DE>
+        <DE code="0426" name="ADJUSTMENT REASON CODE" type="ID" desc=""></DE>
+        <DE code="0352" name="DESCRIPTION" type="ID" desc=""></DE>
+      </SEG-FST>
+      <SEG-FST>
+        <SEG-INFO code="FST" name="FORECAST SCHEDULE" />
+        <DE code="0380" name="QUANTITY" type="ID" desc="">300</DE>
+        <DE code="0680" name="FORECAST QUALIFIER" type="ID" desc="Firm">C</DE>
+        <DE code="0681" name="FORECAST TIMING QUALIFIE" type="ID" desc="Weekly Bucket (Monday through Sunday)">W</DE>
+        <DE code="0373" name="DATE" type="ID" desc="">20191118</DE>
+        <DE code="0373" name="DATE" type="ID" desc=""></DE>
+        <DE code="0374" name="DATE/TIME QUALIFIER" type="ID" desc=""></DE>
+        <DE code="0337" name="TIME" type="ID" desc=""></DE>
+        <DE code="0128" name="REFERENCE IDENTIFICATION QUALIFIER" type="ID" desc=""></DE>
+        <DE code="0127" name="REFERENCE IDENTIFICATION" type="ID" desc=""></DE>
+        <DE code="0783" name="PLANNING SCHEDULE CODE" type="ID" desc=""></DE>
+        <DE code="0673" name="QUANTITY QUALIFIER" type="ID" desc=""></DE>
+        <DE code="0426" name="ADJUSTMENT REASON CODE" type="ID" desc=""></DE>
+        <DE code="0352" name="DESCRIPTION" type="ID" desc=""></DE>
+      </SEG-FST>
+      <SEG-FST>
+        <SEG-INFO code="FST" name="FORECAST SCHEDULE" />
+        <DE code="0380" name="QUANTITY" type="ID" desc="">900</DE>
+        <DE code="0680" name="FORECAST QUALIFIER" type="ID" desc="Planning">D</DE>
+        <DE code="0681" name="FORECAST TIMING QUALIFIE" type="ID" desc="Monthly Bucket (Calendar Months)">M</DE>
+        <DE code="0373" name="DATE" type="ID" desc="">20200101</DE>
+        <DE code="0373" name="DATE" type="ID" desc=""></DE>
+        <DE code="0374" name="DATE/TIME QUALIFIER" type="ID" desc=""></DE>
+        <DE code="0337" name="TIME" type="ID" desc=""></DE>
+        <DE code="0128" name="REFERENCE IDENTIFICATION QUALIFIER" type="ID" desc=""></DE>
+        <DE code="0127" name="REFERENCE IDENTIFICATION" type="ID" desc=""></DE>
+        <DE code="0783" name="PLANNING SCHEDULE CODE" type="ID" desc=""></DE>
+        <DE code="0673" name="QUANTITY QUALIFIER" type="ID" desc=""></DE>
+        <DE code="0426" name="ADJUSTMENT REASON CODE" type="ID" desc=""></DE>
+        <DE code="0352" name="DESCRIPTION" type="ID" desc=""></DE>
+      </SEG-FST>
+      <SEG-FST>
+        <SEG-INFO code="FST" name="FORECAST SCHEDULE" />
+        <DE code="0380" name="QUANTITY" type="ID" desc="">300</DE>
+        <DE code="0680" name="FORECAST QUALIFIER" type="ID" desc="Planning">D</DE>
+        <DE code="0681" name="FORECAST TIMING QUALIFIE" type="ID" desc="Monthly Bucket (Calendar Months)">M</DE>
+        <DE code="0373" name="DATE" type="ID" desc="">20200201</DE>
+        <DE code="0373" name="DATE" type="ID" desc=""></DE>
+        <DE code="0374" name="DATE/TIME QUALIFIER" type="ID" desc=""></DE>
+        <DE code="0337" name="TIME" type="ID" desc=""></DE>
+        <DE code="0128" name="REFERENCE IDENTIFICATION QUALIFIER" type="ID" desc=""></DE>
+        <DE code="0127" name="REFERENCE IDENTIFICATION" type="ID" desc=""></DE>
+        <DE code="0783" name="PLANNING SCHEDULE CODE" type="ID" desc=""></DE>
+        <DE code="0673" name="QUANTITY QUALIFIER" type="ID" desc=""></DE>
+        <DE code="0426" name="ADJUSTMENT REASON CODE" type="ID" desc=""></DE>
+        <DE code="0352" name="DESCRIPTION" type="ID" desc=""></DE>
+      </SEG-FST>
+    </LOOP-SDP>
+  </LOOP-LIN>
+  <SEG-CTT>
+    <SEG-INFO code="CTT" name="TRANSACTION TOTALS" />
+    <DE code="0354" name="NUMBER OF LINE ITEMS" type="ID" desc="">1</DE>
+    <DE code="0347" name="HASH TOTAL" type="ID" desc="">2500</DE>
+  </SEG-CTT>
+</TRN-830>

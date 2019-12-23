@@ -77,6 +77,10 @@ Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.FXSYS", "FxAztec.FX
 EndProject
 Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.SUPPLIEREDI", "FxAztec.SUPPLIEREDI\FxAztec.SUPPLIEREDI.ssmssqlproj", "{C54BFCA6-ED47-4EF0-A369-01AFBF496E41}"
 EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.EDIFord", "FxAztec.EDIFord\FxAztec.EDIFord.ssmssqlproj", "{61B10AB6-4126-4160-A85F-68271BE74958}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.custom.Labels", "FxAztec.custom.Labels\FxAztec.custom.Labels.ssmssqlproj", "{06DEA87E-F80F-47C1-B136-0690163B2728}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Default|Default = Default|Default
@@ -118,8 +122,10 @@ Global
 		{4C3F942E-888B-4C81-92EE-9C2D659342CB}.Default|Default.ActiveCfg = Default
 		{1F492CE1-D7DF-46FC-9C17-8F91C5F4A085}.Default|Default.ActiveCfg = Default
 		{004801E8-F6E4-42BE-AC83-17DF4BF54C18}.Default|Default.ActiveCfg = Default
-		{59634E51-7593-4091-AE3E-762C28EF7028}.Default|Default.ActiveCfg = Default
 		{C54BFCA6-ED47-4EF0-A369-01AFBF496E41}.Default|Default.ActiveCfg = Default
+		{61B10AB6-4126-4160-A85F-68271BE74958}.Default|Default.ActiveCfg = Default
+		{06DEA87E-F80F-47C1-B136-0690163B2728}.Default|Default.ActiveCfg = Default
+		{989A74AE-89BC-40B7-984A-34287E0FD171}.Default|Default.ActiveCfg = Default
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -18,7 +18,13 @@ select
 	spl.SupplierCode
 ,	spl.SupplierName
 ,	spl.SupplierPartCode
-,	Status = case when spl.SupplierPartCode > '' and spl.InternalPartCount = 1 and HasBlanketPO = 1 then 0 else -1 end
+,	Status =
+		case 
+			when spl.SupplierCode = 'MID0010' and spl.InternalPartCode like '2488%' then -1
+			when spl.SupplierCode = 'MID0010' and spl.SupplierPartCode > '' and spl.InternalPartCount > 0 and HasBlanketPO = 1 then 0
+			when spl.SupplierPartCode > '' and spl.InternalPartCount = 1 and HasBlanketPO = 1 then 0 
+			else -1 
+		end
 ,	spl.SupplierStdPack
 ,	spl.InternalPartCount
 ,	spl.InternalPartCode
@@ -27,6 +33,8 @@ select
 ,	spl.PartSubClass
 ,	spl.HasBlanketPO
 ,	spl.LabelFormatName
+,	spl.PrimaryLocation
+,	spl.StdUnit
 from
 	(	select
 			sl.SupplierCode
@@ -48,10 +56,13 @@ from
 							where
 								ph.blanket_part = p.part
 								and ph.vendor_code = sl.SupplierCode
+								and ph.status = 'A'
 						) then 1
 					else 0
 				end
 		,	LabelFormatName = pInv.label_format
+		,	PrimaryLocation = pInv.primary_location
+		,	StdUnit = pInv.standard_unit
 		from
 			dbo.part p
 			join dbo.part_inventory pInv
@@ -69,3 +80,6 @@ select
 	*
 from
 	SPORTAL.SupplierPartList spl
+where
+	spl.SupplierCode = 'ROC0010'
+	and spl.Status >= 0
