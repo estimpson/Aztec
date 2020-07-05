@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<SqlWorkbenchSqlProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="FxEDI.FXSYS">
+  <Items>
+    <LogicalFolder Name="Connections" Type="2" Sorted="true">
+      <Items>
+        <ConnectionNode Name="aztec-sql01.aztecmfgcorp.com:estimpson">
+          <Created>2020-06-30T14:57:12.375811-04:00</Created>
+          <Type>SQL</Type>
+          <Server>aztec-sql01.aztecmfgcorp.com</Server>
+          <UserName>estimpson</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB>FxEDI</InitialDB>
+          <LoginTimeout>30</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Queries" Type="0" Sorted="true">
+      <Items>
+        <FileNode Name="Schema.FxEDI.FXSYS.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01.aztecmfgcorp.com:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01.aztecmfgcorp.com</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Schema.FxEDI.FXSYS.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Synonym.FxEDI.dbo.fn_SplitStringToRows.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Synonym.FxEDI.dbo.fn_SplitStringToRows.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Synonym.FxEDI.FXSYS.ErrorLog.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Synonym.FxEDI.FXSYS.ErrorLog.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Synonym.FxEDI.FXSYS.udf_GetDT.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Synonym.FxEDI.FXSYS.udf_GetDT.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Synonym.FxEDI.FXSYS.USP_Calls.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01.aztecmfgcorp.com:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01.aztecmfgcorp.com</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Synonym.FxEDI.FXSYS.USP_Calls.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Synonym.FxEDI.FXSYS.usp_EmailError.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Synonym.FxEDI.FXSYS.usp_EmailError.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Synonym.FxEDI.FXSYS.usp_LogError.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01.aztecmfgcorp.com:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01.aztecmfgcorp.com</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Synonym.FxEDI.FXSYS.usp_LogError.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Synonym.FxEDI.FXSYS.usp_LongPrint.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01.aztecmfgcorp.com:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01.aztecmfgcorp.com</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Synonym.FxEDI.FXSYS.usp_LongPrint.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Synonym.FxEDI.FXSYS.usp_PrintError.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01.aztecmfgcorp.com:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01.aztecmfgcorp.com</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Synonym.FxEDI.FXSYS.usp_PrintError.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Synonym.FxEDI.FXSYS.usp_TableToHTML.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Synonym.FxEDI.FXSYS.usp_TableToHTML.sql</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Miscellaneous" Type="3" Sorted="true">
+      <Items />
+    </LogicalFolder>
+  </Items>
+</SqlWorkbenchSqlProject>

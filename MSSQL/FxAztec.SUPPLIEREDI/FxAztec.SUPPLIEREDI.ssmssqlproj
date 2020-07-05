@@ -15,6 +15,18 @@
           <ConnectionProtocol>NotSpecified</ConnectionProtocol>
           <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
         </ConnectionNode>
+        <ConnectionNode Name="aztec-sql01.aztecmfgcorp.com:estimpson">
+          <Created>2020-07-03T14:28:05.9911886-04:00</Created>
+          <Type>SQL</Type>
+          <Server>aztec-sql01.aztecmfgcorp.com</Server>
+          <UserName>estimpson</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB />
+          <LoginTimeout>30</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
       </Items>
     </LogicalFolder>
     <LogicalFolder Name="Queries" Type="0" Sorted="true">
@@ -49,11 +61,17 @@
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Schema.FxAztec.SUPPLIEREDI.sql</FullPath>
         </FileNode>
-        <FileNode Name="SQLQuery1.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+        <FileNode Name="Script.Insert.MenuItem.ProcessWaupacaShipNotice.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01.aztecmfgcorp.com:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01.aztecmfgcorp.com</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
-          <FullPath>SQLQuery1.sql</FullPath>
+          <FullPath>Script.Insert.MenuItem.ProcessWaupacaShipNotice.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.Test.WaupacaShipNotice.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01.aztecmfgcorp.com:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01.aztecmfgcorp.com</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Script.Test.WaupacaShipNotice.sql</FullPath>
         </FileNode>
         <FileNode Name="Table.FxAztec.SUPPLIEREDI.ShipNoticeLines.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>

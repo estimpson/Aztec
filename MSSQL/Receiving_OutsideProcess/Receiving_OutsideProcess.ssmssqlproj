@@ -3,6 +3,18 @@
   <Items>
     <LogicalFolder Name="Connections" Type="2" Sorted="true">
       <Items>
+        <ConnectionNode Name="aztec-sql01.aztecmfgcorp.com:estimpson">
+          <Created>2020-01-17T11:31:41.6546457-05:00</Created>
+          <Type>SQL</Type>
+          <Server>aztec-sql01.aztecmfgcorp.com</Server>
+          <UserName>estimpson</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB />
+          <LoginTimeout>30</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
         <ConnectionNode Name="aztecsql2.aztecmfgcorp.local\fx:estimpson">
           <Created>2014-09-25T15:40:18.072015-04:00</Created>
           <Type>SQL</Type>
@@ -20,9 +32,9 @@
     <LogicalFolder Name="Queries" Type="0" Sorted="true">
       <Items>
         <FileNode Name="Procedure.Fx.dbo.usp_OutsideProcessing_AdjustVendorInventory.sql">
-          <AssociatedConnectionMoniker />
-          <AssociatedConnSrvName />
-          <AssociatedConnUserName />
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01.aztecmfgcorp.com:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01.aztecmfgcorp.com</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Procedure.Fx.dbo.usp_OutsideProcessing_AdjustVendorInventory.sql</FullPath>
         </FileNode>
         <FileNode Name="Procedure.Fx.dbo.usp_OutsideProcessing_AutoCreateFirmPOLineItem.sql">
@@ -32,8 +44,8 @@
           <FullPath>Procedure.Fx.dbo.usp_OutsideProcessing_AutoCreateFirmPOLineItem.sql</FullPath>
         </FileNode>
         <FileNode Name="Procedure.Fx.dbo.usp_OutsideProcessing_GetVendorInventory.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:estimpson</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01.aztecmfgcorp.com:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01.aztecmfgcorp.com</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Procedure.Fx.dbo.usp_OutsideProcessing_GetVendorInventory.sql</FullPath>
         </FileNode>
@@ -54,6 +66,12 @@
           <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Procedure.Fx.dbo.usp_OutsideProcessing_UndoAutoCreateFirmPOLineItem.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.FxAztec.dbo.OutsideProcessing_VendorInventory.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01.aztecmfgcorp.com:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01.aztecmfgcorp.com</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>View.FxAztec.dbo.OutsideProcessing_VendorInventory.sql</FullPath>
         </FileNode>
       </Items>
     </LogicalFolder>

@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<SqlWorkbenchSqlProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="FxSYS">
+  <Items>
+    <LogicalFolder Name="Connections" Type="2" Sorted="true">
+      <Items>
+        <ConnectionNode Name="aztec-sql01.aztecmfgcorp.com:estimpson">
+          <Created>2020-06-30T14:58:40.190813-04:00</Created>
+          <Type>SQL</Type>
+          <Server>aztec-sql01.aztecmfgcorp.com</Server>
+          <UserName>estimpson</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB>FxEDI</InitialDB>
+          <LoginTimeout>30</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Queries" Type="0" Sorted="true">
+      <Items>
+        <FileNode Name="Aggregate.FxSYS.dbo.ToList.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Aggregate.FxSYS.dbo.ToList.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.FxSYS.dbo.usp_EmailError.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.FxSYS.dbo.usp_EmailError.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.FxSYS.dbo.usp_LogError.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01.aztecmfgcorp.com:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01.aztecmfgcorp.com</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxSYS.dbo.usp_LogError.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.FxSYS.dbo.usp_LongPrint.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01.aztecmfgcorp.com:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01.aztecmfgcorp.com</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxSYS.dbo.usp_LongPrint.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.FxSYS.dbo.usp_PrintError.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01.aztecmfgcorp.com:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01.aztecmfgcorp.com</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxSYS.dbo.usp_PrintError.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.FxSYS.dbo.usp_TableToHTML.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure.FxSYS.dbo.usp_TableToHTML.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxSYS.dbo.fn_CamelCase.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>ScalarFunction.FxSYS.dbo.fn_CamelCase.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxSYS.dbo.udf_GetDT.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>ScalarFunction.FxSYS.dbo.udf_GetDT.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxSYS.dbo.udf_GetNewChildHierarchyID.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>ScalarFunction.FxSYS.dbo.udf_GetNewChildHierarchyID.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ScalarFunction.FxSYS.dbo.udf_GetNewID.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>ScalarFunction.FxSYS.dbo.udf_GetNewID.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.FxSYS.dbo.ErrorLog.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01.aztecmfgcorp.com:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01.aztecmfgcorp.com</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Table.FxSYS.dbo.ErrorLog.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.FxSYS.dbo.Rows.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01.aztecmfgcorp.com:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01.aztecmfgcorp.com</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Table.FxSYS.dbo.Rows.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Table.FxSYS.dbo.USP_Calls.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01.aztecmfgcorp.com:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01.aztecmfgcorp.com</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Table.FxSYS.dbo.USP_Calls.sql</FullPath>
+        </FileNode>
+        <FileNode Name="TableFunction.FxSYS.dbo.fn_SplitStringToRows.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>TableFunction.FxSYS.dbo.fn_SplitStringToRows.sql</FullPath>
+        </FileNode>
+        <FileNode Name="TableFunction.FxSYS.dbo.udf_Rows.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>TableFunction.FxSYS.dbo.udf_Rows.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.FxSYS.dbo.GetNewID.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>View.FxSYS.dbo.GetNewID.sql</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Miscellaneous" Type="3" Sorted="true">
+      <Items />
+    </LogicalFolder>
+  </Items>
+</SqlWorkbenchSqlProject>
