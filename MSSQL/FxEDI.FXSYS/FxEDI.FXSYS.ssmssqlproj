@@ -3,6 +3,18 @@
   <Items>
     <LogicalFolder Name="Connections" Type="2" Sorted="true">
       <Items>
+        <ConnectionNode Name="Aztec_FT:estimpson">
+          <Created>2020-07-05T10:48:31.2897813-04:00</Created>
+          <Type>SQL</Type>
+          <Server>Aztec_FT</Server>
+          <UserName>estimpson</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB />
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>TcpIp</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
         <ConnectionNode Name="aztec-sql01.aztecmfgcorp.com:estimpson">
           <Created>2020-06-30T14:57:12.375811-04:00</Created>
           <Type>SQL</Type>
@@ -37,6 +49,12 @@
           <AssociatedConnUserName />
           <FullPath>Synonym.FxEDI.FXSYS.ErrorLog.sql</FullPath>
         </FileNode>
+        <FileNode Name="Synonym.FxEDI.FXSYS.Rows.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Synonym.FxEDI.FXSYS.Rows.sql</FullPath>
+        </FileNode>
         <FileNode Name="Synonym.FxEDI.FXSYS.udf_GetDT.sql">
           <AssociatedConnectionMoniker />
           <AssociatedConnSrvName />
@@ -44,8 +62,8 @@
           <FullPath>Synonym.FxEDI.FXSYS.udf_GetDT.sql</FullPath>
         </FileNode>
         <FileNode Name="Synonym.FxEDI.FXSYS.USP_Calls.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01.aztecmfgcorp.com:False:estimpson</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>aztec-sql01.aztecmfgcorp.com</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Synonym.FxEDI.FXSYS.USP_Calls.sql</FullPath>
         </FileNode>

@@ -1,59 +1,50 @@
 use FxAztec
 go
 
---	dbo.usp_Purchasing_Receive
 select
-	sn.Status
-,	sn.Type
-,	sn.RawDocumentGUID
-,	sn.ShipperID
-,	sn.BillOfLadingNumber
-,	sn.ShipFromCode
-,	sn.ShipToCode
-,	sn.ShipDT
+	wsn.Status
+,	wsn.Type
+,	wsn.RawDocumentGUID
+,	wsn.ShipperID
+,	wsn.BillOfLadingNumber
+,	wsn.ShipFromCode
+,	wsn.ShipToCode
+,	wsn.ShipDT
+,	AlertsSummary = FX.ToList(Alerts.AlertType + '[' + convert(varchar(12), Alerts.AlertCount) + ']')
 from
-	SUPPLIEREDI.ShipNotices sn
-
-select
-	snh.Status
-,	snh.Type
-,	snh.RawDocumentGUID
-,	sno.ShipperID
-,	BillOfLadingNumber = sn.Trailer
-,	ShipFromCode = sn.ShipFromCode
-,	ShipToCode = ph.ship_to_destination
-,	ShipDT = snh.DocumentDT
-from
-	FxEDI.EDI4010_WAUPACA.ShipNoticeHeaders snh
-	join FxEDI.EDI4010_WAUPACA.ShipNotices sn
-		on sn.RawDocumentGUID = snh.RawDocumentGUID
-	join FxEDI.EDI4010_WAUPACA.ShipNoticeOrders sno
-		on sno.RawDocumentGUID = snh.RawDocumentGUID
-	join dbo.po_header ph
-		on ph.po_number = sno.PurchaseOrder
+	SUPPLIEREDI.WaupacaShipNotices wsn
+	outer apply
+	(	select
+			wsna.RawDocumentGUID
+		,	AlertType = case when wsna.Type < 0 then 'Error' else 'Warning' end
+		,	AlertCount = count(*)
+		from
+			SUPPLIEREDI.WaupacaShipNoticeAlerts wsna
+		where
+			wsna.RawDocumentGUID = wsn.RawDocumentGUID
+		group by
+			wsna.RawDocumentGUID
+		,	case when wsna.Type < 0 then 'Error' else 'Warning' end
+	) Alerts
+where
+	wsn.Status = 0
 group by
-	snh.Status
-,	snh.Type
-,	snh.RawDocumentGUID
-,	sno.ShipperID
-,	sn.Trailer
-,	sn.ShipFromCode
-,	ph.ship_to_destination
-,	snh.DocumentDT
+	wsn.Status
+,	wsn.Type
+,	wsn.RawDocumentGUID
+,	wsn.ShipperID
+,	wsn.BillOfLadingNumber
+,	wsn.ShipFromCode
+,	wsn.ShipToCode
+,	wsn.ShipDT
 
 select
-	snl.Status
-,	snl.Type
-,	snl.RawDocumentGUID
-,	snl.SupplierPart
-,	snl.PurchaseOrderRef
-,	snl.Quantity
-,	snl.PartCode
-,	snl.PurchaseOrderNumber
-,	snl.RowID
-,	snl.RowCreateDT
-,	snl.RowCreateUser
-,	snl.RowModifiedDT
-,	snl.RowModifiedUser
+	*
 from
-	SUPPLIEREDI.ShipNoticeLines snl
+	SUPPLIEREDI.WaupacaShipNoticeAlerts wsna
+order by
+	wsna.ShipDT
+,	wsna.ShipperID
+,	wsna.RawDocumentGUID
+,	wsna.Type
+,	wsna.Alert

@@ -15,6 +15,18 @@
           <ConnectionProtocol>NotSpecified</ConnectionProtocol>
           <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
         </ConnectionNode>
+        <ConnectionNode Name="Aztec_FT:estimpson">
+          <Created>2020-07-05T10:18:30.9167344-04:00</Created>
+          <Type>SQL</Type>
+          <Server>Aztec_FT</Server>
+          <UserName>estimpson</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB />
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>TcpIp</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
         <ConnectionNode Name="aztec-sql01.aztecmfgcorp.com:estimpson">
           <Created>2020-07-03T14:28:05.9911886-04:00</Created>
           <Type>SQL</Type>
@@ -68,8 +80,8 @@
           <FullPath>Script.Insert.MenuItem.ProcessWaupacaShipNotice.sql</FullPath>
         </FileNode>
         <FileNode Name="Script.Test.WaupacaShipNotice.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01.aztecmfgcorp.com:False:estimpson</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>aztec-sql01.aztecmfgcorp.com</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Script.Test.WaupacaShipNotice.sql</FullPath>
         </FileNode>
@@ -90,6 +102,24 @@
           <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Table.FxAztec.SUPPLIEREDI.ShipNotices.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.FxAztec.SUPPLIEREDI.WaupacaShipNoticeAlerts.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>View.FxAztec.SUPPLIEREDI.WaupacaShipNoticeAlerts.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.FxAztec.SUPPLIEREDI.WaupacaShipNoticeLines.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>View.FxAztec.SUPPLIEREDI.WaupacaShipNoticeLines.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.FxAztec.SUPPLIEREDI.WaupacaShipNotices.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>View.FxAztec.SUPPLIEREDI.WaupacaShipNotices.sql</FullPath>
         </FileNode>
       </Items>
     </LogicalFolder>
