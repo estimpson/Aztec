@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create procedure [EDI4010_WAUPACA].[usp_StageShipNotices]
+CREATE procedure [EDI4010_WAUPACA].[usp_StageShipNotices]
 	@TranDT datetime = null out
 ,	@Result integer = null out
 ,	@Debug int = 0
@@ -15,10 +15,10 @@ begin
 	set nocount on
 	
 	declare
-	--	@StagingProcedureSchema sysname = schema_name(objectproperty(@@procid, 'SchemaID'))
-	--,	@StagingProcedureName sysname = object_name(@@procid)
-		@StagingProcedureSchema sysname = 'EDI4010_WAUPACA'
-	,	@StagingProcedureName sysname = 'usp_StageShipNotice'
+		@StagingProcedureSchema sysname = schema_name(objectproperty(@@procid, 'SchemaID'))
+	,	@StagingProcedureName sysname = object_name(@@procid)
+	--	@StagingProcedureSchema sysname = 'EDI4010_WAUPACA'
+	--,	@StagingProcedureName sysname = 'usp_StageShipNotices'
 
 	--- <TIC>
 	declare
@@ -200,7 +200,6 @@ begin
 				RAISERROR ('Error updating into %s in procedure %s.  Rows Updated: %d.  Expected rows: 1 or more.', 16, 1, @TableName, @ProcName, @RowCount)
 			end
 			--- </Update>
-
 
 			--- <TOC>
 			if	@Debug & 0x01 = 0x01 begin
@@ -405,7 +404,6 @@ begin
 
 		/*	Prepare shipper lines */
 		set @TocMsg = 'Prepare shipper lines'
-
 		begin
 			declare
 				@ShipNoticeLines table
@@ -614,6 +612,74 @@ begin
 					exists (select * from @ShipNoticeHeaders snhL where snhL.RawDocumentGUID = snl.RawDocumentGUID)
 
 			end
+		end
+
+		/*	Move in process documents to processed. */
+		set @TocMsg = 'Move in process documents to processed. '
+		if	exists
+				(	select
+						*
+					from
+						EDI.EDIDocuments ed
+						join EDI.XML_TradingPartners_StagingDefinition xtpsd
+							on xtpsd.DocumentTradingPartner = ed.TradingPartner
+							and xtpsd.DocumentType = ed.Type
+					where
+						ed.Status = 100
+						and xtpsd.StagingProcedureSchema = @StagingProcedureSchema
+						and xtpsd.StagingProcedureName = @StagingProcedureName
+				)
+		begin
+			--- <Update rows="1+">
+			set	@TableName = 'EDI.EDIDocuments'
+
+			update
+				ed
+			set
+				Status = 1
+			from
+				EDI.EDIDocuments ed
+				join EDI.XML_TradingPartners_StagingDefinition xtpsd
+					on xtpsd.DocumentTradingPartner = ed.TradingPartner
+					and xtpsd.DocumentType = ed.Type
+			where
+				ed.Status = 100
+				and xtpsd.StagingProcedureSchema = @StagingProcedureSchema
+				and xtpsd.StagingProcedureName = @StagingProcedureName
+
+			select
+				@Error = @@Error,
+				@RowCount = @@Rowcount
+
+			if	@Error != 0 begin
+				set	@Result = 999999
+				RAISERROR ('Error updating table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
+			end
+			if	@RowCount <= 0 begin
+				set	@Result = 999999
+				RAISERROR ('Error updating into %s in procedure %s.  Rows Updated: %d.  Expected rows: 1 or more.', 16, 1, @TableName, @ProcName, @RowCount)
+			end
+			--- </Update>
+
+			--- <TOC>
+			if	@Debug & 0x01 = 0x01 begin
+				set @TocDT = getdate()
+				set @TimeDiff =
+					case
+						when datediff(day, @TocDT - @TicDT, convert(datetime, '1900-01-01')) > 1
+							then convert(varchar, datediff(day, @TocDT - @TicDT, convert(datetime, '1900-01-01'))) + ' day(s) ' + convert(char(12), @TocDT - @TicDT, 114)
+						else
+							convert(varchar(12), @TocDT - @TicDT, 114)
+					end
+				set @DebugMsg = @DebugMsg + char(13) + char(10) + replicate(' -', (@Debug & 0x3E) / 2) + @TocMsg + ': ' + @TimeDiff
+				set @TicDT = @TocDT
+			end
+			set @DebugMsg += coalesce(char(13) + char(10) + @cDebugMsg, N'')
+			set @cDebugMsg = null
+			--- </TOC>
+		end
+		else begin
+			goto done
 		end
 
 		done:
