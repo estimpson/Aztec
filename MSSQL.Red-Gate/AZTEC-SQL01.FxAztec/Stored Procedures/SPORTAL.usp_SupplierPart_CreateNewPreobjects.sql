@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create procedure [SPORTAL].[usp_SupplierPart_CreateNewPreobjects]
+CREATE procedure [SPORTAL].[usp_SupplierPart_CreateNewPreobjects]
 	@SupplierCode varchar(20)
 ,	@SupplierPartCode varchar(50)
 ,	@InternalPartCode varchar(25)
@@ -45,7 +45,14 @@ end
 set	@TranDT = coalesce(@TranDT, GetDate())
 --- </Tran>
 
+
 ---	<ArgumentValidation>
+declare
+	@Exception varchar(1000)
+,	@ProcedureName varchar(50)
+
+set @ProcedureName = 'SPORTAL.usp_SupplierPart_CreateNewPreobjects'
+
 /*	Valid supplier code. */
 if	not exists
 	(	select
@@ -56,6 +63,11 @@ if	not exists
 			sl.SupplierCode = @SupplierCode
 			and sl.Status = 0
 	) begin
+
+	set @Exception = 'Invalid supplier code: ' + @SupplierCode	
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 	set	@Result = 999999
 	RAISERROR ('Error:  Invalid supplier code %s in procedure %s', 16, 1, @SupplierCode, @ProcName)
 	rollback tran @ProcName
@@ -73,6 +85,11 @@ if	not exists
 			and spl.SupplierPartCode = @SupplierPartCode
 			and spl.Status = 0
 	) begin
+
+	set @Exception = 'Invalid supplier part code: ' + @SupplierPartCode	
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 	set	@Result = 999999
 	RAISERROR ('Error:  Invalid supplier part code %s in procedure %s', 16, 1, @SupplierPartCode, @ProcName)
 	rollback tran @ProcName
@@ -91,6 +108,11 @@ if	not exists
 			and spl.InternalPartCode = @InternalPartCode
 			and spl.Status = 0
 	) begin
+
+	set @Exception = 'Invalid internal part code: ' + @InternalPartCode	
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 	set	@Result = 999999
 	RAISERROR ('Error:  Invalid internal part code %s in procedure %s', 16, 1, @InternalPartCode, @ProcName)
 	rollback tran @ProcName
@@ -99,40 +121,70 @@ end
 
 /*	Valid quantity per object. */
 if	@QuantityPerObject is null begin
+
+	set @Exception = 'Invalid quantity per object (null).'	
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 	set	@Result = 999999
 	RAISERROR ('Error:  Invalid quantity per object (null) in procedure %s', 16, 1, @ProcName)
 	rollback tran @ProcName
 	return
 end
 if	@QuantityPerObject < 0 begin
+
+	set @Exception = 'Quantity per object cannot be less than zero.'	
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 	set	@Result = 999999
 	RAISERROR ('Error:  Invalid quantity per object %d in procedure %s', 16, 1, @QuantityPerObject, @ProcName)
 	rollback tran @ProcName
 	return
 end
 if	@QuantityPerObject > 100000 begin
+
+	set @Exception = 'Quantity per object cannot be greater than 100000.'	
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 	set	@Result = 999999
-	RAISERROR ('Error:  Invalid quantity per object %d in procedure %s', 16, 1, @QuantityPerObject, @ProcName)
+	RAISERROR ('Error:  Invalid quantity per object %d in procedure %s. 100000 maximum.', 16, 1, @QuantityPerObject, @ProcName)
 	rollback tran @ProcName
 	return
 end
 
 /*	Valid object count. */
 if	@ObjectCount is null begin
+
+	set @Exception = 'Invalid object count (null).'	
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 	set	@Result = 999999
 	RAISERROR ('Error:  Invalid object count (null) in procedure %s', 16, 1, @ProcName)
 	rollback tran @ProcName
 	return
 end
 if	@ObjectCount < 0 begin
+
+	set @Exception = 'Object count cannot be less than zero.'	
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 	set	@Result = 999999
 	RAISERROR ('Error:  Invalid object count %d in procedure %s', 16, 1, @ObjectCount, @ProcName)
 	rollback tran @ProcName
 	return
 end
 if	@ObjectCount > 100 begin
+
+	set @Exception = 'Object count cannot be greater than 100.'	
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 	set	@Result = 999999
-	RAISERROR ('Error:  Invalid object count %d in procedure %s', 16, 1, @ObjectCount, @ProcName)
+	RAISERROR ('Error:  Invalid object count %d in procedure %s. 100 maximum.', 16, 1, @ObjectCount, @ProcName)
 	rollback tran @ProcName
 	return
 end
@@ -150,18 +202,33 @@ execute
 	
 set	@Error = @@Error
 if	@Error != 0 begin
+
+	set @Exception = 'Error occured while calling: ' + @CallProcName + '.'	
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 	set	@Result = 900501
 	RAISERROR ('Error encountered in %s.  Error: %d while calling %s', 16, 1, @ProcName, @Error, @CallProcName)
 	rollback tran @ProcName
 	return	@Result
 end
 if	@ProcReturn != 0 begin
+
+	set @Exception = 'Error occured while calling: ' + @CallProcName + '.'	
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 	set	@Result = 900502
 	RAISERROR ('Error encountered in %s.  ProcReturn: %d while calling %s', 16, 1, @ProcName, @ProcReturn, @CallProcName)
 	rollback tran @ProcName
 	return	@Result
 end
 if	@ProcResult != 0 begin
+
+	set @Exception = 'Error occured while calling: ' + @CallProcName + '.'	
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 	set	@Result = 900502
 	RAISERROR ('Error encountered in %s.  ProcResult: %d while calling %s', 16, 1, @ProcName, @ProcResult, @CallProcName)
 	rollback tran @ProcName
@@ -204,12 +271,22 @@ select
 ,	@RowCount = @@rowcount
 
 if	@Error != 0 begin
+
+	set @Exception = 'Error inserting into table: ' + @TableName + '.'	
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 	set	@Result = 999999
 	RAISERROR ('Error inserting into table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
 	rollback tran @ProcName
 	return
 end
 if	@RowCount != 1 begin
+
+	set @Exception = 'Error inserting into table: ' + @TableName + '. Rows inserted: ' + @RowCount + '. Expected rows: 1.'	
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 	set	@Result = 999999
 	RAISERROR ('Error inserting into table %s in procedure %s.  Rows inserted: %d.  Expected rows: 1.', 16, 1, @TableName, @ProcName, @RowCount)
 	rollback tran @ProcName
@@ -255,12 +332,22 @@ select
 ,	@RowCount = @@rowcount
 
 if	@Error != 0 begin
+
+	set @Exception = 'Error inserting into table: ' + @TableName + '.'	
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 	set	@Result = 999999
 	RAISERROR ('Error inserting into table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
 	rollback tran @ProcName
 	return
 end
 if	@RowCount != @ObjectCount begin
+
+	set @Exception = 'Error inserting into table: ' + @TableName + '. Rows inserted: ' + @RowCount + '. Expected rows: ' + @ObjectCount + '.'	
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 	set	@Result = 999999
 	RAISERROR ('Error inserting into table %s in procedure %s.  Rows inserted: %d.  Expected rows: %d.', 16, 1, @TableName, @ProcName, @RowCount, @ObjectCount)
 	rollback tran @ProcName

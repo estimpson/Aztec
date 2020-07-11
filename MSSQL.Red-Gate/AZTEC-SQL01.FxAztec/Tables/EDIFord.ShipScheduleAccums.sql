@@ -33,3 +33,5 @@ CREATE TABLE [EDIFord].[ShipScheduleAccums]
 GO
 ALTER TABLE [EDIFord].[ShipScheduleAccums] ADD CONSTRAINT [PK__ShipSche__FFEE7450D8C3D513] PRIMARY KEY NONCLUSTERED  ([RowID]) ON [PRIMARY]
 GO
+CREATE NONCLUSTERED INDEX [ix_ShippingScheduleAccums_1] ON [EDIFord].[ShipScheduleAccums] ([ShipFromCode]) INCLUDE ([CustomerModelYear], [CustomerPart], [CustomerPO], [LastAccumQty], [RawDocumentGUID], [ShipToCode]) ON [PRIMARY]
+GO

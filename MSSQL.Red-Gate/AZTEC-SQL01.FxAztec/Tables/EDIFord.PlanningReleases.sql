@@ -31,3 +31,5 @@ CREATE TABLE [EDIFord].[PlanningReleases]
 GO
 ALTER TABLE [EDIFord].[PlanningReleases] ADD CONSTRAINT [PK__Planning__FFEE7451837B582D] PRIMARY KEY CLUSTERED  ([RowID]) ON [PRIMARY]
 GO
+CREATE NONCLUSTERED INDEX [ix_PlanningReleases_Status] ON [EDIFord].[PlanningReleases] ([Status], [RawDocumentGUID], [RowID]) ON [PRIMARY]
+GO

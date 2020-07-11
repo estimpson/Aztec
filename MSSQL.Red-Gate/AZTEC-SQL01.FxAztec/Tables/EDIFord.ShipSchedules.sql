@@ -31,3 +31,5 @@ CREATE TABLE [EDIFord].[ShipSchedules]
 GO
 ALTER TABLE [EDIFord].[ShipSchedules] ADD CONSTRAINT [PK__ShipSche__FFEE74516684246A] PRIMARY KEY CLUSTERED  ([RowID]) ON [PRIMARY]
 GO
+CREATE NONCLUSTERED INDEX [ix_ShipSchedules_1] ON [EDIFord].[ShipSchedules] ([RawDocumentGUID], [ShipToCode], [ShipFromCode], [CustomerPart]) INCLUDE ([ConsigneeCode], [CustomerECL], [CustomerModelYear], [CustomerPO], [CustomerPOLine], [ReferenceNo], [ReleaseDT], [ReleaseNo], [ReleaseQty], [RowCreateDT], [RowCreateUser], [RowID], [RowModifiedDT], [RowModifiedUser], [ScheduleType], [Status], [SupplierCode], [Type], [UserDefined1], [UserDefined2], [UserDefined3], [UserDefined4], [UserDefined5]) ON [PRIMARY]
+GO

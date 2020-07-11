@@ -709,6 +709,10 @@ from
 --<Debug>
 if @Debug & 1 = 1 begin
 	print	'	...calculated.   ' + Convert (varchar, DateDiff (ms, @StartDT, GetDate ())) + ' ms'
+	select
+		*
+	from
+		@RawReleases rr
 end
 --</Debug>
 
@@ -1630,11 +1634,12 @@ from
 						where
 							ss.RawDocumentGUID = ssh.RawDocumentGUID
 							and ss.ShipToCode = od.destination
+							and ss.CustomerPart = od.customer_part
 					)
 		) od
 where
 	a.NewDocument = 1	
-	and od.RunningTotal > coalesce(od.InvQty, 0)		
+	and od.RunningTotal > coalesce(od.InvQty, 0)
 order by 1,2,5,4,7
 
 
@@ -1934,6 +1939,9 @@ select
 	@Error, @ProcReturn, @TranDT, @ProcResult
 go
 
+
+go
+
 commit transaction
 --rollback transaction
 
@@ -1948,64 +1956,4 @@ go
 Results {
 }
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 GO

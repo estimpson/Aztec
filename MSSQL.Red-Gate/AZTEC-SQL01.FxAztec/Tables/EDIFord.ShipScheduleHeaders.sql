@@ -20,3 +20,5 @@ CREATE TABLE [EDIFord].[ShipScheduleHeaders]
 GO
 ALTER TABLE [EDIFord].[ShipScheduleHeaders] ADD CONSTRAINT [PK__ShipSche__FFEE7450E1A34753] PRIMARY KEY NONCLUSTERED  ([RowID]) ON [PRIMARY]
 GO
+CREATE NONCLUSTERED INDEX [ix_ShipScheduleHeaders_Status] ON [EDIFord].[ShipScheduleHeaders] ([Status], [RawDocumentGUID], [RowID]) ON [PRIMARY]
+GO

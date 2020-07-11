@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create procedure [SPORTAL].[usp_Preobject_ChangeLot]
+CREATE procedure [SPORTAL].[usp_Preobject_ChangeLot]
 	@SupplierCode varchar(20)
 ,	@Serial int
 ,	@NewLot varchar(50)
@@ -42,6 +42,12 @@ set	@TranDT = coalesce(@TranDT, GetDate())
 --- </Tran>
 
 ---	<ArgumentValidation>
+declare
+	@Exception varchar(1000)
+,	@ProcedureName varchar(50)
+
+set @ProcedureName = 'SPORTAL.usp_Preobject_ChangeLot'
+
 /*	Valid supplier code. */
 if	not exists
 	(	select
@@ -52,6 +58,11 @@ if	not exists
 			sl.SupplierCode = @SupplierCode
 			and sl.Status = 0
 	) begin
+
+	set @Exception = 'Invalid supplier code: ' + @SupplierCode	
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 	set	@Result = 999999
 	RAISERROR ('Error:  Invalid supplier code %s in procedure %s', 16, 1, @SupplierCode, @ProcName)
 	rollback tran @ProcName
@@ -71,6 +82,11 @@ if	not exists
 			and so.Serial = @Serial
 			and so.Status = 0
 	) begin
+
+	set @Exception = 'Invalid serial: ' + @Serial	
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 	set	@Result = 999999
 	RAISERROR ('Error:  Invalid serial %d in procedure %s', 16, 1, @Serial, @ProcName)
 	rollback tran @ProcName
@@ -100,12 +116,22 @@ select
 	@RowCount = @@Rowcount
 
 if	@Error != 0 begin
+
+	set @Exception = 'Error updating table: ' + @TableName	
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 	set	@Result = 999999
 	RAISERROR ('Error updating table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
 	rollback tran @ProcName
 	return
 end
 if	@RowCount != 1 begin
+
+	set @Exception = 'Error updating table: ' + @TableName + '. Rows updated: ' + @RowCount + '. Expected rows: 1.'	
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 	set	@Result = 999999
 	RAISERROR ('Error updating %s in procedure %s.  Rows Updated: %d.  Expected rows: 1.', 16, 1, @TableName, @ProcName, @RowCount)
 	rollback tran @ProcName

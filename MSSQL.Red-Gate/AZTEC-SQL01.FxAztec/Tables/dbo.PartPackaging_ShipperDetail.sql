@@ -25,5 +25,5 @@ ALTER TABLE [dbo].[PartPackaging_ShipperDetail] ADD CONSTRAINT [FK__PartPacka__P
 GO
 ALTER TABLE [dbo].[PartPackaging_ShipperDetail] ADD CONSTRAINT [FK__PartPacka__PartC__52A5B780] FOREIGN KEY ([PartCode]) REFERENCES [dbo].[part] ([part])
 GO
-ALTER TABLE [dbo].[PartPackaging_ShipperDetail] ADD CONSTRAINT [FK__PartPackaging_Sh__5E176A2C] FOREIGN KEY ([ShipperID], [ShipperPart]) REFERENCES [dbo].[shipper_detail] ([shipper], [part])
+ALTER TABLE [dbo].[PartPackaging_ShipperDetail] ADD CONSTRAINT [FK__PartPackaging_Sh__5E176A2C] FOREIGN KEY ([ShipperID], [ShipperPart]) REFERENCES [dbo].[shipper_detail] ([shipper], [part]) ON DELETE CASCADE ON UPDATE CASCADE
 GO

@@ -2,15 +2,11 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_NULLS ON
 GO
+
 CREATE procedure [SPORTAL].[usp_Q_SupplierShipmentsASNLines_ByASNRowID]
 	@SupplierShipmentsASNRowID int
 as
 begin
-
-	exec FxAztec_Temp.SPORTAL.usp_Q_SupplierShipmentsASNLines_ByASNRowID
-		@SupplierShipmentsASNRowID = @SupplierShipmentsASNRowID
-	
-	return
 
 	set nocount on
 

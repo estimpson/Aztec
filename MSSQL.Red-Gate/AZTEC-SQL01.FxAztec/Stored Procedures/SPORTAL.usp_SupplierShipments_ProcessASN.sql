@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create procedure [SPORTAL].[usp_SupplierShipments_ProcessASN]
+CREATE procedure [SPORTAL].[usp_SupplierShipments_ProcessASN]
 	@SupplierCode varchar(10)
 ,	@ShipperID varchar(50)
 ,	@TranDT datetime = null out
@@ -12,18 +12,6 @@ create procedure [SPORTAL].[usp_SupplierShipments_ProcessASN]
 ,	@DebugMsg varchar(max) = null out
 as
 begin
-	
-	if	db_name(db_id()) = 'FxAztec' begin
-		exec FxAztec_Temp.SPORTAL.usp_SupplierShipments_ProcessASN
-			@SupplierCode = @SupplierCode
-		,	@ShipperID = @ShipperID
-		,	@TranDT = @TranDT output	 -- datetime
-		,	@Result = @Result output	 -- int
-		,	@Debug = 0					 -- int
-		,	@DebugMsg = @DebugMsg output -- varchar(max)
-	
-		return
-	end
 
 	--set xact_abort on
 	set nocount on

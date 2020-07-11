@@ -64,7 +64,7 @@ set
 /*	Create material issue audit trail. (i1) */
 declare
 	@materialIssueATType char(1)
-,	@materialIssueATRemarks char(1)
+,	@materialIssueATRemarks varchar(10)
 
 set	@materialIssueATType = 'M'
 set @materialIssueATRemarks = 'Mat Issue'
@@ -405,4 +405,5 @@ go
 Results {
 }
 */
+
 GO

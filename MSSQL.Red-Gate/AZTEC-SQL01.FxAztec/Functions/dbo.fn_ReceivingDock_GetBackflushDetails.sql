@@ -2,7 +2,8 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_NULLS ON
 GO
-CREATE function [dbo].[fn_ReceivingDock_GetBackflushDetails]
+
+create function [dbo].[fn_ReceivingDock_GetBackflushDetails]
 (	@BackflushNumber varchar(50)
 )
 returns @InventoryConsumption table
@@ -99,26 +100,28 @@ set	@qtyRequested =
 	,	QtyPer = null
 	from
 		dbo.BackflushHeaders bh
-		join dbo.audit_trail atRLast
-			on atRLast.serial = bh.SerialProduced
-			and atRLast.date_stamp =
-				(	select
-				 		max(date_stamp)
-				 	from
-				 		dbo.audit_trail
-				 	where
-				 		type = 'R'
-				 		and serial = bh.SerialProduced
-						and std_quantity > 0
-				)
+		cross apply
+		(	select top(1)
+				at.vendor
+			from
+				dbo.audit_trail at
+			where
+				at.type = 'R'
+				and at.serial = bh.SerialProduced
+				and at.std_quantity > 0
+			order by
+				at.date_stamp desc
+		) atRLast
 		join FT.XRt xr
 			on xr.TopPart = bh.PartProduced
 			and xr.BOMLevel = 1
 		join dbo.object oAvailable
+			left join dbo.destination d
+				on d.destination = oAvailable.location
 			on oAvailable.part = xr.ChildPart
 			and oAvailable.status in ('A', 'P')
-			and oAvailable.location = atRLast.vendor
 			and oAvailable.std_quantity > 0
+			and d.vendor = atRLast.vendor
 	where
 		bh.BackflushNumber = @BackflushNumber
 

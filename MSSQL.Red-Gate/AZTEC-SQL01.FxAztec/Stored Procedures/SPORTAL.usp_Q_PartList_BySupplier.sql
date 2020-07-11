@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create procedure [SPORTAL].[usp_Q_PartList_BySupplier]
+CREATE procedure [SPORTAL].[usp_Q_PartList_BySupplier]
 	@SupplierCode varchar(20)
 ,	@TranDT datetime = null out
 ,	@Result integer = null out
@@ -30,6 +30,12 @@ set	@TranDT = coalesce(@TranDT, GetDate())
 --- </Tran>
 
 ---	<ArgumentValidation>
+declare
+	@Exception varchar(1000)
+,	@ProcedureName varchar(50)
+
+set @ProcedureName = 'SPORTAL.usp_Q_PartList_BySupplier'
+
 /*	Validate supplier code. */
 if	not exists
 	(	select
@@ -40,12 +46,37 @@ if	not exists
 			sl.SupplierCode = @SupplierCode
 			and sl.Status = 0
 	) begin
+
+	set @Exception = 'Invalid supplier code: ' + @SupplierCode
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 	set	@Result = 999999
-	RAISERROR ('Error:  Invalid supplier code %s in procedure %s', 16, 1, @SupplierCode, @ProcName)
+	RAISERROR ('Error:  Invalid supplier code %s.  Procedure %s.', 16, 1, @SupplierCode, @ProcName)
 	--rollback tran @ProcName
 	return
 end
+
+/* Validate part list. */
+if not exists (
+		select
+			*
+		from
+			SPORTAL.SupplierPartList spl
+		where
+			spl.SupplierCode = @SupplierCode
+			and spl.Status = 0 ) begin
+
+	set @Exception = 'No parts found for supplier: ' + @SupplierCode + '.'
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
+	set	@Result = 999999
+	raiserror ('Error:  No parts found for supplier %s.  Procedure %s.', 16, 1, @SupplierCode, @ProcName)
+	return
+end
 ---	</ArgumentValidation>
+
 
 --- <Body>
 /*	Return part list for this supplier. */

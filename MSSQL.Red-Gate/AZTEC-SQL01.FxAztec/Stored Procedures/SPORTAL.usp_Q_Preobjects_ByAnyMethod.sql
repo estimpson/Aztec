@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create procedure [SPORTAL].[usp_Q_Preobjects_ByAnyMethod]
+CREATE procedure [SPORTAL].[usp_Q_Preobjects_ByAnyMethod]
 	@SupplierCode varchar(20)
 ,	@FirstSerial varchar(12) = '' -- 'Leave empty or pass first serial for batch.
 ,	@LotNumber varchar(100) = ''  -- 'Leave empty or provide lot number.
@@ -33,6 +33,12 @@ set	@TranDT = coalesce(@TranDT, GetDate())
 --- </Tran>
 
 ---	<ArgumentValidation>
+declare
+	@Exception varchar(1000)
+,	@ProcedureName varchar(50)
+
+set @ProcedureName = 'SPORTAL.usp_Q_Preobjects_ByAnyMethod'
+
 /*	Validate supplier code. */
 if	not exists
 	(	select
@@ -43,6 +49,11 @@ if	not exists
 			sl.SupplierCode = @SupplierCode
 			and sl.Status = 0
 	) begin
+
+	set @Exception = 'Invalid supplier code: ' + @SupplierCode	
+	exec 
+		SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 	set	@Result = 999999
 	RAISERROR ('Error:  Invalid supplier code %s in procedure %s', 16, 1, @SupplierCode, @ProcName)
 	--rollback tran @ProcName
@@ -65,18 +76,30 @@ if	@FirstSerial > '' begin
 	
 	set	@Error = @@Error
 	if	@Error != 0 begin
+		set @Exception = 'Exception when executing SPORTAL.usp_Q_Preobjects_BySupplierBatch'
+		exec 
+			SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 		set	@Result = 900501
 		RAISERROR ('Error encountered in %s.  Error: %d while calling %s', 16, 1, @ProcName, @Error, @CallProcName)
 		rollback tran @ProcName
 		return	@Result
 	end
 	if	@ProcReturn != 0 begin
+		set @Exception = 'Exception when executing SPORTAL.usp_Q_Preobjects_BySupplierBatch'
+		exec 
+			SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 		set	@Result = 900502
 		RAISERROR ('Error encountered in %s.  ProcReturn: %d while calling %s', 16, 1, @ProcName, @ProcReturn, @CallProcName)
 		rollback tran @ProcName
 		return	@Result
 	end
 	if	@ProcResult != 0 begin
+		set @Exception = 'Exception when executing SPORTAL.usp_Q_Preobjects_BySupplierBatch'
+		exec 
+			SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+		
 		set	@Result = 900502
 		RAISERROR ('Error encountered in %s.  ProcResult: %d while calling %s', 16, 1, @ProcName, @ProcResult, @CallProcName)
 		rollback tran @ProcName
@@ -99,18 +122,30 @@ else if
 	
 	set	@Error = @@Error
 	if	@Error != 0 begin
+		set @Exception = 'Exception when executing SPORTAL.usp_Q_Preobjects_BySupplierLot'
+		exec 
+			SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 		set	@Result = 900501
 		RAISERROR ('Error encountered in %s.  Error: %d while calling %s', 16, 1, @ProcName, @Error, @CallProcName)
 		rollback tran @ProcName
 		return	@Result
 	end
 	if	@ProcReturn != 0 begin
+		set @Exception = 'Exception when executing SPORTAL.usp_Q_Preobjects_BySupplierLot'
+		exec 
+			SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 		set	@Result = 900502
 		RAISERROR ('Error encountered in %s.  ProcReturn: %d while calling %s', 16, 1, @ProcName, @ProcReturn, @CallProcName)
 		rollback tran @ProcName
 		return	@Result
 	end
 	if	@ProcResult != 0 begin
+		set @Exception = 'Exception when executing SPORTAL.usp_Q_Preobjects_BySupplierLot'
+		exec 
+			SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 		set	@Result = 900502
 		RAISERROR ('Error encountered in %s.  ProcResult: %d while calling %s', 16, 1, @ProcName, @ProcResult, @CallProcName)
 		rollback tran @ProcName
@@ -133,18 +168,30 @@ else if
 	
 	set	@Error = @@Error
 	if	@Error != 0 begin
+		set @Exception = 'Exception when executing SPORTAL.usp_Q_Preobjects_BySupplierSerialList'
+		exec 
+			SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 		set	@Result = 900501
 		RAISERROR ('Error encountered in %s.  Error: %d while calling %s', 16, 1, @ProcName, @Error, @CallProcName)
 		rollback tran @ProcName
 		return	@Result
 	end
 	if	@ProcReturn != 0 begin
+		set @Exception = 'Exception when executing SPORTAL.usp_Q_Preobjects_BySupplierSerialList'
+		exec 
+			SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 		set	@Result = 900502
 		RAISERROR ('Error encountered in %s.  ProcReturn: %d while calling %s', 16, 1, @ProcName, @ProcReturn, @CallProcName)
 		rollback tran @ProcName
 		return	@Result
 	end
 	if	@ProcResult != 0 begin
+		set @Exception = 'Exception when executing SPORTAL.usp_Q_Preobjects_BySupplierSerialList'
+		exec 
+			SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 		set	@Result = 900502
 		RAISERROR ('Error encountered in %s.  ProcResult: %d while calling %s', 16, 1, @ProcName, @ProcResult, @CallProcName)
 		rollback tran @ProcName
@@ -162,20 +209,32 @@ else begin
 		,	@TranDT = @TranDT out
 		,	@Result = @ProcResult out
 	
-	set	@Error = @@Error
+	set	@Error = @@error
 	if	@Error != 0 begin
+		set @Exception = 'Exception when executing SPORTAL.usp_Q_Preobjects_BySupplier'
+		exec 
+			SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 		set	@Result = 900501
 		RAISERROR ('Error encountered in %s.  Error: %d while calling %s', 16, 1, @ProcName, @Error, @CallProcName)
 		rollback tran @ProcName
 		return	@Result
 	end
 	if	@ProcReturn != 0 begin
+		set @Exception = 'Exception when executing SPORTAL.usp_Q_Preobjects_BySupplier'
+		exec 
+			SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 		set	@Result = 900502
 		RAISERROR ('Error encountered in %s.  ProcReturn: %d while calling %s', 16, 1, @ProcName, @ProcReturn, @CallProcName)
 		rollback tran @ProcName
 		return	@Result
 	end
 	if	@ProcResult != 0 begin
+		set @Exception = 'Exception when executing SPORTAL.usp_Q_Preobjects_BySupplier'
+		exec 
+			SPORTAL.ExceptionLogInsert @ProcedureName, @Exception
+
 		set	@Result = 900502
 		RAISERROR ('Error encountered in %s.  ProcResult: %d while calling %s', 16, 1, @ProcName, @ProcResult, @CallProcName)
 		rollback tran @ProcName

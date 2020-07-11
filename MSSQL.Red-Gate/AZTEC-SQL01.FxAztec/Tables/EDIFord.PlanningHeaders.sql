@@ -20,3 +20,5 @@ CREATE TABLE [EDIFord].[PlanningHeaders]
 GO
 ALTER TABLE [EDIFord].[PlanningHeaders] ADD CONSTRAINT [PK__Planning__FFEE745049C63427] PRIMARY KEY NONCLUSTERED  ([RowID]) ON [PRIMARY]
 GO
+CREATE NONCLUSTERED INDEX [ix_PlanningHeaders_Status] ON [EDIFord].[PlanningHeaders] ([Status], [RawDocumentGUID], [RowID]) ON [PRIMARY]
+GO

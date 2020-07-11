@@ -33,3 +33,5 @@ CREATE TABLE [EDIFord].[PlanningAccums]
 GO
 ALTER TABLE [EDIFord].[PlanningAccums] ADD CONSTRAINT [PK__Planning__FFEE74509257B6A2] PRIMARY KEY NONCLUSTERED  ([RowID]) ON [PRIMARY]
 GO
+CREATE NONCLUSTERED INDEX [ix_PlanningAccums_1] ON [EDIFord].[PlanningAccums] ([RawDocumentGUID], [ShipToCode], [ShipFromCode], [CustomerPart]) ON [PRIMARY]
+GO
