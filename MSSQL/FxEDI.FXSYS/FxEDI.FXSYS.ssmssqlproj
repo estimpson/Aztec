@@ -92,9 +92,9 @@
           <FullPath>Synonym.FxEDI.FXSYS.usp_PrintError.sql</FullPath>
         </FileNode>
         <FileNode Name="Synonym.FxEDI.FXSYS.usp_TableToHTML.sql">
-          <AssociatedConnectionMoniker />
-          <AssociatedConnSrvName />
-          <AssociatedConnUserName />
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Synonym.FxEDI.FXSYS.usp_TableToHTML.sql</FullPath>
         </FileNode>
       </Items>

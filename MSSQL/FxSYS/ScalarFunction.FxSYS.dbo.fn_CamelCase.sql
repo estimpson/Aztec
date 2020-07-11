@@ -62,3 +62,7 @@ as begin
 	return @inputString
 end
 go
+
+select dbo.fn_CamelCase('x_y')
+go
+

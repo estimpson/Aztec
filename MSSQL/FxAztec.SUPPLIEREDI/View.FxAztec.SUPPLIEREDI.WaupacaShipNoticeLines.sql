@@ -16,7 +16,7 @@ create view SUPPLIEREDI.WaupacaShipNoticeLines
 as
 
 select
-	snh.Status
+	snl.Status
 ,	snh.Type
 ,	snh.RawDocumentGUID
 ,	SupplierPart = snl.PartNumber
@@ -24,6 +24,7 @@ select
 ,	snl.Quantity
 ,	PartCode = phBestMatch.blanket_part
 ,	PurchaseOrderNumber = phBestMatch.po_number
+,	snl.RowID
 from
 	FxEDI.EDI4010_WAUPACA.ShipNoticeHeaders snh
 	join FxEDI.EDI4010_WAUPACA.ShipNotices sn
@@ -56,15 +57,6 @@ from
 		order by
 			phBestMatch.po_number
 	) phBestMatch
-group by
-	snh.Status
-,	snh.Type
-,	snh.RawDocumentGUID
-,	snl.PartNumber
-,	sno.PurchaseOrder
-,	snl.Quantity
-,	phBestMatch.po_number
-,	phBestMatch.blanket_part
 go
 
 select
