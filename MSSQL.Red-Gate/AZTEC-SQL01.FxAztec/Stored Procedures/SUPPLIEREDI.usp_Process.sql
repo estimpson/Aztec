@@ -134,6 +134,7 @@ begin
 			,	ObjectSerial int null
 			,	ObjectParentSerial int null
 			,	ObjectPackageType varchar(25) null
+			,	OutsideProcess bit
 			)
 
 			insert
@@ -160,6 +161,7 @@ begin
 			,	ObjectSerial
 			,	ObjectParentSerial
 			,	ObjectPackageType
+			,	OutsideProcess
 			)
 			select
 				sn.RawDocumentGUID
@@ -184,6 +186,7 @@ begin
 			,	sno.ObjectSerial
 			,	sno.ObjectParentSerial
 			,	sno.ObjectPackageType
+			,	OutsideProcess = case when OP.OP = 1 then 1 else 0 end
 			from
 				SUPPLIEREDI.ShipNotices sn with (tablockx)
 				join SUPPLIEREDI.ShipNoticeLines snl with (tablockx)
@@ -191,6 +194,17 @@ begin
 				join SUPPLIEREDI.ShipNoticeObjects sno with (tablockx)
 					on sno.RawDocumentGUID = sn.RawDocumentGUID
 					and sno.SupplierPart = snl.SupplierPart
+				outer apply
+				(	select top(1)
+						OP = 1
+					from
+						dbo.part_machine pmOP
+					where
+						pmOP.part = snl.PartCode
+						and pmOP.machine = sn.ShipFromCode
+					order by
+						pmOP.sequence
+				) OP
 			where
 				sn.Status = 0
 				and snl.Quantity is not null
@@ -435,7 +449,7 @@ begin
 				ReceiverNumber = 0
 			,	Type =
 					case
-						when v.code is null then 1  -- (select dbo.udf_TypeValue ('ReceiverHeaders', 'Purchase Order'))
+						when sn.OutsideProcess = 0 then 1  -- (select dbo.udf_TypeValue ('ReceiverHeaders', 'Purchase Order'))
 						else 3 -- (select dbo.udf_TypeValue ('ReceiverHeaders', 'Outside Process'))
 					end
 			,	Status = 0 -- (select dbo.udf_StatusValue ('ReceiverHeaders', 'New'))
@@ -452,10 +466,6 @@ begin
 			,	SupplierASNGuid = sn.RawDocumentGUID
 			from
 				@ShipNotices sn
-				left join dbo.destination d
-					join dbo.vendor v
-						on v.code = d.vendor
-					on d.destination = sn.ShipToCode
 
 			--- <TOC>
 			if	@Debug & 0x01 = 0x01 begin
@@ -872,11 +882,11 @@ begin
 					@html nvarchar(max)
 			
 			--- <Call>	
-			set	@CallProcName = 'FT.usp_TableToHTML'
+			set	@CallProcName = 'FXSYS.usp_TableToHTML'
 			execute
-				@ProcReturn = FT.usp_TableToHTML
+				@ProcReturn = FXSYS.usp_TableToHTML
 					@TableName = '#emailReport'
-				,	@OrderBy = N'AlertType'
+				,	@OrderBy = N'RowId'
 				,	@Html = @html out
 				,	@IncludeRowNumber = 0
 				,	@CamelCaseHeaders = 1
@@ -921,6 +931,7 @@ begin
 			,	@body = @emailBody
 			,	@body_format = 'HTML'
 			,	@importance = 'HIGH'
+			,	@exclude_query_output = 1
 
 			--- <TOC>
 			if	@Debug & 0x01 = 0x01 begin
