@@ -18,6 +18,7 @@ create procedure dbo.usp_TableToHTML
 ,	@includeRowNumber bit = 1
 ,	@camelCaseHeaders bit = 1
 as
+set ansi_warnings on 
 
 declare
 	@getColumnListSyntax nvarchar(max)

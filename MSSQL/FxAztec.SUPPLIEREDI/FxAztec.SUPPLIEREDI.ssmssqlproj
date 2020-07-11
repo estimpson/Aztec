@@ -44,14 +44,14 @@
     <LogicalFolder Name="Queries" Type="0" Sorted="true">
       <Items>
         <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_Process.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_Process.sql</FullPath>
         </FileNode>
         <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_ProcessReceiver_byReceiverObjectList.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_ProcessReceiver_byReceiverObjectList.sql</FullPath>
         </FileNode>
@@ -61,11 +61,89 @@
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_Purchasing_AddReceipt_byReceiverObjectList.sql</FullPath>
         </FileNode>
+        <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_Receiver_byReceiverObjectList.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_Receiver_byReceiverObjectList.sql</FullPath>
+        </FileNode>
         <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_ReceivingDock_Backflush_byReceiverObjectList.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_ReceivingDock_Backflush_byReceiverObjectList.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_CancelEdiShipper.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_CancelEdiShipper.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_CancelEdiShipperLine.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_CancelEdiShipperLine.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_GetReceiverDetails_byRawDocumentGuidList.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_GetReceiverDetails_byRawDocumentGuidList.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_GetShipNoticeAlerts_byRawDocumentGuidList.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_GetShipNoticeAlerts_byRawDocumentGuidList.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_GetShipNoticeLines_byRawDocumentGuidList.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_GetShipNoticeLines_byRawDocumentGuidList.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_GetShipNotices.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_GetShipNotices.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_ProcessEdiShipper.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_ProcessEdiShipper.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_ReceiverDetail_SetAsnGuid.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_ReceiverDetail_SetAsnGuid.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_RestoreEdiShipper.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_RestoreEdiShipper.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_RestoreEdiShipperLine.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_RestoreEdiShipperLine.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_SaveSupplierPart.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_SaveSupplierPart.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_UndoProcessEdiShipper.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_UndoProcessEdiShipper.sql</FullPath>
         </FileNode>
         <FileNode Name="Schema.FxAztec.SUPPLIEREDI.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>

@@ -29,6 +29,8 @@ begin
 	,	[State] = convert(varchar(5), error_state())
 	,	[Procedure] = isnull(error_procedure(), '-')
 	,	[Line] = convert(varchar(5), error_line())
+	into
+		#errorInfo
 
 	declare @html1 nvarchar(max);
 	

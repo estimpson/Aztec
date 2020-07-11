@@ -16,6 +16,7 @@ create view SUPPLIEREDI.WaupacaShipNotices
 as
 select
 	snh.Status
+,	ShipperLineStatus = snl.Status
 ,	snh.Type
 ,	snh.RawDocumentGUID
 ,	sno.ShipperID
@@ -29,10 +30,14 @@ from
 		on sn.RawDocumentGUID = snh.RawDocumentGUID
 	join FxEDI.EDI4010_WAUPACA.ShipNoticeOrders sno
 		on sno.RawDocumentGUID = snh.RawDocumentGUID
+	join FxEDI.EDI4010_WAUPACA.ShipNoticeLines snl
+		on snl.RawDocumentGUID = snh.RawDocumentGUID
+		and snl.PurchaseOrder = sno.PurchaseOrder
 	join dbo.po_header ph
 		on ph.po_number = sno.PurchaseOrder
 group by
 	snh.Status
+,	snl.Status
 ,	snh.Type
 ,	snh.RawDocumentGUID
 ,	sno.ShipperID
@@ -43,7 +48,15 @@ group by
 go
 
 select
-	*
+	wsn.Status
+,	wsn.ShipperLineStatus
+,	wsn.Type
+,	wsn.RawDocumentGUID
+,	wsn.ShipperID
+,	wsn.BillOfLadingNumber
+,	wsn.ShipFromCode
+,	wsn.ShipToCode
+,	wsn.ShipDT
 from
 	SUPPLIEREDI.WaupacaShipNotices as wsn
 where

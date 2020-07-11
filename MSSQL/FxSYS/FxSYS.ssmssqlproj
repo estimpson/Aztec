@@ -3,6 +3,18 @@
   <Items>
     <LogicalFolder Name="Connections" Type="2" Sorted="true">
       <Items>
+        <ConnectionNode Name="Aztec_FT:estimpson">
+          <Created>2020-07-08T21:36:57.7156914-04:00</Created>
+          <Type>SQL</Type>
+          <Server>Aztec_FT</Server>
+          <UserName>estimpson</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB>FxAztec</InitialDB>
+          <LoginTimeout>30</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
         <ConnectionNode Name="aztec-sql01.aztecmfgcorp.com:estimpson">
           <Created>2020-06-30T14:58:40.190813-04:00</Created>
           <Type>SQL</Type>
@@ -26,9 +38,9 @@
           <FullPath>Aggregate.FxSYS.dbo.ToList.sql</FullPath>
         </FileNode>
         <FileNode Name="Procedure.FxSYS.dbo.usp_EmailError.sql">
-          <AssociatedConnectionMoniker />
-          <AssociatedConnSrvName />
-          <AssociatedConnUserName />
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Procedure.FxSYS.dbo.usp_EmailError.sql</FullPath>
         </FileNode>
         <FileNode Name="Procedure.FxSYS.dbo.usp_LogError.sql">
@@ -50,15 +62,15 @@
           <FullPath>Procedure.FxSYS.dbo.usp_PrintError.sql</FullPath>
         </FileNode>
         <FileNode Name="Procedure.FxSYS.dbo.usp_TableToHTML.sql">
-          <AssociatedConnectionMoniker />
-          <AssociatedConnSrvName />
-          <AssociatedConnUserName />
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Procedure.FxSYS.dbo.usp_TableToHTML.sql</FullPath>
         </FileNode>
         <FileNode Name="ScalarFunction.FxSYS.dbo.fn_CamelCase.sql">
-          <AssociatedConnectionMoniker />
-          <AssociatedConnSrvName />
-          <AssociatedConnUserName />
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>ScalarFunction.FxSYS.dbo.fn_CamelCase.sql</FullPath>
         </FileNode>
         <FileNode Name="ScalarFunction.FxSYS.dbo.udf_GetDT.sql">
