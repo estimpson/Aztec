@@ -157,6 +157,7 @@ begin
 			,	wsn.ShipFromCode
 			,	wsn.ShipToCode
 			,	wsn.ShipDT
+			,	wsn.RawDocumentGUID
 			,	Alerts.InformationCount
 			,	Alerts.WarningCount
 			,	Alerts.ErrorCount
