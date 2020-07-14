@@ -3,6 +3,12 @@ GO
 SET ANSI_NULLS ON
 GO
 
+--if	objectproperty(object_id('SPORTAL.usp_SupplierShipments_ProcessASN'), 'IsProcedure') = 1 begin
+--	drop procedure SPORTAL.usp_SupplierShipments_ProcessASN
+--end
+--go
+
+--create procedure SPORTAL.usp_SupplierShipments_ProcessASN
 CREATE procedure [SPORTAL].[usp_SupplierShipments_ProcessASN]
 	@SupplierCode varchar(10)
 ,	@ShipperID varchar(50)
@@ -151,9 +157,11 @@ begin
 							ph.po_number
 						from
 							dbo.po_header ph
+							join dbo.destination dV
+								on dV.vendor = ph.vendor_code
 						where
 							ph.plant = ssa.Destination
-							and ph.vendor_code = ssa.SupplierCode
+							and dV.destination = ssa.SupplierCode
 							and ph.blanket_part = ssal.Part
 						order by
 							ph.po_number desc
