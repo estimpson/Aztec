@@ -3,9 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-
-
-CREATE view [SPORTAL].[SupplierPartList]
+create view [SPORTAL].[SupplierPartList]
 as
 select
 	spl.SupplierCode
@@ -15,6 +13,9 @@ select
 		case 
 			when spl.SupplierCode = 'MID0010' and spl.InternalPartCode like '2488%' then -1
 			when spl.SupplierCode = 'MID0010' and spl.SupplierPartCode > '' and spl.InternalPartCount > 0 and HasBlanketPO = 1 then 0
+			when spl.SupplierCode = 'AUB0010' and spl.SupplierPartCode > '' and spl.InternalPartCount > 0 and HasBlanketPO = 1 then 0
+			when spl.SupplierCode = 'HIB0010' and spl.SupplierPartCode > '' and spl.InternalPartCount > 0 and HasBlanketPO = 1 then 0
+			when spl.SupplierCode = 'RDI0010' and spl.SupplierPartCode > '' and spl.InternalPartCount > 0 and HasBlanketPO = 1 then 0
 			when spl.SupplierPartCode > '' and spl.InternalPartCount = 1 and HasBlanketPO = 1 then 0 
 			else -1 
 		end
@@ -46,9 +47,11 @@ from
 								*
 							from
 								dbo.po_header ph
+								join dbo.destination d
+									on d.vendor = ph.vendor_code
 							where
 								ph.blanket_part = p.part
-								and ph.vendor_code = sl.SupplierCode
+								and d.destination = sl.SupplierCode
 								and ph.status = 'A'
 						) then 1
 					else 0
@@ -62,11 +65,11 @@ from
 				on pInv.part = p.part
 			join dbo.part_vendor pv
 				join SPORTAL.SupplierList sl
-					on sl.SupplierCode = pv.vendor
+					join dbo.destination d
+						on d.destination = sl.SupplierCode
+					on d.vendor = pv.vendor
 				on pv.part = p.part
 		where
 			p.class != 'O'
 	) spl
-
-
 GO
