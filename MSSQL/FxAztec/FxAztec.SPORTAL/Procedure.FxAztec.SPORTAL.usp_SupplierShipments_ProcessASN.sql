@@ -6,12 +6,13 @@ Create Procedure.FxAztec.SPORTAL.usp_SupplierShipments_ProcessASN.sql
 use FxAztec
 go
 
-if	objectproperty(object_id('SPORTAL.usp_SupplierShipments_ProcessASN'), 'IsProcedure') = 1 begin
-	drop procedure SPORTAL.usp_SupplierShipments_ProcessASN
-end
-go
+--if	objectproperty(object_id('SPORTAL.usp_SupplierShipments_ProcessASN'), 'IsProcedure') = 1 begin
+--	drop procedure SPORTAL.usp_SupplierShipments_ProcessASN
+--end
+--go
 
-create procedure SPORTAL.usp_SupplierShipments_ProcessASN
+--create procedure SPORTAL.usp_SupplierShipments_ProcessASN
+alter procedure SPORTAL.usp_SupplierShipments_ProcessASN
 	@SupplierCode varchar(10)
 ,	@ShipperID varchar(50)
 ,	@TranDT datetime = null out
@@ -20,18 +21,6 @@ create procedure SPORTAL.usp_SupplierShipments_ProcessASN
 ,	@DebugMsg varchar(max) = null out
 as
 begin
-	
-	if	db_name(db_id()) = 'FxAztec' begin
-		exec FxAztec_Temp.SPORTAL.usp_SupplierShipments_ProcessASN
-			@SupplierCode = @SupplierCode
-		,	@ShipperID = @ShipperID
-		,	@TranDT = @TranDT output	 -- datetime
-		,	@Result = @Result output	 -- int
-		,	@Debug = 0					 -- int
-		,	@DebugMsg = @DebugMsg output -- varchar(max)
-	
-		return
-	end
 
 	--set xact_abort on
 	set nocount on
@@ -171,9 +160,11 @@ begin
 							ph.po_number
 						from
 							dbo.po_header ph
+							join dbo.destination dV
+								on dV.vendor = ph.vendor_code
 						where
 							ph.plant = ssa.Destination
-							and ph.vendor_code = ssa.SupplierCode
+							and dV.destination = ssa.SupplierCode
 							and ph.blanket_part = ssal.Part
 						order by
 							ph.po_number desc

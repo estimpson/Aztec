@@ -15,13 +15,25 @@
           <ConnectionProtocol>NotSpecified</ConnectionProtocol>
           <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
         </ConnectionNode>
+        <ConnectionNode Name="aztec-sql01:estimpson">
+          <Created>2020-07-11T17:19:50.0685081-04:00</Created>
+          <Type>SQL</Type>
+          <Server>aztec-sql01</Server>
+          <UserName>estimpson</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB />
+          <LoginTimeout>30</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
       </Items>
     </LogicalFolder>
     <LogicalFolder Name="Queries" Type="0" Sorted="true">
       <Items>
         <FileNode Name="Procedure.FxEDI.EDI4010_WAUPACA.usp_StageShipNotices.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01.aztecmfgcorp.com:False:estimpson</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>aztec-sql01.aztecmfgcorp.com</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Procedure.FxEDI.EDI4010_WAUPACA.usp_StageShipNotices.sql</FullPath>
         </FileNode>
@@ -32,8 +44,8 @@
           <FullPath>Schema.FxEDI.EDI4010_WAUPACA.sql</FullPath>
         </FileNode>
         <FileNode Name="Script.FxEDI.EDI4010_WAUPACA.StageShipNotices.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01.aztecmfgcorp.com:False:estimpson</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>aztec-sql01.aztecmfgcorp.com</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Script.FxEDI.EDI4010_WAUPACA.StageShipNotices.sql</FullPath>
         </FileNode>

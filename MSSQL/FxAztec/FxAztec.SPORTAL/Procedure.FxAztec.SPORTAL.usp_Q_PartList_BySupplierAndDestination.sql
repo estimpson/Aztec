@@ -6,12 +6,13 @@ Create Procedure.FxAztec.SPORTAL.usp_Q_PartList_BySupplierAndDestination.sql
 use FxAztec
 go
 
-if	objectproperty(object_id('SPORTAL.usp_Q_PartList_BySupplierAndDestination'), 'IsProcedure') = 1 begin
-	drop procedure SPORTAL.usp_Q_PartList_BySupplierAndDestination
-end
-go
+--if	objectproperty(object_id('SPORTAL.usp_Q_PartList_BySupplierAndDestination'), 'IsProcedure') = 1 begin
+--	drop procedure SPORTAL.usp_Q_PartList_BySupplierAndDestination
+--end
+--go
 
-create procedure SPORTAL.usp_Q_PartList_BySupplierAndDestination
+--create procedure SPORTAL.usp_Q_PartList_BySupplierAndDestination
+alter procedure SPORTAL.usp_Q_PartList_BySupplierAndDestination
 	@SupplierCode varchar(20)
 ,	@Destination varchar(20)
 ,	@TranDT datetime = null out
@@ -78,10 +79,11 @@ from
 				PONumber = ph.po_number
 			from
 				dbo.po_header ph
+				join dbo.destination d
+					on d.vendor = ph.vendor_code
 			where
 				ph.blanket_part = spl.InternalPartCode
-				and ph.vendor_code = @SupplierCode
-				and ph.plant = @Destination
+				and d.destination = @SupplierCode
 				and ph.ship_to_destination = @Destination
 			order by
 				ph.po_number desc		
@@ -114,7 +116,8 @@ set statistics time on
 go
 
 declare
-	@SupplierCode varchar(20) = 'MAR0200'
+	@SupplierCode varchar(20) = 'HIB0010'
+,	@Destination varchar(20) = 'MID0010'
 
 declare
 	@ProcReturn integer
@@ -125,6 +128,7 @@ declare
 execute
 	@ProcReturn = SPORTAL.usp_Q_PartList_BySupplierAndDestination
 	@SupplierCode = @SupplierCode
+,	@Destination = @Destination
 ,	@TranDT = @TranDT out
 ,	@Result = @ProcResult out
 
@@ -144,6 +148,7 @@ Results {
 }
 */
 go
+
 
 exec SPORTAL.usp_Q_PartList_BySupplierAndDestination
 	@SupplierCode = 'ROC0010'

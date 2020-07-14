@@ -272,6 +272,7 @@ begin
 			where
 				ro.Status = 0
 				and rh.Status in (0, 1, 2, 3, 4) -- 'New, Cofirmed, Shipped, 
+				and rh.ConfirmedSID not like '%test%'
 
 			--- <TOC>
 			if	@Debug & 0x01 = 0x01 begin

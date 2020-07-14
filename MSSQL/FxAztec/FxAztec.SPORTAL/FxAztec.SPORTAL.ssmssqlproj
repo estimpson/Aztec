@@ -27,26 +27,14 @@
           <ConnectionProtocol>NotSpecified</ConnectionProtocol>
           <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
         </ConnectionNode>
-        <ConnectionNode Name="eehsql1:estimpson">
-          <Created>2018-09-05T14:13:31.4937654-04:00</Created>
+        <ConnectionNode Name="aztec-sql01:estimpson">
+          <Created>2020-07-14T13:40:25.3287033-04:00</Created>
           <Type>SQL</Type>
-          <Server>eehsql1</Server>
+          <Server>aztec-sql01</Server>
           <UserName>estimpson</UserName>
           <Authentication>SQL</Authentication>
           <InitialDB />
-          <LoginTimeout>15</LoginTimeout>
-          <ExecutionTimeout>0</ExecutionTimeout>
-          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
-          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
-        </ConnectionNode>
-        <ConnectionNode Name="eeisql1:estimpson">
-          <Created>2018-01-05T13:16:52.0269762-05:00</Created>
-          <Type>SQL</Type>
-          <Server>eeisql1</Server>
-          <UserName>estimpson</UserName>
-          <Authentication>SQL</Authentication>
-          <InitialDB />
-          <LoginTimeout>15</LoginTimeout>
+          <LoginTimeout>30</LoginTimeout>
           <ExecutionTimeout>0</ExecutionTimeout>
           <ConnectionProtocol>NotSpecified</ConnectionProtocol>
           <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
@@ -67,6 +55,12 @@
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Procedure.FxAztec.SPORTAL.usp_Preobject_ChangeQuantity.sql</FullPath>
         </FileNode>
+        <FileNode Name="Procedure.FxAztec.SPORTAL.usp_Q_DestinationList_BySupplier.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Procedure.FxAztec.SPORTAL.usp_Q_DestinationList_BySupplier.sql</FullPath>
+        </FileNode>
         <FileNode Name="Procedure.FxAztec.SPORTAL.usp_Q_Lots_BySupplier.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec:False:estimpson</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>Aztec</AssociatedConnSrvName>
@@ -80,8 +74,8 @@
           <FullPath>Procedure.FxAztec.SPORTAL.usp_Q_PartList_BySupplier.sql</FullPath>
         </FileNode>
         <FileNode Name="Procedure.FxAztec.SPORTAL.usp_Q_PartList_BySupplierAndDestination.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec:False:estimpson</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>Aztec</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Procedure.FxAztec.SPORTAL.usp_Q_PartList_BySupplierAndDestination.sql</FullPath>
         </FileNode>
@@ -110,9 +104,9 @@
           <FullPath>Procedure.FxAztec.SPORTAL.usp_Q_Preobjects_BySupplierLot.sql</FullPath>
         </FileNode>
         <FileNode Name="Procedure.FxAztec.SPORTAL.usp_Q_Preobjects_BySupplierSerialList.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:eehsql1:False:estimpson</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>eehsql1</AssociatedConnSrvName>
-          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
           <FullPath>Procedure.FxAztec.SPORTAL.usp_Q_Preobjects_BySupplierSerialList.sql</FullPath>
         </FileNode>
         <FileNode Name="Procedure.FxAztec.SPORTAL.usp_Q_SerialObjectBatches_BySupplier.sql">
@@ -128,8 +122,8 @@
           <FullPath>Procedure.FxAztec.SPORTAL.usp_Q_Shipments_BySupplier.sql</FullPath>
         </FileNode>
         <FileNode Name="Procedure.FxAztec.SPORTAL.usp_Supplier_CreateNewShipment.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec:False:estimpson</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>Aztec</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Procedure.FxAztec.SPORTAL.usp_Supplier_CreateNewShipment.sql</FullPath>
         </FileNode>
@@ -164,8 +158,8 @@
           <FullPath>Procedure.FxAztec.SPORTAL.usp_SupplierShipment_RemovePreobjectList.sql</FullPath>
         </FileNode>
         <FileNode Name="Procedure.FxAztec.SPORTAL.usp_SupplierShipments_ProcessASN.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec:False:estimpson</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>Aztec</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Procedure.FxAztec.SPORTAL.usp_SupplierShipments_ProcessASN.sql</FullPath>
         </FileNode>
@@ -180,6 +174,12 @@
           <AssociatedConnSrvName>Aztec</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Script.Insert.NumberSequence.Supplier Shipments.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Script.Test ASN Process.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>Script.Test ASN Process.sql</FullPath>
         </FileNode>
         <FileNode Name="Script.TestAll.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec:False:SupplierPortal</AssociatedConnectionMoniker>
@@ -212,10 +212,16 @@
           <FullPath>View.FxAztec.SPORTAL.PartList.sql</FullPath>
         </FileNode>
         <FileNode Name="View.FxAztec.SPORTAL.SupplierList.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec:False:estimpson</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>Aztec</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>View.FxAztec.SPORTAL.SupplierList.sql</FullPath>
+        </FileNode>
+        <FileNode Name="View.FxAztec.SPORTAL.SupplierPartList.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
+          <FullPath>View.FxAztec.SPORTAL.SupplierPartList.sql</FullPath>
         </FileNode>
       </Items>
     </LogicalFolder>
