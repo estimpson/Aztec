@@ -3,7 +3,13 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create procedure [SUPPLIEREDI].[usp_Process]
+--if	objectproperty(object_id('SUPPLIEREDI.usp_Process'), 'IsProcedure') = 1 begin
+--	drop procedure SUPPLIEREDI.usp_Process
+--end
+--go
+
+--create procedure SUPPLIEREDI.usp_Process
+CREATE procedure [SUPPLIEREDI].[usp_Process]
 	@TranDT datetime = null out
 ,	@Result integer = null out
 ,	@Debug int = 0
@@ -245,14 +251,26 @@ begin
 						when summary.FileCount = 1 then '1 file'
 						else convert(varchar(3), summary.FileCount) + ' files'
 					end +
-					' from ' + summary.ShipFromCode + ' to ' + summary.ShipToCode
+					' from ' + summary.ShipFromCode + ' to ' + summary.ShipToCode + ' -- ' + summary.ShipperDetails
 			from
 				(	select
 						sn.ShipFromCode
 					,	sn.ShipToCode
 					,	FileCount = count(distinct sn.RawDocumentGUID)
+					,	ShipperDetails = FX.ToList(distinct 'SID: ' + sn.ShipperID + ' ~ ' + sDetails.Details)
 					from
 						SUPPLIEREDI.ShipNotices sn
+						outer apply
+						(	select
+								Details = FX.ToList(distinct 'Part: ' + sno.PartCode + ' ~ Qty:' + convert(varchar(12),convert(int, sno.ObjectQuantity)))
+							from
+								SUPPLIEREDI.ShipNoticeLines snl
+								join SUPPLIEREDI.ShipNoticeObjects sno
+									on sno.RawDocumentGUID = snl.RawDocumentGUID
+									and sno.SupplierPart = snl.SupplierPart
+							where
+								snl.RawDocumentGuid = sn.RawDocumentGuid
+						) sDetails
 					where
 						sn.Status = 0
 					group by
@@ -778,12 +796,12 @@ begin
 			update
 				sno
 			set
-				sno.Status = ro.Status
+				sno.Status = case when sn.ShipperID like '%test%' then 1 else ro.Status end
 			from
 				SUPPLIEREDI.ShipNoticeObjects sno
 				join @ShipNotices sn
 					join @newReceiverObjects nro
-						join dbo.ReceiverObjects ro
+						left join dbo.ReceiverObjects ro
 							on ro.ReceiverObjectID = nro.ReceiverObjectID
 						on nro.SupplierLicensePlate = sn.ShipFromCode + '_' + sn.SupplierSerial
 					on sn.RawDocumentGUID = sno.RawDocumentGUID
@@ -792,7 +810,7 @@ begin
 			update
 				snl
 			set
-				snl.Status = rl.Status
+				snl.Status = case when sn.ShipperID like '%test%' then 1 else rl.Status end
 			from
 				SUPPLIEREDI.ShipNoticeLines snl
 				join @ShipNotices sn
@@ -809,7 +827,7 @@ begin
 			update
 				sn
 			set
-				sn.Status = rh.Status
+				sn.Status = case when sn.ShipperID like '%test%' then 1 else rh.Status end
 			from
 				SUPPLIEREDI.ShipNotices sn
 				join @ShipNotices sn2
@@ -918,10 +936,96 @@ begin
 					end + N'Procces ASN Report from Fx Supplier Portal'
 
 			declare
+				@recipients varchar(max) =
+					(	select
+							FX.ToList(recipient)
+						from
+							(	select
+									recipient = 'rjohnson@aztecmfgcorp.com'
+								union
+								select
+									'rreyna@aztecmfgcorp.com'
+								union
+								select
+									'abodey@metal-technologies.com'
+								where
+									exists
+									(	select
+											*
+										from
+											@ShipNotices sn
+										where
+											sn.ShipFromCode = 'AUB0010'
+									)
+								union
+								select
+									'whaley@metal-technologies.com'
+								where
+									exists
+									(	select
+											*
+										from
+											@ShipNotices sn
+										where
+											sn.ShipFromCode = 'AUB0010'
+									)
+								union
+								select
+									'raseline@metal-technologies.com'
+								where
+									exists
+									(	select
+											*
+										from
+											@ShipNotices sn
+										where
+											sn.ShipFromCode = 'HIB0010'
+									)
+								union
+								select
+									'mheaton@metal-technologies.com'
+								where
+									exists
+									(	select
+											*
+										from
+											@ShipNotices sn
+										where
+											sn.ShipFromCode = 'HIB0010'
+									)
+								union
+								select
+									'dhornacek@metal-technologies.com'
+								where
+									exists
+									(	select
+											*
+										from
+											@ShipNotices sn
+										where
+											sn.ShipFromCode = 'RDI0010'
+									)
+								union
+								select
+									'jholubeck@metal-technologies.com'
+								where
+									exists
+									(	select
+											*
+										from
+											@ShipNotices sn
+										where
+											sn.ShipFromCode = 'RDI0010'
+									)
+							) r
+					)
+
+			set	@recipients = replace(@recipients, ',', ';')
+
+			declare
 				@emailBody nvarchar(max) = N'<H1>' + @emailHeader + N'</H1>' + @html
 			,	@profileName sysname = 'fxAlerts'
-			,	@recipients sysname = 'estimpson@fore-thought.com'
-			,	@copyRecipients sysname
+			,	@copyRecipients sysname = 'estimpson@fore-thought.com'
 
 			exec msdb.dbo.sp_send_dbmail
 				@profile_name = @profileName
@@ -932,6 +1036,11 @@ begin
 			,	@body_format = 'HTML'
 			,	@importance = 'HIGH'
 			,	@exclude_query_output = 1
+
+			if	@Debug & 0x01 = 1 begin
+				print '@recipients: ' + @recipients
+				print '@emailBody: ' + @emailBody
+			end
 
 			--- <TOC>
 			if	@Debug & 0x01 = 0x01 begin
@@ -1077,4 +1186,6 @@ go
 Results {
 }
 */
+GO
+GRANT EXECUTE ON  [SUPPLIEREDI].[usp_Process] TO [SupplierPortal]
 GO
