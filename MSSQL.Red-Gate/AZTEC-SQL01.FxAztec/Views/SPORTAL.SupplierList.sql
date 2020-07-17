@@ -21,4 +21,7 @@ from
 	dbo.destination dv
 	join dbo.vendor v
 		on v.code = dv.vendor
+
+GO
+GRANT SELECT ON  [SPORTAL].[SupplierList] TO [SupplierPortal]
 GO

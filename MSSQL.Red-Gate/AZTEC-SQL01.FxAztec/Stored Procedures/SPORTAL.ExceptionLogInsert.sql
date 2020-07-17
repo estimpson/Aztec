@@ -25,4 +25,7 @@ set nocount on
 
 	end catch
 end
+
+GO
+GRANT EXECUTE ON  [SPORTAL].[ExceptionLogInsert] TO [SupplierPortal]
 GO

@@ -181,3 +181,11 @@ ALTER TABLE [SPORTAL].[SupplierObjectBatches] ADD CONSTRAINT [PK__Supplier__FFEE
 GO
 ALTER TABLE [SPORTAL].[SupplierObjectBatches] ADD CONSTRAINT [UQ__Supplier__FBB6EFBC5435799A] UNIQUE NONCLUSTERED  ([FirstSerial]) ON [PRIMARY]
 GO
+GRANT DELETE ON  [SPORTAL].[SupplierObjectBatches] TO [SupplierPortal]
+GO
+GRANT INSERT ON  [SPORTAL].[SupplierObjectBatches] TO [SupplierPortal]
+GO
+GRANT SELECT ON  [SPORTAL].[SupplierObjectBatches] TO [SupplierPortal]
+GO
+GRANT UPDATE ON  [SPORTAL].[SupplierObjectBatches] TO [SupplierPortal]
+GO

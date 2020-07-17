@@ -72,4 +72,7 @@ from
 		where
 			p.class != 'O'
 	) spl
+
+GO
+GRANT SELECT ON  [SPORTAL].[SupplierPartList] TO [SupplierPortal]
 GO

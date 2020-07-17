@@ -16,3 +16,11 @@ ALTER TABLE [SPORTAL].[SupplierShipmentsASNLines] ADD CONSTRAINT [PK__Supplier__
 GO
 CREATE UNIQUE NONCLUSTERED INDEX [idx_SupplierShipmentsASNLines_1] ON [SPORTAL].[SupplierShipmentsASNLines] ([SupplierShipmentsASNRowID], [Part], [Quantity]) ON [PRIMARY]
 GO
+GRANT DELETE ON  [SPORTAL].[SupplierShipmentsASNLines] TO [SupplierPortal]
+GO
+GRANT INSERT ON  [SPORTAL].[SupplierShipmentsASNLines] TO [SupplierPortal]
+GO
+GRANT SELECT ON  [SPORTAL].[SupplierShipmentsASNLines] TO [SupplierPortal]
+GO
+GRANT UPDATE ON  [SPORTAL].[SupplierShipmentsASNLines] TO [SupplierPortal]
+GO

@@ -13,3 +13,11 @@ CREATE TABLE [SPORTAL].[ExceptionLog]
 GO
 ALTER TABLE [SPORTAL].[ExceptionLog] ADD CONSTRAINT [PK__Exceptio__FFEE74510DE8A6A0] PRIMARY KEY CLUSTERED  ([RowID]) ON [PRIMARY]
 GO
+GRANT DELETE ON  [SPORTAL].[ExceptionLog] TO [SupplierPortal]
+GO
+GRANT INSERT ON  [SPORTAL].[ExceptionLog] TO [SupplierPortal]
+GO
+GRANT SELECT ON  [SPORTAL].[ExceptionLog] TO [SupplierPortal]
+GO
+GRANT UPDATE ON  [SPORTAL].[ExceptionLog] TO [SupplierPortal]
+GO

@@ -366,4 +366,7 @@ go
 Results {
 }
 */
+
+GO
+GRANT EXECUTE ON  [SUPPLIEREDI].[usp_ReceivingDock_Backflush_byReceiverObjectList] TO [SupplierPortal]
 GO

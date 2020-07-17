@@ -187,3 +187,11 @@ ALTER TABLE [SUPPLIEREDI].[ShipNoticeObjects] ADD CONSTRAINT [FK__ShipNoticeObje
 GO
 ALTER TABLE [SUPPLIEREDI].[ShipNoticeObjects] ADD CONSTRAINT [FK__ShipNotic__RawDo__6C10E75C] FOREIGN KEY ([RawDocumentGUID]) REFERENCES [SUPPLIEREDI].[ShipNotices] ([RawDocumentGUID])
 GO
+GRANT DELETE ON  [SUPPLIEREDI].[ShipNoticeObjects] TO [SupplierPortal]
+GO
+GRANT INSERT ON  [SUPPLIEREDI].[ShipNoticeObjects] TO [SupplierPortal]
+GO
+GRANT SELECT ON  [SUPPLIEREDI].[ShipNoticeObjects] TO [SupplierPortal]
+GO
+GRANT UPDATE ON  [SUPPLIEREDI].[ShipNoticeObjects] TO [SupplierPortal]
+GO

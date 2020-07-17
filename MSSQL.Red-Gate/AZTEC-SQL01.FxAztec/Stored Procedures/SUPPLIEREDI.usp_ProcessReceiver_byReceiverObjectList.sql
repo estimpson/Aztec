@@ -838,4 +838,7 @@ go
 Results {
 }
 */
+
+GO
+GRANT EXECUTE ON  [SUPPLIEREDI].[usp_ProcessReceiver_byReceiverObjectList] TO [SupplierPortal]
 GO

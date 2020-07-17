@@ -179,7 +179,15 @@ ALTER TABLE [SPORTAL].[SupplierObjects] ADD CONSTRAINT [PK__Supplier__FFEE7451D4
 GO
 ALTER TABLE [SPORTAL].[SupplierObjects] ADD CONSTRAINT [UQ__Supplier__1A00E0931D396131] UNIQUE NONCLUSTERED  ([Serial]) ON [PRIMARY]
 GO
+ALTER TABLE [SPORTAL].[SupplierObjects] ADD CONSTRAINT [FK__SupplierO__Shipp__3DC23D02] FOREIGN KEY ([ShipperNumber]) REFERENCES [SPORTAL].[SupplierShipments] ([ShipperNumber])
+GO
 ALTER TABLE [SPORTAL].[SupplierObjects] ADD CONSTRAINT [FK__SupplierO__Suppl__3CCE18C9] FOREIGN KEY ([SupplierObjectBatch]) REFERENCES [SPORTAL].[SupplierObjectBatches] ([RowID])
 GO
-ALTER TABLE [SPORTAL].[SupplierObjects] ADD CONSTRAINT [FK__SupplierO__Shipp__3DC23D02] FOREIGN KEY ([ShipperNumber]) REFERENCES [SPORTAL].[SupplierShipments] ([ShipperNumber])
+GRANT DELETE ON  [SPORTAL].[SupplierObjects] TO [SupplierPortal]
+GO
+GRANT INSERT ON  [SPORTAL].[SupplierObjects] TO [SupplierPortal]
+GO
+GRANT SELECT ON  [SPORTAL].[SupplierObjects] TO [SupplierPortal]
+GO
+GRANT UPDATE ON  [SPORTAL].[SupplierObjects] TO [SupplierPortal]
 GO

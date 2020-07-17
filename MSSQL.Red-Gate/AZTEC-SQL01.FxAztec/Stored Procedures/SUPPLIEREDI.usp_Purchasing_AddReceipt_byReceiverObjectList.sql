@@ -645,4 +645,7 @@ go
 Results {
 }
 */
+
+GO
+GRANT EXECUTE ON  [SUPPLIEREDI].[usp_Purchasing_AddReceipt_byReceiverObjectList] TO [SupplierPortal]
 GO

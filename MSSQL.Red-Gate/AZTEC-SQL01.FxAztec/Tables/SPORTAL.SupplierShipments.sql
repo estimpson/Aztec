@@ -308,3 +308,11 @@ ALTER TABLE [SPORTAL].[SupplierShipments] ADD CONSTRAINT [PK__Supplier__FFEE7451
 GO
 ALTER TABLE [SPORTAL].[SupplierShipments] ADD CONSTRAINT [UQ__Supplier__ED0F8CBF51D8DB16] UNIQUE NONCLUSTERED  ([ShipperNumber]) ON [PRIMARY]
 GO
+GRANT DELETE ON  [SPORTAL].[SupplierShipments] TO [SupplierPortal]
+GO
+GRANT INSERT ON  [SPORTAL].[SupplierShipments] TO [SupplierPortal]
+GO
+GRANT SELECT ON  [SPORTAL].[SupplierShipments] TO [SupplierPortal]
+GO
+GRANT UPDATE ON  [SPORTAL].[SupplierShipments] TO [SupplierPortal]
+GO

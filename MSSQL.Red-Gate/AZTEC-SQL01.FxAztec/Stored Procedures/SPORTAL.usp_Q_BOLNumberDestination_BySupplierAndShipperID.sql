@@ -53,4 +53,7 @@ begin
 	
 	end catch
 end
+
+GO
+GRANT EXECUTE ON  [SPORTAL].[usp_Q_BOLNumberDestination_BySupplierAndShipperID] TO [SupplierPortal]
 GO
