@@ -944,7 +944,7 @@ begin
 									recipient = 'rjohnson@aztecmfgcorp.com'
 								union
 								select
-									'rreyna@aztecmfgcorp.com'
+									'rvasquez@aztecmfgcorp.com'
 								union
 								select
 									'abodey@metal-technologies.com'
