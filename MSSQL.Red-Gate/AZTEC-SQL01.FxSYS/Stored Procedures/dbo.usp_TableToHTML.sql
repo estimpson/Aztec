@@ -163,4 +163,7 @@ set	@html = replace(@html, '<TRRow>0</TRRow>', '')
 
 --print
 --	@html
+
+GO
+GRANT EXECUTE ON  [dbo].[usp_TableToHTML] TO [SupplierPortal]
 GO
