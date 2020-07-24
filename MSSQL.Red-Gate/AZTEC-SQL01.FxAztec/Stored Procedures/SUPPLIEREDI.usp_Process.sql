@@ -933,7 +933,7 @@ begin
 					case
 						when db_name(db_id()) = 'FxAztec' then ''
 						else 'TEST DB: '
-					end + N'Procces ASN Report from Fx Supplier Portal'
+					end + N'Process ASN Report from Fx Supplier Portal'
 
 			declare
 				@recipients varchar(max) =
