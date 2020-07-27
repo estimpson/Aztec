@@ -3,7 +3,14 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create view [SPORTAL].[SupplierPartList]
+--drop table SPORTAL.SupplierPartList
+--if	objectproperty(object_id('SPORTAL.SupplierPartList'), 'IsView') = 1 begin
+--	drop view SPORTAL.SupplierPartList
+--end
+--go
+
+--create view SPORTAL.SupplierPartList
+CREATE view [SPORTAL].[SupplierPartList]
 as
 select
 	spl.SupplierCode
@@ -16,6 +23,7 @@ select
 			when spl.SupplierCode = 'AUB0010' and spl.SupplierPartCode > '' and spl.InternalPartCount > 0 and HasBlanketPO = 1 then 0
 			when spl.SupplierCode = 'HIB0010' and spl.SupplierPartCode > '' and spl.InternalPartCount > 0 and HasBlanketPO = 1 then 0
 			when spl.SupplierCode = 'RDI0010' and spl.SupplierPartCode > '' and spl.InternalPartCount > 0 and HasBlanketPO = 1 then 0
+			when spl.SupplierCode = 'ROC0010' and spl.SupplierPartCode > '' and spl.InternalPartCount > 0 and HasBlanketPO = 1 then 0
 			when spl.SupplierPartCode > '' and spl.InternalPartCount = 1 and HasBlanketPO = 1 then 0 
 			else -1 
 		end
@@ -72,7 +80,6 @@ from
 		where
 			p.class != 'O'
 	) spl
-
 GO
 GRANT SELECT ON  [SPORTAL].[SupplierPartList] TO [SupplierPortal]
 GO

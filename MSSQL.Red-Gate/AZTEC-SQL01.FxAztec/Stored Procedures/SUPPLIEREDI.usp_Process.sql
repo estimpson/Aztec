@@ -1017,6 +1017,18 @@ begin
 										where
 											sn.ShipFromCode = 'RDI0010'
 									)
+								union
+								select
+									'dbush@rochestermetals.com'
+								where
+									exists
+									(	select
+											*
+										from
+											@ShipNotices sn
+										where
+											sn.ShipFromCode = 'ROC0010'
+									)
 							) r
 					)
 
