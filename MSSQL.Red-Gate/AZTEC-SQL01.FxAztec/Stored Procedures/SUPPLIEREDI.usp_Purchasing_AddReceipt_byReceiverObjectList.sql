@@ -3,6 +3,12 @@ GO
 SET ANSI_NULLS ON
 GO
 
+--if	objectproperty(object_id('SUPPLIEREDI.usp_Purchasing_AddReceipt_byReceiverObjectList'), 'IsProcedure') = 1 begin
+--	drop procedure SUPPLIEREDI.usp_Purchasing_AddReceipt_byReceiverObjectList
+--end
+--go
+
+--create procedure SUPPLIEREDI.usp_Purchasing_AddReceipt_byReceiverObjectList
 CREATE procedure [SUPPLIEREDI].[usp_Purchasing_AddReceipt_byReceiverObjectList]
 	@User varchar(5)
 ,	@ReceiverObjectID int = null -- Specify this or a list using #receiverObjectList
@@ -201,7 +207,7 @@ begin
 			,	POLineNo = count(*) over (partition by pd.po_number, pd.part_number order by pd.date_due, pd.row_id)
 			,	QtyDue = pd.standard_qty
 			,	Unit = coalesce(pd.unit_of_measure, pInv.standard_unit)
-			,	PriorAccum = sum(pd.standard_qty) over (partition by pd.po_number, pd.part_number order by pd.date_due, pd.row_id)
+			,	PriorAccum = sum(pd.standard_qty) over (partition by pd.po_number, pd.part_number order by pd.date_due, pd.row_id) - pd.standard_qty
 			,	TotalReceiptQty = ro.TotalReceiptQty
 			from
 				dbo.po_detail pd
@@ -262,6 +268,13 @@ begin
 			--- </TOC>
 		end
 
+		if	@Debug & 0x03 = 0x01 begin
+			select
+				'@POReleases', *
+			from
+				@POReleases pr
+		end
+
 		/*	Calculate (over)receipt amount. */
 		set @TocMsg = 'Calculate receipt amount'
 		begin
@@ -294,6 +307,8 @@ begin
 										pr2.PONumber = pr.PONumber
 										and pr2.PartCode = pr.PartCode
 								) then pr.TotalReceiptQty - (pr.PriorAccum + pr.QtyDue)
+						else
+							0
 					end
 			from
 				@POReleases pr
@@ -314,6 +329,13 @@ begin
 			set @DebugMsg += coalesce(char(13) + char(10) + @cDebugMsg, N'')
 			set @cDebugMsg = null
 			--- </TOC>
+		end
+
+		if	@Debug & 0x03 = 0x01 begin
+			select
+				'@POReleases', *
+			from
+				@POReleases pr
 		end
 
 		/*	Write changes to PO detail. */
@@ -352,6 +374,24 @@ begin
 			set @DebugMsg += coalesce(char(13) + char(10) + @cDebugMsg, N'')
 			set @cDebugMsg = null
 			--- </TOC>
+		end
+		
+		if	@Debug & 0x03 = 0x01 begin
+			select
+				'dbo.po_detail'
+			,	received = pd.received + dbo.udf_GetQtyFromStdQty(pr.PartCode, pr.QtyReceived + pr.QtyOverReceived, pr.Unit)
+			,	balance = pd.balance - dbo.udf_GetQtyFromStdQty(pr.PartCode, pr.QtyReceived, pr.Unit)
+			,	standard_qty = pd.standard_qty - pr.QtyReceived
+			,	last_recvd_date = @TranDT
+			,	last_recvd_amount = pr.QtyReceived + pr.QtyOverReceived
+			from
+				dbo.po_detail pd
+				join @POReleases pr
+					on pr.PONumber = pd.po_number
+					and pr.PartCode = pd.part_number
+					and pr.DueDT = pd.date_due
+					and pr.RowID = pd.row_id
+					and pr.QtyReceived + pr.QtyOverReceived > 0
 		end
 		
 		/*	Write receipt history. */
@@ -401,6 +441,26 @@ begin
 			set @DebugMsg += coalesce(char(13) + char(10) + @cDebugMsg, N'')
 			set @cDebugMsg = null
 			--- </TOC>
+		end
+		
+		if	@Debug & 0x03 = 0x01 begin
+			select
+				'dbo.po_detail_history', pd.po_number, pd.vendor_code, pd.part_number, pd.description, pd.unit_of_measure
+			,	pd.date_due, pd.requisition_number, pd.status, pd.type, pd.last_recvd_date
+			,	pd.last_recvd_amount, pd.cross_reference_part, pd.account_code, pd.notes, pd.quantity
+			,	pd.received, pd.balance, pd.active_release_cum, pd.received_cum, pd.price
+			,	pd.row_id, pd.invoice_status, pd.invoice_date, pd.invoice_qty, pd.invoice_unit_price
+			,	pd.release_no, pd.ship_to_destination, pd.terms, pd.week_no, pd.plant
+			,	pd.invoice_number, pd.standard_qty, pd.sales_order, pd.dropship_oe_row_id, pd.ship_type
+			,	pd.dropship_shipper, pd.price_unit, pd.ship_via, pd.release_type, pd.alternate_price
+			from
+				dbo.po_detail pd
+				join @POReleases pr
+					on pr.PONumber = pd.po_number
+					and pr.PartCode = pd.part_number
+					and pr.DueDT = pd.date_due
+					and pr.RowID = pd.row_id
+					and pr.QtyReceived + pr.QtyOverReceived > 0
 		end
 		
 		/*	Delete completed blanket releases. */
@@ -607,10 +667,20 @@ set statistics time on
 go
 
 declare
-	@FinishedPart varchar(25) = 'ALC0598-HC02'
-,	@ParentHeirarchID hierarchyid
+	@User varchar(5) = 'EES'
+,	@ReceiverObjectID int = null
 
 begin transaction Test
+
+create table tempdb.dbo.#receiverObjectList
+(	ReceiverObjectId int)
+
+insert
+	tempdb.dbo.#receiverObjectList
+(	ReceiverObjectId
+)
+select
+	ReceiverObjectId = 55888427
 
 declare
 	@ProcReturn integer
@@ -620,10 +690,11 @@ declare
 
 execute
 	@ProcReturn = SUPPLIEREDI.usp_Purchasing_AddReceipt_byReceiverObjectList
-	@FinishedPart = @FinishedPart
-,	@ParentHeirarchID = @ParentHeirarchID
+	@User = @User
+,	@ReceiverObjectID = @ReceiverObjectID
 ,	@TranDT = @TranDT out
 ,	@Result = @ProcResult out
+,	@Debug = 1
 
 set	@Error = @@error
 
@@ -631,6 +702,7 @@ select
 	@Error, @ProcReturn, @TranDT, @ProcResult
 go
 
+--commit
 if	@@trancount > 0 begin
 	rollback
 end
@@ -645,7 +717,6 @@ go
 Results {
 }
 */
-
 GO
 GRANT EXECUTE ON  [SUPPLIEREDI].[usp_Purchasing_AddReceipt_byReceiverObjectList] TO [SupplierPortal]
 GO
