@@ -689,7 +689,7 @@ begin
 				RowID = row_number() over (order by sn.ShipperID)
 			,	sn.RawDocumentGUID
 			,	sn.ShipperID
-			,	sn.ShipToCode
+			,	ShipToCode = coalesce(ph.ship_to_destination, sn.ShipToCode)
 			,	sn.ShipFromCode
 			,	sn.Carrier
 			,	sn.TransMode
@@ -707,6 +707,8 @@ begin
 					on sno.RawDocumentGUID = snl.RawDocumentGUID
 					and sno.ShipperID = snl.ShipperID
 					and sno.IdNumber = snl.IdNumber
+				left join FxAztec.dbo.po_header ph
+					on ph.po_number = sno.PurchaseOrder
 
 			--- <Call>	
 			declare
