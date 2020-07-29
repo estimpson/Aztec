@@ -3,8 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-
-CREATE PROCEDURE [EDI4010].[usp_Stage_1]
+CREATE procedure [EDI4010].[usp_Stage_1]
 	@TranDT DATETIME = NULL OUT
 ,	@Result INTEGER = NULL OUT
 AS
@@ -364,7 +363,7 @@ if	exists
 	,	SupplierCode	
 	,	CustomerPart = EDIData.Data.value('(	for $a in SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerPO = EDIData.Data.value('(	for $a in SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	, CustomerPOLine = EDIData.Data.value('(	for $a in SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
+	,	CustomerPOLine = EDIData.Data.value('(	for $a in SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerModelYear = ''
 	,	CustomerECL = ''
 	,	Data = EDIData.Data.query('.')
@@ -403,7 +402,7 @@ if	exists
 	,	SupplierCode	
 	,	CustomerPart 
 	,	CustomerPO
-	, CustomerPOLine 
+	,	CustomerPOLine 
 	,	CustomerModelYear
 	,	CustomerECL
 	,	ValueQualifier	=	Data.value('(/LOOP-RFF/DE[@code="7511"])[1]', 'varchar(50)')	
@@ -639,7 +638,7 @@ declare
 	,	SupplierCode	
 	,	CustomerPart = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
+	,	CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerModelYear = ''
 	,	CustomerECL = ''
 	,	Data = EDIData.Data.query('.')
@@ -915,7 +914,7 @@ declare
 	,	SupplierCode	
 	,	CustomerPart = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
+	,	CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerModelYear = ''
 	,	CustomerECL = ''
 	,	Data = EDIData.Data.query('.')
@@ -1183,7 +1182,7 @@ declare
 	,	SupplierCode	
 	,	CustomerPart = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
+	,	CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerModelYear = ''
 	,	CustomerECL = ''
 	,	Data = EDIData.Data.query('.')
@@ -1221,7 +1220,7 @@ insert
 	,	SupplierCode	
 	,	CustomerPart = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
+	,	CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerModelYear = ''
 	,	CustomerECL = ''
 	,	Data = EDIData.Data.query('.')
@@ -1283,7 +1282,7 @@ insert
 	from
 		@ShipSchedulesTemp2
 
-INSERT 
+insert 
 		@ShipSchedules
 	(	RawDocumentGUID
 	,	ReleaseNo
@@ -1306,7 +1305,7 @@ INSERT
 	,	QuantityType 
 	)
 
-	SELECT
+	select
 		RawDocumentGUID
 	,	ReleaseNo
 	,	ShipToCode
@@ -1327,10 +1326,10 @@ INSERT
 	,	QuantityDue 
 	,	QuantityType
 	
-	FROM
+	from
 		@ShipSchedulesTemp3
 
-ORDER BY
+order by
  2,3,7
 	 
 
@@ -1340,7 +1339,7 @@ ORDER BY
 		--Select * From @ShipSchedules
 
 		--Rollback Transaction
-END
+end
 
 /*		- prepare Release Plans...*/
 if	exists
@@ -1529,7 +1528,7 @@ if	exists
 	,	SupplierCode	
 	,	CustomerPart = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
+	,	CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerModelYear = ''
 	,	CustomerECL = ''
 	,	Data = EDIData.Data.query('.')
@@ -1568,7 +1567,7 @@ if	exists
 	,	SupplierCode	
 	,	CustomerPart 
 	,	CustomerPO
-	, CustomerPOLine 
+	,	CustomerPOLine 
 	,	CustomerModelYear
 	,	CustomerECL
 	,	ValueQualifier	=	Data.value('(/SEG-REF/DE[@code="0128"])[1]', 'varchar(50)')	
@@ -1708,6 +1707,7 @@ declare
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
 	,	SupplierCode varchar(50)	
+	,	CustomerPO varchar(50)
 	,	Data xml
 	)
 
@@ -1763,7 +1763,8 @@ declare
 	,	ShipToCode 
 	,	ConsigneeCode 
 	,	ShipFromCode 
-	,	SupplierCode	
+	,	SupplierCode
+	,	CustomerPO
 	,	Data	
 	)
 	
@@ -1774,6 +1775,7 @@ declare
 	,	ConsigneeCode = ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="IC"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
 	,	ShipFromCode = ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="SF"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
 	,	SupplierCode = ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="SU"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
+	,	CustomerPO = ed.Data.value('(/TRN-830/SEG-BFR/DE[@code="0324"])[1]', 'varchar(30)')
 	,	Data = EDIData.Releases.query('.')
 	from
 		@PlanningHeaders ed
@@ -1802,8 +1804,8 @@ declare
 	,	ShipFromCode 
 	,	SupplierCode	
 	,	CustomerPart = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
+	,	CustomerPO = coalesce(ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)'), ed.CustomerPO)
+	,	CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerModelYear = ''
 	,	CustomerECL = ''
 	,	Data = EDIData.Data.query('.')
@@ -1991,6 +1993,7 @@ declare
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
 	,	SupplierCode varchar(50)	
+	,	CustomerPO varchar(50)
 	,	Data xml
 	)
 
@@ -2050,6 +2053,7 @@ declare
 	,	ConsigneeCode 
 	,	ShipFromCode 
 	,	SupplierCode	
+	,	CustomerPO
 	,	Data	
 	)
 	
@@ -2060,6 +2064,7 @@ declare
 	,	ConsigneeCode = ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="IC"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
 	,	ShipFromCode = ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="SF"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
 	,	SupplierCode = ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="SU"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
+	,	CustomerPO = ed.Data.value('(/TRN-830/SEG-BFR/DE[@code="0324"])[1]', 'varchar(30)')
 	,	Data = EDIData.Releases.query('.')
 	from
 		@PlanningHeaders ed
@@ -2088,8 +2093,8 @@ declare
 	,	ShipFromCode 
 	,	SupplierCode	
 	,	CustomerPart = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
+	,	CustomerPO = coalesce(ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)'), ed.CustomerPO)
+	,	CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerModelYear = ''
 	,	CustomerECL = ''
 	,	Data = EDIData.Data.query('.')
@@ -2285,6 +2290,7 @@ declare
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
 	,	SupplierCode varchar(50)	
+	,	CustomerPO varchar(50)
 	,	Data xml
 	)
 
@@ -2338,6 +2344,7 @@ declare
 	,	ConsigneeCode 
 	,	ShipFromCode 
 	,	SupplierCode	
+	,	CustomerPO
 	,	Data	
 	)
 	
@@ -2348,6 +2355,7 @@ declare
 	,	ConsigneeCode = ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="IC"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
 	,	ShipFromCode = ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="SF"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
 	,	SupplierCode = ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="SU"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
+	,	CustomerPO = ed.Data.value('(/TRN-830/SEG-BFR/DE[@code="0324"])[1]', 'varchar(30)')
 	,	Data = EDIData.Releases.query('.')
 	from
 		@PlanningHeaders ed
@@ -2376,8 +2384,8 @@ declare
 	,	ShipFromCode 
 	,	SupplierCode	
 	,	CustomerPart = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
+	,	CustomerPO = coalesce(ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)'), ed.CustomerPO)
+	,	CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerModelYear = ''
 	,	CustomerECL = ''
 	,	Data = EDIData.Data.query('.')
@@ -2414,8 +2422,8 @@ insert
 	,	ShipFromCode 
 	,	SupplierCode	
 	,	CustomerPart = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
+	,	CustomerPO = coalesce(ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)'), ed.CustomerPO)
+	,	CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerModelYear = ''
 	,	CustomerECL = ''
 	,	Data = EDIData.Data.query('.')
@@ -2452,8 +2460,8 @@ insert
 	,	ShipFromCode 
 	,	SupplierCode	
 	,	CustomerPart = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
+	,	CustomerPO = coalesce(ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)'), ed.CustomerPO)
+	,	CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerModelYear = ''
 	,	CustomerECL = ''
 	,	Data = EDIData.Data.query('.')
@@ -2490,8 +2498,8 @@ insert
 	,	ShipFromCode 
 	,	SupplierCode	
 	,	CustomerPart = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
+	,	CustomerPO = coalesce(ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)'), ed.CustomerPO)
+	,	CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerModelYear = ''
 	,	CustomerECL = ''
 	,	Data = EDIData.Data.query('.')
