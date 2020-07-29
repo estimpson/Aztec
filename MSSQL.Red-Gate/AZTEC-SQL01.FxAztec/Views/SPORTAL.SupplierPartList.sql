@@ -24,6 +24,7 @@ select
 			when spl.SupplierCode = 'HIB0010' and spl.SupplierPartCode > '' and spl.InternalPartCount > 0 and HasBlanketPO = 1 then 0
 			when spl.SupplierCode = 'RDI0010' and spl.SupplierPartCode > '' and spl.InternalPartCount > 0 and HasBlanketPO = 1 then 0
 			when spl.SupplierCode = 'ROC0010' and spl.SupplierPartCode > '' and spl.InternalPartCount > 0 and HasBlanketPO = 1 then 0
+			when spl.SupplierCode = 'BREW0010' and spl.SupplierPartCode > '' and spl.InternalPartCount > 0 and HasBlanketPO = 1 then 0
 			when spl.SupplierPartCode > '' and spl.InternalPartCount = 1 and HasBlanketPO = 1 then 0 
 			else -1 
 		end
