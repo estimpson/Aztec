@@ -18,6 +18,8 @@ CREATE procedure [SUPPLIEREDI].[usp_Purchasing_AddReceipt_byReceiverObjectList]
 ,	@DebugMsg varchar(max) = null out
 as
 begin
+	--set xact_abort on
+	set nocount on
 
 	--- <TIC>
 	declare

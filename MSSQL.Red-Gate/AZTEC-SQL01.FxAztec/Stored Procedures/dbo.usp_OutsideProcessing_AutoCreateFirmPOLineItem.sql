@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create procedure [dbo].[usp_OutsideProcessing_AutoCreateFirmPOLineItem]
+CREATE procedure [dbo].[usp_OutsideProcessing_AutoCreateFirmPOLineItem]
 	@User varchar(10)
 ,	@VendorShipFrom varchar(20)
 ,	@RawPartCode varchar(25)
@@ -154,7 +154,7 @@ if	@RowCount != @expectedRows begin
 	,	week_no = datediff(week, p.fiscal_year_begin, @TranDT + opbpo.ProcessDays)
 	,	plant = opbpo.OrderingPlant
 	,	standard_qty = @RawPartStandardQty / opbpo.BOMQty
-	,	ship_type = opbpo.ShipType
+	,	ship_type = case when opbpo.ShipType = 'DropShip' then 'D' else 'N' end
 	from
 		dbo.OutsideProcessing_BlanketPOs opbpo
 		cross join dbo.parameters p
