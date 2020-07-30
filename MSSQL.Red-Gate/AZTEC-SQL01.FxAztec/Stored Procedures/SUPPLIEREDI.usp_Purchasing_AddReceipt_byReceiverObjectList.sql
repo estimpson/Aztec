@@ -19,9 +19,6 @@ CREATE procedure [SUPPLIEREDI].[usp_Purchasing_AddReceipt_byReceiverObjectList]
 as
 begin
 
-	--set xact_abort on
-	set nocount on
-
 	--- <TIC>
 	declare
 		@cDebug int = @Debug + 2 -- Proc level
@@ -114,7 +111,8 @@ begin
 		@Error integer,
 		@RowCount integer
 
-	set	@ProcName = user_name(objectproperty(@@procid, 'OwnerId')) + '.' + object_name(@@procid)  -- e.g. SUPPLIEREDI.usp_Test
+	--set	@ProcName = user_name(objectproperty(@@procid, 'OwnerId')) + '.' + object_name(@@procid)  -- e.g. SUPPLIEREDI.usp_Test
+	set	@ProcName = 'SUPPLIEREDI.usp_Purchasing_AddReceipt_byReceiverObjectList'
 	--- </Error Handling>
 
 	/*	Record initial transaction count. */
@@ -246,7 +244,7 @@ begin
 						)
 					)
 
-			if	@@rowcount = 0 begin
+			if	@@ROWCOUNT = 0 begin
 				goto done
 			end
 
@@ -268,7 +266,7 @@ begin
 			--- </TOC>
 		end
 
-		if	@Debug & 0x03 = 0x01 begin
+		if	@Debug & 0x01 = 0x01 begin
 			select
 				'@POReleases', *
 			from
@@ -331,7 +329,7 @@ begin
 			--- </TOC>
 		end
 
-		if	@Debug & 0x03 = 0x01 begin
+		if	@Debug & 0x01 = 0x01 begin
 			select
 				'@POReleases', *
 			from
@@ -376,7 +374,7 @@ begin
 			--- </TOC>
 		end
 		
-		if	@Debug & 0x03 = 0x01 begin
+		if	@Debug & 0x01 = 0x01 begin
 			select
 				'dbo.po_detail'
 			,	received = pd.received + dbo.udf_GetQtyFromStdQty(pr.PartCode, pr.QtyReceived + pr.QtyOverReceived, pr.Unit)
@@ -443,7 +441,7 @@ begin
 			--- </TOC>
 		end
 		
-		if	@Debug & 0x03 = 0x01 begin
+		if	@Debug & 0x01 = 0x01 begin
 			select
 				'dbo.po_detail_history', pd.po_number, pd.vendor_code, pd.part_number, pd.description, pd.unit_of_measure
 			,	pd.date_due, pd.requisition_number, pd.status, pd.type, pd.last_recvd_date
@@ -579,6 +577,291 @@ begin
 			set @cDebugMsg = null
 			--- </TOC>
 		end
+
+		/*	If material has been delivered to an outside processor, autocreate PO line. */
+		set @TocMsg = 'If material has been delivered to an outside processor, autocreate PO line'
+		declare
+			@expectedRows int =
+			(	select
+					count(*)
+				from
+					(	select
+							rh.plant
+						,	ro.PartCode
+						,	QtyReceived = sum(ro.QtyObject)
+						from
+							dbo.ReceiverHeaders rh
+							join dbo.ReceiverLines rl
+								join dbo.ReceiverObjects ro
+									on rl.ReceiverLineID = ro.ReceiverLineID
+								on rh.ReceiverID = rl.ReceiverID
+						where
+							exists
+								(	select
+										*
+									from
+										dbo.#receiverObjectList rol
+									where
+										rol.receiverObjectID = ro.ReceiverObjectID
+								)
+						group by
+							rh.plant
+						,	ro.PartCode
+					) ro
+					join dbo.OutsideProcessing_BlanketPOs opbpo
+						on opbpo.InPartCode = ro.PartCode
+						and coalesce(opbpo.VendorShipFrom, ro.Plant, 'N/A') = coalesce(ro.Plant, 'N/A')
+						and opbpo.VendorCode = coalesce(opbpo.DefaultVendor, opbpo.VendorCode)
+						and opbpo.PONumber = coalesce(opbpo.DefaultPO, opbpo.PONumber)
+			)
+		if	@expectedRows > 0
+		begin
+			--- <Insert rows="*">
+			set	@TableName = 'dbo.po_detail'
+			
+			insert
+				dbo.po_detail
+			(	po_number
+			,	vendor_code
+			,	part_number
+			,	description
+			,	unit_of_measure
+			,	date_due
+			,	status
+			,	type
+			,	account_code
+			,	quantity
+			,	received
+			,	balance
+			,	price
+			,	alternate_price
+			,	row_id
+			,	release_no
+			,	ship_to_destination
+			,	terms
+			,	week_no
+			,	plant
+			,	standard_qty
+			,	ship_type
+			)
+			select
+				po_number = opbpo.PONumber
+			,	vendor_code = opbpo.VendorCode
+			,	part_number = opbpo.OutPartCode
+			,	description = opbpo.OutPartDescription
+			,	unit_of_measure = opbpo.ReceivingUnit
+			,	date_due = FT.fn_TruncDate('day', @TranDT + opbpo.ProcessDays)
+			,	status = 'A'
+			,	type = 'B'
+			,	account_code = opbpo.APAccountCode
+			,	quantity = 0
+			,	received = 0
+			,	balance = 0
+			,	price = opbpo.Price
+			,	alternate_price = opbpo.Price
+			,	row_id = coalesce((select max(row_id) + 1 from dbo.po_detail pd where pd.po_number = opbpo.PONumber), 1)
+			,	release_no = opbpo.NextRelease
+			,	ship_to_destination = opbpo.DeliveryShipTo
+			,	terms = opbpo.Terms
+			,	week_no = datediff(week, p.fiscal_year_begin, @TranDT + opbpo.ProcessDays)
+			,	plant = opbpo.OrderingPlant
+			,	standard_qty = 0
+			,	ship_type = case when opbpo.ShipType = 'DropShip' then 'D' else 'N' end
+			from
+				(	select
+						rh.plant
+					,	ro.PartCode
+					,	QtyReceived = sum(ro.QtyObject)
+					from
+						dbo.ReceiverHeaders rh
+						join dbo.ReceiverLines rl
+							join dbo.ReceiverObjects ro
+								on rl.ReceiverLineID = ro.ReceiverLineID
+							on rh.ReceiverID = rl.ReceiverID
+					where
+						exists
+							(	select
+									*
+								from
+									dbo.#receiverObjectList rol
+								where
+									rol.receiverObjectID = ro.ReceiverObjectID
+							)
+					group by
+						rh.plant
+					,	ro.PartCode
+				) ro
+				join dbo.OutsideProcessing_BlanketPOs opbpo
+					on opbpo.InPartCode = ro.PartCode
+					and coalesce(opbpo.VendorShipFrom, ro.Plant, 'N/A') = coalesce(ro.Plant, 'N/A')
+					and opbpo.VendorCode = coalesce(opbpo.DefaultVendor, opbpo.VendorCode)
+					and opbpo.PONumber = coalesce(opbpo.DefaultPO, opbpo.PONumber)
+				cross join dbo.parameters p
+			where
+				not exists
+				(	select
+						*
+					from
+						dbo.po_detail pd
+					where
+						pd.po_number = opbpo.PONumber
+						and pd.part_number = opbpo.OutPartCode
+						and pd.date_due = FT.fn_TruncDate('day', @TranDT + opbpo.ProcessDays)
+				)
+
+			select
+				@Error = @@Error,
+				@RowCount = @@Rowcount
+			
+			if	@Error != 0 begin
+				set	@Result = 999999
+				RAISERROR ('Error inserting into table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
+				rollback tran @ProcName
+				return
+			end
+			--- </Insert>
+			
+			--- <Update rows="n">
+			set	@TableName = 'dbo.po_detail'
+			
+			update
+				pd
+			set
+				quantity = quantity + dbo.udf_GetQtyFromStdQty(opbpo.OutPartCode, ro.QtyReceived / opbpo.BOMQty, opbpo.ReceivingUnit)
+			,	balance = balance + dbo.udf_GetQtyFromStdQty(opbpo.OutPartCode, ro.QtyReceived / opbpo.BOMQty, opbpo.ReceivingUnit)
+			,	standard_qty = pd.standard_qty + ro.QtyReceived / opbpo.BOMQty
+			from
+				dbo.po_detail pd
+				join
+					(	select
+							rh.plant
+						,	ro.PartCode
+						,	QtyReceived = sum(ro.QtyObject)
+						from
+							dbo.ReceiverHeaders rh
+							join dbo.ReceiverLines rl
+								join dbo.ReceiverObjects ro
+									on rl.ReceiverLineID = ro.ReceiverLineID
+								on rh.ReceiverID = rl.ReceiverID
+						where
+							exists
+								(	select
+										*
+									from
+										dbo.#receiverObjectList rol
+									where
+										rol.receiverObjectID = ro.ReceiverObjectID
+								)
+						group by
+							rh.plant
+						,	ro.PartCode
+					) ro
+					join dbo.OutsideProcessing_BlanketPOs opbpo
+						on opbpo.InPartCode = ro.PartCode
+						and coalesce(opbpo.VendorShipFrom, ro.Plant, 'N/A') = coalesce(ro.Plant, 'N/A')
+						and opbpo.VendorCode = coalesce(opbpo.DefaultVendor, opbpo.VendorCode)
+						and opbpo.PONumber = coalesce(opbpo.DefaultPO, opbpo.PONumber)
+				on pd.po_number = opbpo.PONumber
+				and pd.part_number = opbpo.OutPartCode
+			where
+				pd.date_due = FT.fn_TruncDate('day', @TranDT + opbpo.ProcessDays)
+				and pd.row_id =
+					(	select
+							max(row_id)
+						from
+							dbo.po_detail pd2
+						where
+							pd2.po_number = pd.po_number
+							and pd2.part_number = pd.part_number
+							and pd2.date_due = pd.date_due
+					)
+			
+			select
+				@Error = @@Error,
+				@RowCount = @@Rowcount
+			
+			if	@Error != 0 begin
+				set	@Result = 999999
+				RAISERROR ('Error updating table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
+				rollback tran @ProcName
+				return
+			end
+			if	@RowCount != @expectedRows begin
+				set	@Result = 999999
+				RAISERROR ('Error updating %s in procedure %s.  Rows Updated: %d.  Expected rows: %d.', 16, 1, @TableName, @ProcName, @RowCount, @expectedRows)
+				rollback tran @ProcName
+				return
+			end
+			--- </Update>
+			
+			--- <TOC>
+			if	@Debug & 0x01 = 0x01 begin
+				set @TocDT = getdate()
+				set @TimeDiff =
+					case
+						when datediff(day, @TocDT - @TicDT, convert(datetime, '1900-01-01')) > 1
+							then convert(varchar, datediff(day, @TocDT - @TicDT, convert(datetime, '1900-01-01'))) + ' day(s) ' + convert(char(12), @TocDT - @TicDT, 114)
+						else
+							convert(varchar(12), @TocDT - @TicDT, 114)
+					end
+				set @DebugMsg = @DebugMsg + char(13) + char(10) + replicate(' -', (@Debug & 0x3E) / 2) + @TocMsg + ': ' + @TimeDiff
+				set @TicDT = @TocDT
+			end
+			set @DebugMsg += coalesce(char(13) + char(10) + @cDebugMsg, N'')
+			set @cDebugMsg = null
+			--- </TOC>
+
+			if	@Debug & 0x01 = 0x01 begin
+				select
+					'po_detail', *
+				from
+					dbo.po_detail pd
+					join
+						(	select
+								rh.plant
+							,	ro.PartCode
+							,	QtyReceived = sum(ro.QtyObject)
+							from
+								dbo.ReceiverHeaders rh
+								join dbo.ReceiverLines rl
+									join dbo.ReceiverObjects ro
+										on rl.ReceiverLineID = ro.ReceiverLineID
+									on rh.ReceiverID = rl.ReceiverID
+							where
+								exists
+									(	select
+											*
+										from
+											dbo.#receiverObjectList rol
+										where
+											rol.receiverObjectID = ro.ReceiverObjectID
+									)
+							group by
+								rh.plant
+							,	ro.PartCode
+						) ro
+						join dbo.OutsideProcessing_BlanketPOs opbpo
+							on opbpo.InPartCode = ro.PartCode
+							and coalesce(opbpo.VendorShipFrom, ro.Plant, 'N/A') = coalesce(ro.Plant, 'N/A')
+							and opbpo.VendorCode = coalesce(opbpo.DefaultVendor, opbpo.VendorCode)
+							and opbpo.PONumber = coalesce(opbpo.DefaultPO, opbpo.PONumber)
+					on pd.po_number = opbpo.PONumber
+					and pd.part_number = opbpo.OutPartCode
+				where
+					pd.date_due = FT.fn_TruncDate('day', @TranDT + opbpo.ProcessDays)
+					and pd.row_id =
+						(	select
+								max(row_id)
+							from
+								dbo.po_detail pd2
+							where
+								pd2.po_number = pd.po_number
+								and pd2.part_number = pd.part_number
+								and pd2.date_due = pd.date_due
+						)
+			end
+
+		end
 		--- </Body>
 
 		done:
@@ -672,15 +955,13 @@ declare
 
 begin transaction Test
 
-create table tempdb.dbo.#receiverObjectList
-(	ReceiverObjectId int)
-
-insert
-	tempdb.dbo.#receiverObjectList
-(	ReceiverObjectId
-)
 select
-	ReceiverObjectId = 55888427
+	receiverObjectID = 55888607
+into
+	tempdb..#receiverObjectList
+union
+select
+	receiverObjectID = 55888608
 
 declare
 	@ProcReturn integer
