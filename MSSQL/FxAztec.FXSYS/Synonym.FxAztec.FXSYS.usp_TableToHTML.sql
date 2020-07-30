@@ -1,9 +1,9 @@
 
 /*
-Create Synonym.FxAztec.FXSYS.usp_TableToHTML.sql
+Create Synonym.FxEDI.FXSYS.usp_TableToHTML.sql
 */
 
-use FxAztec
+use FxEDI
 go
 
 --	drop procedure FXSYS.usp_TableToHTML

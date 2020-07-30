@@ -51,6 +51,18 @@
           <ConnectionProtocol>NotSpecified</ConnectionProtocol>
           <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
         </ConnectionNode>
+        <ConnectionNode Name="aztec-sql01:SupplierPortal">
+          <Created>2020-07-17T09:45:01.1844663-04:00</Created>
+          <Type>SQL</Type>
+          <Server>aztec-sql01</Server>
+          <UserName>SupplierPortal</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB />
+          <LoginTimeout>30</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
       </Items>
     </LogicalFolder>
     <LogicalFolder Name="Queries" Type="0" Sorted="true">
@@ -68,8 +80,8 @@
           <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_ProcessReceiver_byReceiverObjectList.sql</FullPath>
         </FileNode>
         <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_Purchasing_AddReceipt_byReceiverObjectList.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_Purchasing_AddReceipt_byReceiverObjectList.sql</FullPath>
         </FileNode>

@@ -1,26 +1,37 @@
-
-/*
-Create Procedure.FxAztec.SUPPLIEREDI.usp_Purchasing_AddReceipt_byReceiverObjectList.sql
-*/
-
 use FxAztec
 go
 
---if	objectproperty(object_id('SUPPLIEREDI.usp_Purchasing_AddReceipt_byReceiverObjectList'), 'IsProcedure') = 1 begin
---	drop procedure SUPPLIEREDI.usp_Purchasing_AddReceipt_byReceiverObjectList
---end
---go
+select
+	*
+from
+	dbo.ReceiverHeaders rh
+	join dbo.ReceiverLines rl
+		on rl.ReceiverID = rh.ReceiverID
+	join dbo.ReceiverObjects ro
+		on ro.ReceiverLineID = rl.ReceiverLineID
+where
+	rh.SupplierASNGuid = 'A0BE0A79-F4D0-EA11-8123-005056A166E5'
+go
 
---create procedure SUPPLIEREDI.usp_Purchasing_AddReceipt_byReceiverObjectList
-alter procedure SUPPLIEREDI.usp_Purchasing_AddReceipt_byReceiverObjectList
-	@User varchar(5)
+begin transaction
+go
+
+select
+	receiverObjectID = 55888607
+into
+	tempdb..#receiverObjectList
+union
+select
+	receiverObjectID = 55888608
+
+declare
+	@User varchar(5) = 'EES'
 ,	@ReceiverObjectID int = null -- Specify this or a list using #receiverObjectList
-,	@TranDT datetime = null out
-,	@Result integer = null out
-,	@Debug int = 0
-,	@DebugMsg varchar(max) = null out
-as
-begin
+,	@TranDT datetime = null
+,	@Result integer = null
+,	@Debug int = 1
+,	@DebugMsg varchar(max) = null
+
 	--set xact_abort on
 	set nocount on
 
@@ -146,9 +157,9 @@ begin
 		--- <Body>
 		/*	Look for or create working table of receiver objects to create. */
 		if	object_id('tempdb..#receiverObjectList') is null begin
-			create table #receiverObjectList
-			(	ReceiverObjectID int primary key
-			)
+			--create table #receiverObjectList
+			--(	ReceiverObjectID int primary key
+			--)
 
 			insert
 				#receiverObjectList
@@ -904,8 +915,8 @@ begin
 
 		---	<Return>
 		set	@Result = 0
-		return
-			@Result
+		--return
+		--	@Result
 		--- </Return>
 	end try
 	begin catch
@@ -938,70 +949,12 @@ begin
 
 		raiserror(@errorMessage, @errorSeverity, @errorState)
 	end catch
-end
-
-/*
-Example:
-Initial queries
-{
-
-}
-
-Test syntax
-{
-
-set statistics io on
-set statistics time on
-go
-
-declare
-	@User varchar(5) = 'EES'
-,	@ReceiverObjectID int = null
-
-begin transaction Test
 
 select
-	receiverObjectID = 55888607
-into
-	tempdb..#receiverObjectList
-union
-select
-	receiverObjectID = 55888608
+	@TranDT
+,	@Result
 
-declare
-	@ProcReturn integer
-,	@TranDT datetime
-,	@ProcResult integer
-,	@Error integer
-
-execute
-	@ProcReturn = SUPPLIEREDI.usp_Purchasing_AddReceipt_byReceiverObjectList
-	@User = @User
-,	@ReceiverObjectID = @ReceiverObjectID
-,	@TranDT = @TranDT out
-,	@Result = @ProcResult out
-,	@Debug = 1
-
-set	@Error = @@error
-
-select
-	@Error, @ProcReturn, @TranDT, @ProcResult
 go
 
---commit
-if	@@trancount > 0 begin
-	rollback
-end
+rollback
 go
-
-set statistics io off
-set statistics time off
-go
-
-}
-
-Results {
-}
-*/
-go
-

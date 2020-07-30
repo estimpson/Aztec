@@ -410,7 +410,7 @@ begin
 			--- </TOC>
 		end
 
-		/*	Prepare shipper lines */
+		/*	Prepare shipper lines. */
 		set @TocMsg = 'Prepare shipper lines'
 		begin
 			declare
@@ -688,6 +688,114 @@ begin
 		end
 		else begin
 			goto done
+		end
+
+		/*	Send email report. */
+		set @TocMsg = 'Send email reports'
+		begin
+			select
+				RowID = row_number() over (order by sn.ShipperID)
+			,	sn.RawDocumentGUID
+			,	sn.ShipperID
+			,	ShipToCode = coalesce(ph.ship_to_destination, sn.ShipToCode)
+			,	sn.ShipFromCode
+			,	sn.Carrier
+			,	sn.TransMode
+			,	sn.Trailer
+			,	snl.PartNumber
+			,	snl.Quantity
+			into
+				#emailReport
+			from
+				@ShipNotices sn
+				join @ShipNoticeLines snl
+					on snl.RawDocumentGUID = sn.RawDocumentGUID
+					and snl.ShipperID = sn.ShipperID
+				join @ShipNoticeOrders sno
+					on sno.RawDocumentGUID = snl.RawDocumentGUID
+					and sno.ShipperID = snl.ShipperID
+					and sno.IdNumber = snl.IdNumber
+				left join FxAztec.dbo.po_header ph
+					on ph.po_number = sno.PurchaseOrder
+
+			--- <Call>	
+			declare
+				@html nvarchar(max)
+
+			set	@CallProcName = 'FXSYS.usp_TableToHTML'
+			execute
+				@ProcReturn = FXSYS.usp_TableToHTML
+					@TableName = '#emailReport'
+				,	@OrderBy = N'RowId'
+				,	@Html = @html out
+				,	@IncludeRowNumber = 0
+				,	@CamelCaseHeaders = 1
+			
+			set	@Error = @@Error
+			if	@Error != 0 begin
+				set	@Result = 900501
+				RAISERROR ('Error encountered in %s.  Error: %d while calling %s', 16, 1, @ProcName, @Error, @CallProcName)
+			end
+			if	@ProcReturn != 0 begin
+				set	@Result = 900502
+				RAISERROR ('Error encountered in %s.  ProcReturn: %d while calling %s', 16, 1, @ProcName, @ProcReturn, @CallProcName)
+			end
+			if	@ProcResult != 0 begin
+				set	@Result = 900502
+				RAISERROR ('Error encountered in %s.  ProcResult: %d while calling %s', 16, 1, @ProcName, @ProcResult, @CallProcName)
+			end
+			--- </Call>
+
+			if	@Debug & 0x01 = 0x01 begin
+				exec FXSYS.usp_LongPrint @html
+			end
+
+			declare
+				@emailHeader nvarchar(max) =
+					case
+						when db_name(db_id()) = 'FxEDI' then ''
+						else 'TEST DB: '
+					end + N'Waupaca ASN Received'
+
+			declare
+				@recipients varchar(max) = 'rjohnson@aztecmfgcorp.com;rvasquez@aztecmfgcorp.com'
+
+			declare
+				@emailBody nvarchar(max) = N'<H1>' + @emailHeader + N'</H1>' + @html
+			,	@profileName sysname = 'fxAlerts'
+			,	@copyRecipients sysname = 'estimpson@fore-thought.com'
+
+			exec msdb.dbo.sp_send_dbmail
+				@profile_name = @profileName
+			,	@recipients = @recipients
+			,	@copy_recipients = @copyRecipients
+			,	@subject = @emailHeader
+			,	@body = @emailBody
+			,	@body_format = 'HTML'
+			,	@importance = 'HIGH'
+			,	@exclude_query_output = 1
+
+			if	@Debug & 0x01 = 1 begin
+				print '@recipients: ' + @recipients
+				print '@emailBody: ' + @emailBody
+			end
+
+			--- <TOC>
+			if	@Debug & 0x01 = 0x01 begin
+				set @TocDT = getdate()
+				set @TimeDiff =
+					case
+						when datediff(day, @TocDT - @TicDT, convert(datetime, '1900-01-01')) > 1
+							then convert(varchar, datediff(day, @TocDT - @TicDT, convert(datetime, '1900-01-01'))) + ' day(s) ' + convert(char(12), @TocDT - @TicDT, 114)
+						else
+							convert(varchar(12), @TocDT - @TicDT, 114)
+					end
+				set @DebugMsg = @DebugMsg + char(13) + char(10) + replicate(' -', (@Debug & 0x3E) / 2) + @TocMsg + ': ' + @TimeDiff
+				set @TicDT = @TocDT
+			end
+			set @DebugMsg += coalesce(char(13) + char(10) + @cDebugMsg, N'')
+			set @cDebugMsg = null
+			--- </TOC>
 		end
 
 		done:
