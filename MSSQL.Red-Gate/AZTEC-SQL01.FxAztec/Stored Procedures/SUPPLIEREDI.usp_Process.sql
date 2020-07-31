@@ -947,6 +947,9 @@ begin
 									'rvasquez@aztecmfgcorp.com'
 								union
 								select
+									'payables@aztecmfgcorp.com'
+								union
+								select
 									'abodey@metal-technologies.com'
 								where
 									exists
