@@ -44,7 +44,39 @@ AS
 --	9.	Close bill of lading.
 --	10.	Assign invoice number.
 ---------------------------------------------------------------------------------------
-SET ANSI_WARNINGS OFF
+SET ANSI_WARNINGS off
+
+	
+--- <Error Handling>
+declare
+	@result int
+,	@tranDT datetime
+,	@CallProcName sysname
+,	@TableName sysname
+,	@ProcName sysname = user_name(objectproperty(@@procid, 'OwnerId')) + '.' + object_name(@@procid)
+,	@ProcReturn integer
+,	@ProcResult integer
+,	@Error integer
+,	@RowCount integer
+--- </Error Handling>
+
+--	0.  Reconcile shipper.
+--- <Call>	
+set	@CallProcName = 'dbo.msp_reconcile_shipper'
+execute
+	@ProcReturn = dbo.msp_reconcile_shipper
+	@shipper = @shipper
+
+set	@Error = @@Error
+if	@Error != 0 begin
+	RAISERROR ('Error encountered in %s.  Error: %d while calling %s', 16, 1, @ProcName, @Error, @CallProcName)
+	rollback tran @ProcName
+end
+if	@ProcReturn != 0 begin
+	RAISERROR ('Error encountered in %s.  ProcReturn: %d while calling %s', 16, 1, @ProcName, @ProcReturn, @CallProcName)
+	rollback tran @ProcName
+end
+--- </Call>
 
 --	1.	Declare all the required local variables.
 DECLARE	@returnvalue	INTEGER,
@@ -328,21 +360,6 @@ if	(	select
 		where
 			s.id = @shipper
 	) = 'O' begin
-	
-	--- <Error Handling>
-	declare
-		@result int
-	,	@tranDT datetime
-	,	@CallProcName sysname
-	,	@TableName sysname
-	,	@ProcName sysname
-	,	@ProcReturn integer
-	,	@ProcResult integer
-	,	@Error integer
-	,	@RowCount integer
-
-	set	@ProcName = user_name(objectproperty(@@procid, 'OwnerId')) + '.' + object_name(@@procid)  -- e.g. dbo.usp_Test
-	--- </Error Handling>
 	
 	declare
 		@user varchar(10)
