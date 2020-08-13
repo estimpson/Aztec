@@ -1022,6 +1022,18 @@ begin
 									)
 								union
 								select
+									'rdi_shipping@metal-technologies.com'
+								where
+									exists
+									(	select
+											*
+										from
+											@ShipNotices sn
+										where
+											sn.ShipFromCode = 'RDI0010'
+									)
+								union
+								select
 									'dbush@rochestermetals.com'
 								where
 									exists
