@@ -709,10 +709,6 @@ from
 --<Debug>
 if @Debug & 1 = 1 begin
 	print	'	...calculated.   ' + Convert (varchar, DateDiff (ms, @StartDT, GetDate ())) + ' ms'
-	select
-		*
-	from
-		@RawReleases rr
 end
 --</Debug>
 
@@ -1571,15 +1567,6 @@ and
 		coalesce(a.newDocument,0) = 1 and
 		coalesce(bo.AccumShipped,0) != coalesce(pra.LastAccumQty,0)
 union
---	select
---	od.AztecPart
---,	od.CustomerPart
---,	od.DueDT
---,	od.OrderQty
---,	od.RunningTotal
---,	od.InvQty
---,	od.ShipToCode
---from
 select
 	TradingPartner = Coalesce((Select max(TradingPartner) from fxEDI.EDI.EDIDocuments where GUID = a.RawDocumentGUID) ,'')
 ,	DocumentType = 'SS'
@@ -1604,7 +1591,7 @@ from
 	@Current862s a
 	join EDIFord.ShipScheduleHeaders ssh
 		on ssh.RawDocumentGUID = a.RawDocumentGUID
-		and ssh.TradingPartner ='Ford Motor Company (FCSD)'
+		and ssh.TradingPartner like 'Ford Motor Company%FCSD%'
 	cross apply 
 		(	select
 				AztecPart = od.part_number
@@ -1631,6 +1618,67 @@ from
 							*
 						from
 							EDIFord.ShipSchedules ss
+						where
+							ss.RawDocumentGUID = ssh.RawDocumentGUID
+							and ss.ShipToCode = od.destination
+							and ss.CustomerPart = od.customer_part
+					)
+		) od
+where
+	a.NewDocument = 1	
+	and od.RunningTotal > coalesce(od.InvQty, 0)
+union
+select
+	TradingPartner = Coalesce((Select max(TradingPartner) from fxEDI.EDI.EDIDocuments where GUID = a.RawDocumentGUID) ,'')
+,	DocumentType = 'PR'
+,	AlertType =  'Service Inventory Notice'
+,	ReleaseNo =  Coalesce(a.ReleaseNo,'')
+,	ShipToCode = od.ShipToCode
+,	ConsigneeCode =  coalesce(a.ConsigneeCode,'')
+,	ShipFromCode = coalesce(a.ShipFromCode,'')
+,	CustomerPart = Coalesce(a.CustomerPart,'')
+,	CustomerPO = Coalesce(a.CustomerPO,'')
+,	CustomerModelYear = Coalesce(a.CustomerModelYear,'')
+,   Description = 'Aztec Part: ' + od.AztecPart
+					+ '  Inventory Available: '
+					+ convert(varchar(15), od.InvQty)
+					+ '  Running Total of Demand: '
+					+ convert(varchar(15), od.RunningTotal)
+					+ '  Release Qty: '
+					+ convert(varchar(15), od.OrderQty)
+					+ '  Release DT: '
+					+ convert(varchar(15), od.DueDT, 101)
+from
+	@Current862s a
+	join EDIFord.PlanningHeaders ssh
+		on ssh.RawDocumentGUID = a.RawDocumentGUID
+		and ssh.TradingPartner like 'Ford Motor Company%FCSD%'
+	cross apply 
+		(	select
+				AztecPart = od.part_number
+			,	CustomerPart = od.customer_part
+			,	DueDT = od.due_date
+			,	OrderQty = od.std_qty
+			,	RunningTotal = sum (od.std_qty) over (partition by od.part_number order by od.due_date asc)
+			,	InvQty = avail.InvQty
+			,	ShipToCode = od.destination
+			from
+				dbo.order_detail od
+				outer apply
+					(	select
+							InvQty = coalesce(sum(o.std_quantity), 0)
+						from
+							dbo.object o
+						where
+							o.part = od.part_number
+							and o.location != 'LOST'
+					) avail
+			where
+				exists
+					(	select
+							*
+						from
+							EDIFord.PlanningReleases ss
 						where
 							ss.RawDocumentGUID = ssh.RawDocumentGUID
 							and ss.ShipToCode = od.destination
@@ -1939,9 +1987,6 @@ select
 	@Error, @ProcReturn, @TranDT, @ProcResult
 go
 
-
-go
-
 commit transaction
 --rollback transaction
 
@@ -1956,4 +2001,64 @@ go
 Results {
 }
 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 GO
