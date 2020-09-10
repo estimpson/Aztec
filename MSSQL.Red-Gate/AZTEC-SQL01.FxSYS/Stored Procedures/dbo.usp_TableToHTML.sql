@@ -173,8 +173,8 @@ set	@html = replace(@html, '<tr><TRRow>1</TRRow>', '<tr bgcolor=#C6CFFF>')
 set	@html = replace(@html, '<TRRow>0</TRRow>', '')
 if	@colorCodeType = 1 begin
 	set @html = replace(@html, '<th>Type</th>', '')
-	set @html = replace(@html, '<tr><TRType>-1</TRType>', '<tr bgcolor=#F00>')
-	set @html = replace(@html, '<tr bgcolor=#C6CFFF><TRType>-1</TRType>', '<tr bgcolor=#F00>')
+	set @html = replace(@html, '<tr><TRType>-1</TRType>', '<tr bgcolor=#FF0000>')
+	set @html = replace(@html, '<tr bgcolor=#C6CFFF><TRType>-1</TRType>', '<tr bgcolor=#FF0000>')
 	set	@html = replace(@html, '<TRType>0</TRType>', '')
 end
 
