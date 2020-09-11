@@ -3,7 +3,13 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create procedure [dbo].[usp_TableToHTML]
+--if	objectproperty(object_id('dbo.usp_TableToHTML'), 'IsProcedure') = 1 begin
+--	drop procedure dbo.usp_TableToHTML
+--end
+--go
+
+--create procedure dbo.usp_TableToHTML
+CREATE procedure [dbo].[usp_TableToHTML]
 	@tableName sysname = 'dbo.part_packaging'
 ,	@html nvarchar(max) output
 ,	@orderBy nvarchar(max) = ''
@@ -180,4 +186,6 @@ end
 
 --print
 --	@html
+GO
+GRANT EXECUTE ON  [dbo].[usp_TableToHTML] TO [SupplierPortal]
 GO
