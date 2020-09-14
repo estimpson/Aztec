@@ -229,10 +229,12 @@ begin
 					case
 						when summary.FileCount = 1 then '1 file'
 						else convert(varchar(3), summary.FileCount) + ' files'
-					end
+					end +
+					' (' + summary.FileList + ')'
 			from
 				(	select
 						FileCount = count(distinct sn.RawDocumentGUID)
+					,	FileList = Fx.ToList(distinct convert(varchar(50), sn.RawDocumentGUID))
 					from
 						SUPPLIEREDI.ShipNotices sn
 					where
@@ -262,14 +264,23 @@ begin
 						SUPPLIEREDI.ShipNotices sn
 						outer apply
 						(	select
-								Details = FX.ToList(distinct 'Part: ' + sno.PartCode + ' ~ Qty:' + convert(varchar(12),convert(int, sno.ObjectQuantity)))
+								Details = FX.ToList(distinct 'Part: ' + snd.PartCode + ' ~ Qty:' + convert(varchar(12),convert(int, snd.TotalQuantity)))
 							from
-								SUPPLIEREDI.ShipNoticeLines snl
-								join SUPPLIEREDI.ShipNoticeObjects sno
-									on sno.RawDocumentGUID = snl.RawDocumentGUID
-									and sno.SupplierPart = snl.SupplierPart
+								(	select
+										snl.RawDocumentGUID
+									,	sno.PartCode
+									,	TotalQuantity = sum(sno.ObjectQuantity)
+									from
+										SUPPLIEREDI.ShipNoticeLines snl
+										join SUPPLIEREDI.ShipNoticeObjects sno
+											on sno.RawDocumentGUID = snl.RawDocumentGUID
+											and sno.SupplierPart = snl.SupplierPart
+									group by
+										snl.RawDocumentGUID
+									,	sno.PartCode
+								) snd
 							where
-								snl.RawDocumentGuid = sn.RawDocumentGuid
+								snd.RawDocumentGuid = sn.RawDocumentGuid
 						) sDetails
 					where
 						sn.Status = 0
