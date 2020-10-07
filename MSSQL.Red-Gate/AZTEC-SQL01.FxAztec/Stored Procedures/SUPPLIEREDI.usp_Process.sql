@@ -894,11 +894,10 @@ begin
 							(	select
 									*
 								from
-									dbo.po_detail pd
+									@newReceiverLines nrl
 								where
-									pd.po_number = sn.PurchaseOrderNumber
-									and pd.part_number = sn.PartCode
-									and pd.balance > 0
+									nrl.PONumber = sn.PurchaseOrderNumber
+									and nrl.PartCode = sn.PartCode
 							)
 					group by
 						sn.ShipFromCode
@@ -1066,6 +1065,30 @@ begin
 											@ShipNotices sn
 										where
 											sn.ShipFromCode = 'BREW0010'
+									)
+								union
+								select
+									'kbailey@gldiecast.com'
+								where
+									exists
+									(	select
+											*
+										from
+											@ShipNotices sn
+										where
+											sn.ShipFromCode = 'GRE0010'
+									)
+								union
+								select
+									'dwatts@gldiecast.com'
+								where
+									exists
+									(	select
+											*
+										from
+											@ShipNotices sn
+										where
+											sn.ShipFromCode = 'GRE0010'
 									)
 							) r
 					)
