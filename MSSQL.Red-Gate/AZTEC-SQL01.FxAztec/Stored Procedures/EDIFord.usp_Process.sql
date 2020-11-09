@@ -1584,7 +1584,7 @@ and
 		coalesce(bo.AccumShipped,0) != coalesce(pra.LastAccumQty,0)
 union
 select
-	Type = 0
+	Type = -1
 ,	TradingPartner = Coalesce((Select max(TradingPartner) from fxEDI.EDI.EDIDocuments where GUID = a.RawDocumentGUID) ,'')
 ,	DocumentType = 'SS'
 ,	AlertType =  ' Service Inventory Notice'
@@ -1646,7 +1646,7 @@ where
 	and od.RunningTotal > coalesce(od.InvQty, 0)
 union
 select
-	Type = 0
+	Type = -1
 ,	TradingPartner = Coalesce((Select max(TradingPartner) from fxEDI.EDI.EDIDocuments where GUID = a.RawDocumentGUID) ,'')
 ,	DocumentType = 'PR'
 ,	AlertType =  ' Service Inventory Notice'
