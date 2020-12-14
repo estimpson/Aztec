@@ -2,7 +2,8 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_NULLS ON
 GO
-CREATE procedure [dbo].[usp_InventoryControl_MaterialIssue]
+
+create procedure [dbo].[usp_InventoryControl_MaterialIssue]
 	@Operator varchar(5)
 ,	@Serial int
 ,	@QtyIssue numeric(20,6)
@@ -200,7 +201,7 @@ select
 ,   destination = o.destination
 ,   sequence = o.sequence
 ,   object_type = o.type
-,   part_name = (SELECT name FROM part WHERE part = o.part)
+,   part_name = (select name from part where part = o.part)
 ,   start_date = o.start_date
 ,   field1 = o.field1
 ,   field2 = o.field2
@@ -213,30 +214,30 @@ select
 from
 	dbo.object o
 where
-	serial = @Serial
+	o.serial = @Serial
 	and o.status = 'A'
 
-SELECT
+select
 	@Error = @@Error,
 	@RowCount = @@Rowcount
 
-IF	@Error != 0 BEGIN
-	SET	@Result = 999999
-	RAISERROR ('Error inserting into table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
-	ROLLBACK TRAN @ProcName
-	RETURN
-END
-IF	@RowCount != 1 BEGIN
-	SET	@Result = 999999
-	RAISERROR ('Error inserting into table %s in procedure %s.  Rows inserted: %d.  Expected rows: 1.', 16, 1, @TableName, @ProcName, @RowCount)
-	ROLLBACK TRAN @ProcName
-	RETURN
-END
+if	@Error != 0 begin
+	set	@Result = 999999
+	raiserror ('Error inserting into table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
+	rollback tran @ProcName
+	return
+end
+if	@RowCount != 1 begin
+	set	@Result = 999999
+	raiserror ('Error inserting into table %s in procedure %s.  Rows inserted: %d.  Expected rows: 1.', 16, 1, @TableName, @ProcName, @RowCount)
+	rollback tran @ProcName
+	return
+end
 --- </Insert>
 
 /*	Adjust object quantity. (u1) */
 --- <Update rows="1">
-SET	@TableName = 'dbo.object'
+set	@TableName = 'dbo.object'
 
 update
 	o
@@ -250,6 +251,8 @@ from
 	dbo.object o
 where
 	serial = @Serial
+	and
+		status = 'A'
 
 select
 	@Error = @@Error,
@@ -266,9 +269,8 @@ if	@RowCount != 1 begin
 	raiserror ('Error updating %s in procedure %s.  Rows Updated: %d.  Expected rows: 1.', 16, 1, @TableName, @ProcName, @RowCount)
 	rollback tran @ProcName
 	return
-END
+end
 --- </Update>
-
 
 -- 05/23/2019 - delete object if it has been material issued down to zero quantity - per Rick J.
 if ( (
@@ -307,11 +309,13 @@ if ( (
 --- </Delete>
 end
 
-
 /*	Record part on hand. (dbo.usp_InventoryControl_UpdatePartOnHand) */
 declare
-	@partCode varchar(25) =
-	(	select
+	@partCode varchar(25)
+
+set	@partCode =
+	(
+		select
 			part
 		from
 			dbo.object o
@@ -327,26 +331,24 @@ execute
 ,	@TranDT = @TranDT out
 ,	@Result = @ProcResult out
 
-set @Error = @@error
+set	@Error = @@Error
 if	@Error != 0 begin
-	set @Result = 900501
-	raiserror('Error encountered in %s.  Error: %d while calling %s', 16, 1, @ProcName, @Error, @CallProcName)
+	set	@Result = 900501
+	raiserror ('Error encountered in %s.  Error: %d while calling %s', 16, 1, @ProcName, @Error, @CallProcName)
 	rollback tran @ProcName
-	return @Result
+	return	@Result
 end
-
 if	@ProcReturn != 0 begin
-	set @Result = 900502
-	raiserror('Error encountered in %s.  ProcReturn: %d while calling %s', 16, 1, @ProcName, @ProcReturn, @CallProcName)
+	set	@Result = 900502
+	raiserror ('Error encountered in %s.  ProcReturn: %d while calling %s', 16, 1, @ProcName, @ProcReturn, @CallProcName)
 	rollback tran @ProcName
-	return @Result
+	return	@Result
 end
-
 if	@ProcResult != 0 begin
-	set @Result = 900502
+	set	@Result = 900502
 	raiserror('Error encountered in %s.  ProcResult: %d while calling %s', 16, 1, @ProcName, @ProcResult, @CallProcName)
 	rollback tran @ProcName
-	return @Result
+	return	@Result
 end
 --- </Call>
 
@@ -417,5 +419,4 @@ go
 Results {
 }
 */
-
 GO
