@@ -58,6 +58,17 @@ set
 		)
 	)
 
+if	exists
+	(	select
+			*
+		from
+			dbo.object o
+		where
+			o.serial = @Serial
+			and o.status != 'A'
+	) begin
+	raiserror('Error in procedure %s.  Inventory is not approved.  Serial: %d', 16, 1, @ProcName, @Serial)
+end
 ---	</ArgumentValidation>
 
 --- <Body>
@@ -199,10 +210,11 @@ select
 ,   dimension_qty_string = o.dimension_qty_string
 ,   dim_qty_string_other = o.dim_qty_string_other
 ,   varying_dimension_code = o.varying_dimension_code
-FROM
+from
 	dbo.object o
-WHERE
+where
 	serial = @Serial
+	and o.status = 'A'
 
 SELECT
 	@Error = @@Error,
