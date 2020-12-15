@@ -66,7 +66,7 @@ if	exists
 			dbo.object o
 		where
 			o.serial = @Serial
-			and o.status != 'A'
+			and o.status not in ('A', 'P')
 	) begin
 	raiserror('Error in procedure %s.  Inventory is not approved.  Serial: %d', 16, 1, @ProcName, @Serial)
 end
@@ -215,7 +215,7 @@ from
 	dbo.object o
 where
 	o.serial = @Serial
-	and o.status = 'A'
+	and o.status in ('A', 'P')
 
 select
 	@Error = @@Error,
@@ -250,9 +250,7 @@ set
 from
 	dbo.object o
 where
-	serial = @Serial
-	and
-		status = 'A'
+	o.serial = @Serial
 
 select
 	@Error = @@Error,
