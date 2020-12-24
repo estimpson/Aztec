@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create function [EDI_XML].[TRN_INFO]
+CREATE function [EDI_XML].[TRN_INFO]
 (	@dictionaryVersion varchar(25)
 ,	@transactionType varchar(25)
 ,	@tradingPartner varchar(50)
@@ -23,7 +23,7 @@ begin
 			(	select
 					name = dt.TransactionDescription
 				,	trading_partner = @TradingPartner
-				,	ICN = @iConnectID
+				,	ICN = coalesce(@iConnectID, 'UNK')
 				,	version = @DictionaryVersion
 				,	type = @TransactionType
 				,	doc_number = @DocumentNumber
