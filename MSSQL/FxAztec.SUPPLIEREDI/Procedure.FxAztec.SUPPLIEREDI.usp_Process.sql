@@ -232,10 +232,12 @@ begin
 					case
 						when summary.FileCount = 1 then '1 file'
 						else convert(varchar(3), summary.FileCount) + ' files'
-					end
+					end +
+					' (' + summary.FileList + ')'
 			from
 				(	select
 						FileCount = count(distinct sn.RawDocumentGUID)
+					,	FileList = Fx.ToList(distinct convert(varchar(50), sn.RawDocumentGUID))
 					from
 						SUPPLIEREDI.ShipNotices sn
 					where
@@ -265,14 +267,23 @@ begin
 						SUPPLIEREDI.ShipNotices sn
 						outer apply
 						(	select
-								Details = FX.ToList(distinct 'Part: ' + sno.PartCode + ' ~ Qty:' + convert(varchar(12),convert(int, sno.ObjectQuantity)))
+								Details = FX.ToList(distinct 'Part: ' + snd.PartCode + ' ~ Qty:' + convert(varchar(12),convert(int, snd.TotalQuantity)))
 							from
-								SUPPLIEREDI.ShipNoticeLines snl
-								join SUPPLIEREDI.ShipNoticeObjects sno
-									on sno.RawDocumentGUID = snl.RawDocumentGUID
-									and sno.SupplierPart = snl.SupplierPart
+								(	select
+										snl.RawDocumentGUID
+									,	sno.PartCode
+									,	TotalQuantity = sum(sno.ObjectQuantity)
+									from
+										SUPPLIEREDI.ShipNoticeLines snl
+										join SUPPLIEREDI.ShipNoticeObjects sno
+											on sno.RawDocumentGUID = snl.RawDocumentGUID
+											and sno.SupplierPart = snl.SupplierPart
+									group by
+										snl.RawDocumentGUID
+									,	sno.PartCode
+								) snd
 							where
-								snl.RawDocumentGuid = sn.RawDocumentGuid
+								snd.RawDocumentGuid = sn.RawDocumentGuid
 						) sDetails
 					where
 						sn.Status = 0
@@ -886,11 +897,10 @@ begin
 							(	select
 									*
 								from
-									dbo.po_detail pd
+									@newReceiverLines nrl
 								where
-									pd.po_number = sn.PurchaseOrderNumber
-									and pd.part_number = sn.PartCode
-									and pd.balance > 0
+									nrl.PONumber = sn.PurchaseOrderNumber
+									and nrl.PartCode = sn.PartCode
 							)
 					group by
 						sn.ShipFromCode
@@ -948,6 +958,9 @@ begin
 								union
 								select
 									'rvasquez@aztecmfgcorp.com'
+								union
+								select
+									'payables@aztecmfgcorp.com'
 								union
 								select
 									'abodey@metal-technologies.com'
@@ -1022,6 +1035,18 @@ begin
 									)
 								union
 								select
+									'rdi_shipping@metal-technologies.com'
+								where
+									exists
+									(	select
+											*
+										from
+											@ShipNotices sn
+										where
+											sn.ShipFromCode = 'RDI0010'
+									)
+								union
+								select
 									'dbush@rochestermetals.com'
 								where
 									exists
@@ -1043,6 +1068,30 @@ begin
 											@ShipNotices sn
 										where
 											sn.ShipFromCode = 'BREW0010'
+									)
+								union
+								select
+									'kbailey@gldiecast.com'
+								where
+									exists
+									(	select
+											*
+										from
+											@ShipNotices sn
+										where
+											sn.ShipFromCode = 'GRE0010'
+									)
+								union
+								select
+									'dwatts@gldiecast.com'
+								where
+									exists
+									(	select
+											*
+										from
+											@ShipNotices sn
+										where
+											sn.ShipFromCode = 'GRE0010'
 									)
 							) r
 					)

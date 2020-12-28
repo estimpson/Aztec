@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# SQL Server Management Studio Solution File, Format Version 14.00
-VisualStudioVersion = 14.0.23107.0
+# SQL Server Management Studio Solution File, Format Version 18.00
+VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "AztecMES", "AztecMES\AztecMES.ssmssqlproj", "{CC8EF1FE-E88F-4543-9CF5-B412B5892A71}"
 EndProject
@@ -87,6 +87,12 @@ Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxEDI.FXSYS", "FxEDI.FXSYS\
 EndProject
 Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxSYS", "FxSYS\FxSYS.ssmssqlproj", "{2C267012-DFCE-4E69-AB47-330443BF2AA8}"
 EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.IPTAG", "FxAztec.IPTAG\FxAztec.IPTAG.ssmssqlproj", "{02CF599F-19D5-41E2-92FA-83B6714B30A7}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.CDC", "FxAztec.CDC\FxAztec.CDC.ssmssqlproj", "{2949D248-EBC1-45DC-948E-DD1F0BEE7063}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "FxAztec.EDI_XML_Dana_ASN", "FxAztec.EDI_XML_Dana_ASN\FxAztec.EDI_XML_Dana_ASN.ssmssqlproj", "{DCB47C46-2E58-4A4C-8137-FD2F38A611BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Default|Default = Default|Default
@@ -131,12 +137,18 @@ Global
 		{C54BFCA6-ED47-4EF0-A369-01AFBF496E41}.Default|Default.ActiveCfg = Default
 		{61B10AB6-4126-4160-A85F-68271BE74958}.Default|Default.ActiveCfg = Default
 		{06DEA87E-F80F-47C1-B136-0690163B2728}.Default|Default.ActiveCfg = Default
-		{019D016E-ED9A-4235-820C-4AC3EC359148}.Default|Default.ActiveCfg = Default
 		{D0E77249-5917-4C50-95A5-9DF7BA2CF20F}.Default|Default.ActiveCfg = Default
 		{E6072B51-E98F-4FA0-B9ED-2EA368D1A5A5}.Default|Default.ActiveCfg = Default
 		{2C267012-DFCE-4E69-AB47-330443BF2AA8}.Default|Default.ActiveCfg = Default
+		{02CF599F-19D5-41E2-92FA-83B6714B30A7}.Default|Default.ActiveCfg = Default
+		{2949D248-EBC1-45DC-948E-DD1F0BEE7063}.Default|Default.ActiveCfg = Default
+		{DA35D203-2693-4A2E-851B-CBE09359F942}.Default|Default.ActiveCfg = Default
+		{DCB47C46-2E58-4A4C-8137-FD2F38A611BE}.Default|Default.ActiveCfg = Default
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {508A78A6-6A79-41ED-92EF-B9913602D174}
 	EndGlobalSection
 EndGlobal

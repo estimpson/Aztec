@@ -39,7 +39,9 @@ set	@TranCount = @@TranCount
 if	@TranCount = 0 begin
 	begin tran @ProcName
 end
-save tran @ProcName
+else begin
+	save tran @ProcName
+end
 set	@TranDT = coalesce(@TranDT, GetDate())
 --- </Tran>
 
@@ -58,6 +60,17 @@ set
 		)
 	)
 
+if	exists
+	(	select
+			*
+		from
+			dbo.object o
+		where
+			o.serial = @Serial
+			and o.status not in ('A', 'P')
+	) begin
+	raiserror('Error in procedure %s.  Inventory is not approved.  Serial: %d', 16, 1, @ProcName, @Serial)
+end
 ---	</ArgumentValidation>
 
 --- <Body>
@@ -202,7 +215,8 @@ select
 from
 	dbo.object o
 where
-	serial = @Serial
+	o.serial = @Serial
+	and o.status in ('A', 'P')
 
 select
 	@Error = @@Error,
@@ -210,13 +224,13 @@ select
 
 if	@Error != 0 begin
 	set	@Result = 999999
-	RAISERROR ('Error inserting into table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
+	raiserror ('Error inserting into table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
 	rollback tran @ProcName
 	return
 end
 if	@RowCount != 1 begin
 	set	@Result = 999999
-	RAISERROR ('Error inserting into table %s in procedure %s.  Rows inserted: %d.  Expected rows: 1.', 16, 1, @TableName, @ProcName, @RowCount)
+	raiserror ('Error inserting into table %s in procedure %s.  Rows inserted: %d.  Expected rows: 1.', 16, 1, @TableName, @ProcName, @RowCount)
 	rollback tran @ProcName
 	return
 end
@@ -232,12 +246,12 @@ set
 	std_quantity = std_quantity - @QtyIssue
 ,	quantity = quantity - dbo.udf_GetQtyFromStdQty(o.part, @QtyIssue, o.unit_measure)
 ,	weight = dbo.fn_Inventory_GetPartNetWeight(o.part, std_quantity - @QtyIssue)
+,	last_date = @TranDT
+,	last_time = @TranDT
 from
 	dbo.object o
 where
-	serial = @Serial
-	and
-		status = 'A'
+	o.serial = @Serial
 
 select
 	@Error = @@Error,
@@ -245,17 +259,54 @@ select
 
 if	@Error != 0 begin
 	set	@Result = 999999
-	RAISERROR ('Error updating table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
+	raiserror ('Error updating table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
 	rollback tran @ProcName
 	return
 end
 if	@RowCount != 1 begin
 	set	@Result = 999999
-	RAISERROR ('Error updating %s in procedure %s.  Rows Updated: %d.  Expected rows: 1.', 16, 1, @TableName, @ProcName, @RowCount)
+	raiserror ('Error updating %s in procedure %s.  Rows Updated: %d.  Expected rows: 1.', 16, 1, @TableName, @ProcName, @RowCount)
 	rollback tran @ProcName
 	return
 end
 --- </Update>
+
+-- 05/23/2019 - delete object if it has been material issued down to zero quantity - per Rick J.
+if ( (
+		select
+			o.quantity
+		from
+			dbo.object o
+		where
+			o.serial = @Serial ) = 0 ) begin
+
+	/*	Delete zero-ed out object. (d1) */
+	--- <Delete rows="1">
+	set	@TableName = 'dbo.object'
+
+	delete from
+		dbo.object
+	where
+		serial = @Serial
+
+	select
+	@Error = @@Error,
+	@RowCount = @@Rowcount
+
+	if	@Error != 0 begin
+		set	@Result = 999999
+		raiserror ('Error deleting from table %s in procedure %s.  Error: %d', 16, 1, @TableName, @ProcName, @Error)
+		rollback tran @ProcName
+		return
+	end
+	if	@RowCount != 1 begin
+		set	@Result = 999999
+		raiserror ('Error deleting from %s in procedure %s.  Rows attempted to delete: %d.  Expected rows: 1.', 16, 1, @TableName, @ProcName, @RowCount)
+		rollback tran @ProcName
+		return
+	end
+--- </Delete>
+end
 
 /*	Record part on hand. (dbo.usp_InventoryControl_UpdatePartOnHand) */
 declare
@@ -282,25 +333,31 @@ execute
 set	@Error = @@Error
 if	@Error != 0 begin
 	set	@Result = 900501
-	RAISERROR ('Error encountered in %s.  Error: %d while calling %s', 16, 1, @ProcName, @Error, @CallProcName)
+	raiserror ('Error encountered in %s.  Error: %d while calling %s', 16, 1, @ProcName, @Error, @CallProcName)
 	rollback tran @ProcName
 	return	@Result
 end
 if	@ProcReturn != 0 begin
 	set	@Result = 900502
-	RAISERROR ('Error encountered in %s.  ProcReturn: %d while calling %s', 16, 1, @ProcName, @ProcReturn, @CallProcName)
+	raiserror ('Error encountered in %s.  ProcReturn: %d while calling %s', 16, 1, @ProcName, @ProcReturn, @CallProcName)
 	rollback tran @ProcName
 	return	@Result
 end
 if	@ProcResult != 0 begin
 	set	@Result = 900502
-	RAISERROR ('Error encountered in %s.  ProcResult: %d while calling %s', 16, 1, @ProcName, @ProcResult, @CallProcName)
+	raiserror('Error encountered in %s.  ProcResult: %d while calling %s', 16, 1, @ProcName, @ProcResult, @CallProcName)
 	rollback tran @ProcName
 	return	@Result
 end
 --- </Call>
 
 --- </Body>
+
+---	<CloseTran AutoCommit=Yes>
+if	@TranCount = 0 begin
+	commit tran @ProcName
+end
+---	</CloseTran AutoCommit=Yes>
 
 ---	<Return>
 set	@Result = 0

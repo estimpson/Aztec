@@ -27,6 +27,18 @@
           <ConnectionProtocol>NotSpecified</ConnectionProtocol>
           <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
         </ConnectionNode>
+        <ConnectionNode Name="Aztec-sql01:estimpson">
+          <Created>2020-09-09T14:04:05.98709-04:00</Created>
+          <Type>SQL</Type>
+          <Server>Aztec-sql01</Server>
+          <UserName>estimpson</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB />
+          <LoginTimeout>30</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
       </Items>
     </LogicalFolder>
     <LogicalFolder Name="Queries" Type="0" Sorted="true">
@@ -62,8 +74,8 @@
           <FullPath>Procedure.FxSYS.dbo.usp_PrintError.sql</FullPath>
         </FileNode>
         <FileNode Name="Procedure.FxSYS.dbo.usp_TableToHTML.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec-sql01:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec-sql01</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Procedure.FxSYS.dbo.usp_TableToHTML.sql</FullPath>
         </FileNode>

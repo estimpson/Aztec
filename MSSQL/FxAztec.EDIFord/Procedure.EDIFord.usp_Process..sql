@@ -1275,37 +1275,48 @@ end
 --end
 /* Start E-Mail Alerts and Exceptions*/
 
-Declare @EDIOrdersAlert table (
-	TradingPartner varchar(30) NULL,
-	DocumentType varchar(30) NULL, --'PR - Planning Release; SS - ShipSchedule'
-	AlertType varchar(100) NULL,
-	ReleaseNo varchar(100) NULL,
-	ShipToCode varchar(100) NULL,
-	ConsigneeCode varchar(100) NULL,
-	ShipFromCode varchar(100) NULL,
-	CustomerPart varchar(100) NULL,
-	CustomerPO varchar(100) NULL,
-	CustomerModelYear varchar NULL,
-	Description varchar (max)
-	)
-		
-insert	
-	@EDIOrdersAlert
-(	TradingPartner,
-	DocumentType,
-	AlertType,
-	ReleaseNo ,
-	ShipToCode,
-	ConsigneeCode,
-	ShipFromCode,
-	CustomerPart,
-	CustomerPO,
-	CustomerModelYear,
-	Description 
+declare @EDIOrdersAlert table
+(	Type int default(0) null
+,	TradingPartner varchar(30) null
+,	DocumentType varchar(30) null	--'PR - Planning Release; SS - ShipSchedule'
+,	AlertType varchar(100) null
+,	ReleaseNo varchar(100) null
+,	ShipToCode varchar(100) null
+,	ConsigneeCode varchar(100) null
+,	ShipFromCode varchar(100) null
+,	CustomerPart varchar(100) null
+,	CustomerPO varchar(100) null
+,	CustomerModelYear varchar null
+,	Description varchar(max)
 )
-
-Select
-	TradingPartner = Coalesce((Select max(TradingPartner) from fxEDI.EDI.EDIDocuments where GUID = a.RawDocumentGUID) ,'')
+		
+insert
+	@EDIOrdersAlert
+(	Type
+,	TradingPartner
+,	DocumentType
+,	AlertType
+,	ReleaseNo
+,	ShipToCode
+,	ConsigneeCode
+,	ShipFromCode
+,	CustomerPart
+,	CustomerPO
+,	CustomerModelYear
+,	Description
+)
+select
+	Type = -1
+,	TradingPartner	= coalesce
+		(	(	select
+					max(TradingPartner)
+				from
+					FxEDI.EDI.EDIDocuments
+				where
+					GUID = a.RawDocumentGUID
+			)
+		,	''
+		)
 ,	DocumentType = 'SS'
 ,	AlertType =  ' Exception'
 ,	ReleaseNo =  Coalesce(a.ReleaseNo,'')
@@ -1345,7 +1356,8 @@ where
 )
 union
 Select
-	TradingPartner = Coalesce((Select max(TradingPartner) from fxEDI.EDI.EDIDocuments where GUID = a.RawDocumentGUID) ,'')
+	Type = -1
+,	TradingPartner = Coalesce((Select max(TradingPartner) from fxEDI.EDI.EDIDocuments where GUID = a.RawDocumentGUID) ,'')
 ,	DocumentType = 'PR'
 ,	AlertType =  ' Exception'
 ,	ReleaseNo =  Coalesce(a.ReleaseNo,'')
@@ -1387,7 +1399,8 @@ union
 
 --Orders Processed
 Select 
-	TradingPartner = Coalesce((Select max(TradingPartner) from fxEDI.EDI.EDIDocuments where GUID = a.RawDocumentGUID) ,'')
+	Type = 1
+,	TradingPartner = Coalesce((Select max(TradingPartner) from fxEDI.EDI.EDIDocuments where GUID = a.RawDocumentGUID) ,'')
 ,	DocumentType = 'SS'
 ,	AlertType =  ' OrderProcessed'
 ,	ReleaseNo =  Coalesce(a.ReleaseNo,'')
@@ -1417,7 +1430,8 @@ and
 
 union
 Select 
-	TradingPartner = Coalesce((Select max(TradingPartner) from fxEDI.EDI.EDIDocuments where GUID = a.RawDocumentGUID) ,'')
+	Type = 1
+,	TradingPartner = Coalesce((Select max(TradingPartner) from fxEDI.EDI.EDIDocuments where GUID = a.RawDocumentGUID) ,'')
 ,	DocumentType = 'PR'
 ,	AlertType =  ' OrderProcessed'
 ,	ReleaseNo =  Coalesce(a.ReleaseNo,'')
@@ -1448,7 +1462,8 @@ and
 --Accums Reporting
 union
 Select 
-	TradingPartner = Coalesce((Select max(TradingPartner) from fxEDI.EDI.EDIDocuments where GUID = a.RawDocumentGUID) ,'')
+	Type = 0
+,	TradingPartner = Coalesce((Select max(TradingPartner) from fxEDI.EDI.EDIDocuments where GUID = a.RawDocumentGUID) ,'')
 ,	DocumentType = 'SS'
 ,	AlertType =  ' Accum Notice'
 ,	ReleaseNo =  Coalesce(a.ReleaseNo,'')
@@ -1508,7 +1523,8 @@ and
 
 union
 Select 
-	TradingPartner = Coalesce((Select max(TradingPartner) from fxEDI.EDI.EDIDocuments where GUID = a.RawDocumentGUID) ,'')
+	Type = 0
+,	TradingPartner = Coalesce((Select max(TradingPartner) from fxEDI.EDI.EDIDocuments where GUID = a.RawDocumentGUID) ,'')
 ,	DocumentType = 'PR'
 ,	AlertType =  ' Accum Notice'
 ,	ReleaseNo =  Coalesce(a.ReleaseNo,'')
@@ -1565,19 +1581,11 @@ and
 		coalesce(a.newDocument,0) = 1 and
 		coalesce(bo.AccumShipped,0) != coalesce(pra.LastAccumQty,0)
 union
---	select
---	od.AztecPart
---,	od.CustomerPart
---,	od.DueDT
---,	od.OrderQty
---,	od.RunningTotal
---,	od.InvQty
---,	od.ShipToCode
---from
 select
-	TradingPartner = Coalesce((Select max(TradingPartner) from fxEDI.EDI.EDIDocuments where GUID = a.RawDocumentGUID) ,'')
+	Type = -1
+,	TradingPartner = Coalesce((Select max(TradingPartner) from fxEDI.EDI.EDIDocuments where GUID = a.RawDocumentGUID) ,'')
 ,	DocumentType = 'SS'
-,	AlertType =  'Service Inventory Notice'
+,	AlertType =  ' Service Inventory Notice'
 ,	ReleaseNo =  Coalesce(a.ReleaseNo,'')
 ,	ShipToCode = od.ShipToCode
 ,	ConsigneeCode =  coalesce(a.ConsigneeCode,'')
@@ -1598,7 +1606,7 @@ from
 	@Current862s a
 	join EDIFord.ShipScheduleHeaders ssh
 		on ssh.RawDocumentGUID = a.RawDocumentGUID
-		and ssh.TradingPartner ='Ford Motor Company (FCSD)'
+		and ssh.TradingPartner like 'Ford Motor Company%FCSD%'
 	cross apply 
 		(	select
 				AztecPart = od.part_number
@@ -1634,256 +1642,303 @@ from
 where
 	a.NewDocument = 1	
 	and od.RunningTotal > coalesce(od.InvQty, 0)
+union
+select
+	Type = -1
+,	TradingPartner = Coalesce((Select max(TradingPartner) from fxEDI.EDI.EDIDocuments where GUID = a.RawDocumentGUID) ,'')
+,	DocumentType = 'PR'
+,	AlertType =  ' Service Inventory Notice'
+,	ReleaseNo =  Coalesce(a.ReleaseNo,'')
+,	ShipToCode = od.ShipToCode
+,	ConsigneeCode =  coalesce(a.ConsigneeCode,'')
+,	ShipFromCode = coalesce(a.ShipFromCode,'')
+,	CustomerPart = Coalesce(a.CustomerPart,'')
+,	CustomerPO = Coalesce(a.CustomerPO,'')
+,	CustomerModelYear = Coalesce(a.CustomerModelYear,'')
+,   Description = 'Aztec Part: ' + od.AztecPart
+					+ '  Inventory Available: '
+					+ convert(varchar(15), od.InvQty)
+					+ '  Running Total of Demand: '
+					+ convert(varchar(15), od.RunningTotal)
+					+ '  Release Qty: '
+					+ convert(varchar(15), od.OrderQty)
+					+ '  Release DT: '
+					+ convert(varchar(15), od.DueDT, 101)
+from
+	@Current862s a
+	join EDIFord.PlanningHeaders ssh
+		on ssh.RawDocumentGUID = a.RawDocumentGUID
+		and ssh.TradingPartner like 'Ford Motor Company%FCSD%'
+	cross apply 
+		(	select
+				AztecPart = od.part_number
+			,	CustomerPart = od.customer_part
+			,	DueDT = od.due_date
+			,	OrderQty = od.std_qty
+			,	RunningTotal = sum (od.std_qty) over (partition by od.part_number order by od.due_date asc)
+			,	InvQty = avail.InvQty
+			,	ShipToCode = od.destination
+			from
+				dbo.order_detail od
+				outer apply
+					(	select
+							InvQty = coalesce(sum(o.std_quantity), 0)
+						from
+							dbo.object o
+						where
+							o.part = od.part_number
+							and o.location != 'LOST'
+					) avail
+			where
+				exists
+					(	select
+							*
+						from
+							EDIFord.PlanningReleases ss
+						where
+							ss.RawDocumentGUID = ssh.RawDocumentGUID
+							and ss.ShipToCode = od.destination
+							and ss.CustomerPart = od.customer_part
+					)
+		) od
+where
+	a.NewDocument = 1	
+	and od.RunningTotal > coalesce(od.InvQty, 0)
 order by 1,2,5,4,7
 
+select
+	Type
+,	TradingPartner
+,	DocumentType
+,	AlertType
+,	ReleaseNo
+,	ShipToCode
+,	ConsigneeCode
+,	ShipFromCode
+,	CustomerPart
+,	CustomerPO
+,	CustomerModelYear
+,	Description
+into
+	#EDIAlerts
+from
+	@EDIOrdersAlert
 
---Update Order Header with Customer's Accum Received ---Armada Only
+select
+	Type
+,	TradingPartner
+,	DocumentType	--'PR - Planning Release; SS - ShipSchedule'
+,	AlertType
+,	ReleaseNo
+,	ShipToCode
+,	ConsigneeCode
+,	CustomerPart
+,	CustomerPO
+,	Description
+into
+	#EDIAlertsEmail
+from
+	@EDIOrdersAlert
 
---Update oh
---		set oh.raw_cum = coalesce(ssa.LastAccumQty,0)
---from
---	@Current862s a
---	 Join 
---	EDIFORD.BlanketOrders bo on a.CustomerPart = bo.CustomerPart
---and
---	a.ShipToCode = bo.EDIShipToCode
---and
---(	bo.CheckCustomerPOShipSchedule = 0
---	or bo.CustomerPO = a.CustomerPO)
---and
---(	bo.CheckModelYearShipSchedule = 0
---	or bo.ModelYear862 = a.CustomerModelYear)
---	left join
---		EDIFORD.ShipScheduleAccums ssa on 
---		ssa.RawDocumentGUID = a.RawDocumentGUID and
---		ssa.ShipToCode = a.ShipToCode and
---		ssa.CustomerPart = a.CustomerPart and
---		coalesce(ssa.CustomerPO,'') = coalesce(a.customerPO,'') and
---		coalesce(ssa.CustomerModelYear,'') = coalesce(a.customerModelYear,'')
--- 	left join
---		EDIFORD.ShipScheduleAuthAccums ssaa on 
---		ssaa.RawDocumentGUID = a.RawDocumentGUID and
---		ssaa.ShipToCode = a.ShipToCode and
---		ssaa.CustomerPart = a.CustomerPart and
---		coalesce(ssaa.CustomerPO,'') = coalesce(a.customerPO,'') and
---		coalesce(ssaa.CustomerModelYear,'') = coalesce(a.customerModelYear,'')
---join
---		order_header oh on oh.order_no = bo.BlanketOrderNo
-										
---	Where
---		coalesce(a.newDocument,0) = 1
+if	exists
+		(	select
+				*
+			from
+				#EDIAlertsEmail
+		) begin
 
---Update oh
---		set oh.fab_cum = coalesce(pra.LastAccumQty,0)
---from
---	@Current830s  a
---	 Join 
---	EDIFORD.BlanketOrders bo on a.CustomerPart = bo.CustomerPart
---and
---	a.ShipToCode = bo.EDIShipToCode
---and
---(	bo.CheckCustomerPOPlanning = 0
---	or bo.CustomerPO = a.CustomerPO)
---and
---(	bo.CheckModelYearPlanning = 0
---	or bo.ModelYear830 = a.CustomerModelYear)
---	left join
---		EDIFORD.PlanningAccums pra on 
---		pra.RawDocumentGUID = a.RawDocumentGUID and
---		pra.ShipToCode = a.ShipToCode and
---		pra.CustomerPart = a.CustomerPart and
---		coalesce(pra.CustomerPO,'') = coalesce(a.customerPO,'') and
---		coalesce(pra.CustomerModelYear,'') = coalesce(a.customerModelYear,'')
--- 	left join
---		EDIFORD.PlanningAuthAccums praa on 
---		praa.RawDocumentGUID = a.RawDocumentGUID and
---		praa.ShipToCode = a.ShipToCode and
---		praa.CustomerPart = a.CustomerPart and
---		coalesce(praa.CustomerPO,'') = coalesce(a.customerPO,'') and
---		coalesce(praa.CustomerModelYear,'') = coalesce(a.customerModelYear,'')
---join
---		order_header oh on oh.order_no = bo.BlanketOrderNo
-										
---	Where
---		coalesce(a.newDocument,0) = 1
-		
-Select	*
-into	#EDIAlerts
-From	@EDIOrdersAlert
+	declare
+		@html	nvarchar(max)
+	,	@EmailTableName sysname = N'#EDIAlertsEmail'
 
-Select	TradingPartner ,
-				DocumentType , --'PR - Planning Release; SS - ShipSchedule'
-				AlertType ,
-				ReleaseNo ,
-				ShipToCode,
-				ConsigneeCode ,				
-				CustomerPart ,
-				CustomerPO ,
-				Description 
-				
-into	#EDIAlertsEmail
-From	@EDIOrdersAlert
+	exec FXSYS.usp_TableToHTML
+		@tableName = @EmailTableName
+	,	@orderBy = N'AlertType'
+	,	@html = @html output
+	,	@includeRowNumber = 0
+	,	@camelCaseHeaders = 1
+	,	@colorCodeType = 1
 
+	declare
+		@EmailBody	nvarchar(max)
+	,	@EmailHeader nvarchar(max) = N'EDI Processing for EDIFORD'
 
-If Exists (Select 1 From #EDIAlerts)
-
-Begin
-		
-
-		declare
-			@html nvarchar(max),
-			@EmailTableName sysname  = N'#EDIAlertsEmail'
-		
-		exec [FT].[usp_TableToHTML]
-				@tableName = @Emailtablename
-			,	@orderBy = N'AlertType'
-			,	@html = @html OUTPUT
-			,	@includeRowNumber = 0
-			,	@camelCaseHeaders = 1
-		
-		DECLARE
-			@EmailBody NVARCHAR(MAX)
-		,	@EmailHeader NVARCHAR(MAX) = 'EDI Processing for EDIFORD' 
-
-		SELECT
-			@EmailBody =
-				N'<H1>' + @EmailHeader + N'</H1>' +
-				@html
+	select
+		@EmailBody	= N'<H1>' + @EmailHeader + N'</H1>' + @html
 
 	--print @emailBody
 
-	EXEC msdb.dbo.sp_send_dbmail
-			@profile_name = 'FxAlerts'-- sysname
-	,		@recipients = 'edialerts@aztecmfgcorp.com' -- varchar(max)
-	,		@copy_recipients = 'rjohnson@aztecmfgcorp.com' -- varchar(max)
-	, 	@subject = @EmailHeader
-	,  	@body = @EmailBody
-	,  	@body_format = 'HTML'
-	,		@importance = 'High' 
-					
-
-INSERT [EDIAlerts].[ProcessedReleases]
-
-(	 EDIGroup
-	,TradingPartner
-	,DocumentType --'PR - Planning Release; SS - ShipSchedule'
-	,AlertType 
-	,ReleaseNo
-	,ShipToCode
-	,ConsigneeCode 
-	,ShipFromCode 
-	,CustomerPart
-	,CustomerPO
-	,CustomerModelYear
-	,Description
-)
+	exec msdb.dbo.sp_send_dbmail
+		@profile_name = 'FxAlerts'						-- sysname
+	,	@recipients = 'edialerts@aztecmfgcorp.com'		-- varchar(max)
+	,	@copy_recipients = 'rjohnson@aztecmfgcorp.com; estimpson@fore-thought.com'	-- varchar(max)
+	,	@subject = @EmailHeader
+	,	@body = @EmailBody
+	,	@body_format = 'HTML'
+	,	@importance = 'High'
 
 
-SELECT 
-	'EDIFORD'
-	,*
-FROM
-	#EDIAlerts
-UNION
-SELECT
-	'EDIFORD'
-	,TradingPartner = COALESCE((SELECT MAX(TradingPartner) FROM fxEDI.EDI.EDIDocuments WHERE GUID = a.RawDocumentGUID) ,'')
-,	DocumentType = 'SS'
-,	AlertType =  'Exception Quantity Due'
-,	ReleaseNo =  COALESCE(a.ReleaseNo,'')
-,	ShipToCode = a.ShipToCode
-,	ConsigneeCode =  COALESCE(a.ConsigneeCode,'')
-,	ShipFromCode = COALESCE(a.ShipFromCode,'')
-,	CustomerPart = COALESCE(a.CustomerPart,'')
-,	CustomerPO = COALESCE(a.CustomerPO,'')
-,	CustomerModelYear = COALESCE(a.CustomerModelYear,'')
-, Description = 'Qty Due : ' + CONVERT(VARCHAR(MAX), c.ReleaseQty) + ' on - ' + CONVERT(VARCHAR(MAX), c.ReleaseDT)
-FROM
-	@Current862s a
-JOIN
-		EDIFORD.ShipSchedules c
-ON			c.RawDocumentGUID = a.RawDocumentGUID AND
-				a.CustomerPart = c.CustomerPart AND
-				a.ShipToCode =c.ShipToCode AND
-				a.ShipFromCode =c.ShipfromCode AND
-				COALESCE(a.customerPO,'') = COALESCE(c.CustomerPO,'') AND
-				COALESCE(a.CustomerModelYear,'') = COALESCE(c.CustomerModelYear,'')
-WHERE
-		COALESCE(a.newDocument,0) = 1
-AND NOT EXISTS
-( SELECT 1 FROM 
-		EDIFORD.ShipSchedules b
- JOIN 
-	EDIFORD.BlanketOrders bo ON b.CustomerPart = bo.CustomerPart
-AND
-	b.ShipToCode = bo.EDIShipToCode
-AND
-	b.ShipFromCode = bo.SupplierCode
-AND
-(	bo.CheckCustomerPOShipSchedule = 0
-	OR bo.CustomerPO = b.CustomerPO)
-AND
-(	bo.CheckModelYearShipSchedule = 0
-	OR bo.ModelYear862 = b.CustomerModelYear)
-WHERE
-				a.RawDocumentGUID = b.RawDocumentGUID AND
-				a.CustomerPart = b.CustomerPart AND
-				a.ShipToCode = b.ShipToCode AND
-				a.ShipFromCode = b.ShipFromCode AND
-				COALESCE(a.customerPO,'') = COALESCE(b.CustomerPO,'') AND
-				COALESCE(a.CustomerModelYear,'') = COALESCE(b.CustomerModelYear,''))
-
-UNION
-SELECT
-	'EDIFORD'
-	,TradingPartner = COALESCE((SELECT MAX(TradingPartner) FROM fxEDI.EDI.EDIDocuments WHERE GUID = a.RawDocumentGUID) ,'')
-,	DocumentType = 'PR'
-,	AlertType =  'Exception Quantity Due'
-,	ReleaseNo =  COALESCE(a.ReleaseNo,'')
-,	ShipToCode = a.ShipToCode
-,	ConsigneeCode =  COALESCE(a.ConsigneeCode,'')
-,	ShipFromCode = COALESCE(a.ShipFromCode,'')
-,	CustomerPart = COALESCE(a.CustomerPart,'')
-,	CustomerPO = COALESCE(a.CustomerPO,'')
-,	CustomerModelYear = COALESCE(a.CustomerModelYear,'')
-,  Description = 'Qty Due : ' + CONVERT(VARCHAR(MAX), c.ReleaseQty) + ' on - ' + CONVERT(VARCHAR(MAX), c.ReleaseDT)
-FROM
-	@Current830s a
-JOIN
-		EDIFORD.PlanningReleases c
-ON			c.RawDocumentGUID = a.RawDocumentGUID AND
-				a.CustomerPart = c.CustomerPart AND
-				a.ShipToCode =c.ShipToCode AND
-				a.ShipFromCode =c.ShipFromCode AND
-				COALESCE(a.customerPO,'') = COALESCE(c.CustomerPO,'') AND
-				COALESCE(a.CustomerModelYear,'') = COALESCE(c.CustomerModelYear,'')
-WHERE
-		COALESCE(a.newDocument,0) = 1
-AND  NOT EXISTS
-( SELECT 1 FROM 
-		EDIFORD.PlanningReleases b
- JOIN 
-	EDIFORD.BlanketOrders bo ON b.CustomerPart = bo.CustomerPart
-AND
-	b.ShipToCode = bo.EDIShipToCode
-AND
-	b.ShipFromCode = bo.SupplierCode
-AND
-(	bo.CheckCustomerPOPlanning = 0
-	OR bo.CustomerPO = b.CustomerPO)
-AND
-(	bo.CheckModelYearPlanning = 0
-	OR bo.ModelYear830 = b.CustomerModelYear)
-WHERE
-				a.RawDocumentGUID = b.RawDocumentGUID AND
-				a.CustomerPart = b.CustomerPart AND
-				a.ShipToCode = b.ShipToCode AND
-				a.ShipFromCode = b.ShipFromCode AND
-				COALESCE(a.customerPO,'') = COALESCE(b.CustomerPO,'') AND
-				COALESCE(a.CustomerModelYear,'') = COALESCE(b.CustomerModelYear,''))
-
-
-END
+	insert
+		EDIAlerts.ProcessedReleases
+	(	Type
+	,	EDIGroup
+	,	TradingPartner
+	,	DocumentType	--'PR - Planning Release; SS - ShipSchedule'
+	,	AlertType
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	CustomerPart
+	,	CustomerPO
+	,	CustomerModelYear
+	,	Description
+	)
+	select
+		Type
+	,	'EDIFORD'
+	,	TradingPartner
+	,	DocumentType
+	,	AlertType
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	CustomerPart
+	,	CustomerPO
+	,	CustomerModelYear
+	,	Description
+	from
+		#EDIAlerts
+	union
+	select
+		Type = -1
+	,	'EDIFORD'
+	,	TradingPartner = coalesce((
+								select
+										max(TradingPartner)
+									from
+										FxEDI.EDI.EDIDocuments
+									where
+										GUID = a.RawDocumentGUID
+								)
+								, ''
+								)
+	,	DocumentType = 'SS'
+	,	AlertType = 'Exception Quantity Due'
+	,	ReleaseNo = coalesce(a.ReleaseNo, '')
+	,	ShipToCode = a.ShipToCode
+	,	ConsigneeCode = coalesce(a.ConsigneeCode, '')
+	,	ShipFromCode = coalesce(a.ShipFromCode, '')
+	,	CustomerPart = coalesce(a.CustomerPart, '')
+	,	CustomerPO = coalesce(a.CustomerPO, '')
+	,	CustomerModelYear = coalesce(a.CustomerModelYear, '')
+	,	Description = 'Qty Due : ' + convert(varchar(max), c.ReleaseQty) + ' on - '
+					+ convert(varchar(max), c.ReleaseDT)
+	from
+		@Current862s a
+		join EDIFord.ShipSchedules c
+			on c.RawDocumentGUID = a.RawDocumentGUID
+			and a.CustomerPart = c.CustomerPart
+			and a.ShipToCode = c.ShipToCode
+			and a.ShipFromCode = c.ShipFromCode
+			and coalesce(a.CustomerPO, '') = coalesce(c.CustomerPO, '')
+			and coalesce(a.CustomerModelYear, '') = coalesce(c.CustomerModelYear, '')
+	where
+		coalesce(a.NewDocument, 0) = 1
+		and not exists
+	(
+		select
+			1
+		from
+			EDIFord.ShipSchedules b
+			join EDIFord.BlanketOrders bo
+				on b.CustomerPart = bo.CustomerPart
+				and b.ShipToCode = bo.EDIShipToCode
+				and b.ShipFromCode = bo.SupplierCode
+				and
+				(
+					bo.CheckCustomerPOShipSchedule = 0
+					or bo.CustomerPO = b.CustomerPO
+				)
+				and
+				(
+					bo.CheckModelYearShipSchedule = 0
+					or bo.ModelYear862 = b.CustomerModelYear
+				)
+		where
+			a.RawDocumentGUID = b.RawDocumentGUID
+			and a.CustomerPart = b.CustomerPart
+			and a.ShipToCode = b.ShipToCode
+			and a.ShipFromCode = b.ShipFromCode
+			and coalesce(a.CustomerPO, '') = coalesce(b.CustomerPO, '')
+			and coalesce(a.CustomerModelYear, '') = coalesce(b.CustomerModelYear, '')
+	)
+	union
+	select
+		Type = -1
+	,	'EDIFORD'
+	,	TradingPartner = coalesce((
+								select
+										max(TradingPartner)
+									from
+										FxEDI.EDI.EDIDocuments
+									where
+										GUID = a.RawDocumentGUID
+								)
+								, ''
+								)
+	,	DocumentType = 'PR'
+	,	AlertType = 'Exception Quantity Due'
+	,	ReleaseNo = coalesce(a.ReleaseNo, '')
+	,	ShipToCode = a.ShipToCode
+	,	ConsigneeCode = coalesce(a.ConsigneeCode, '')
+	,	ShipFromCode = coalesce(a.ShipFromCode, '')
+	,	CustomerPart = coalesce(a.CustomerPart, '')
+	,	CustomerPO = coalesce(a.CustomerPO, '')
+	,	CustomerModelYear = coalesce(a.CustomerModelYear, '')
+	,	Description = 'Qty Due : ' + convert(varchar(max), c.ReleaseQty) + ' on - '
+					+ convert(varchar(max), c.ReleaseDT)
+	from
+		@Current830s a
+		join EDIFord.PlanningReleases c
+			on c.RawDocumentGUID = a.RawDocumentGUID
+			and a.CustomerPart = c.CustomerPart
+			and a.ShipToCode = c.ShipToCode
+			and a.ShipFromCode = c.ShipFromCode
+			and coalesce(a.CustomerPO, '') = coalesce(c.CustomerPO, '')
+			and coalesce(a.CustomerModelYear, '') = coalesce(c.CustomerModelYear, '')
+	where
+		coalesce(a.NewDocument, 0) = 1
+		and not exists
+	(
+		select
+			1
+		from
+			EDIFord.PlanningReleases b
+			join EDIFord.BlanketOrders bo
+				on b.CustomerPart = bo.CustomerPart
+				and b.ShipToCode = bo.EDIShipToCode
+				and b.ShipFromCode = bo.SupplierCode
+				and
+				(
+					bo.CheckCustomerPOPlanning = 0
+					or bo.CustomerPO = b.CustomerPO
+				)
+				and
+				(
+					bo.CheckModelYearPlanning = 0
+					or bo.ModelYear830 = b.CustomerModelYear
+				)
+		where
+			a.RawDocumentGUID = b.RawDocumentGUID
+			and a.CustomerPart = b.CustomerPart
+			and a.ShipToCode = b.ShipToCode
+			and a.ShipFromCode = b.ShipFromCode
+			and coalesce(a.CustomerPO, '') = coalesce(b.CustomerPO, '')
+			and coalesce(a.CustomerModelYear, '') = coalesce(b.CustomerModelYear, '')
+	)
+end
 
 
 
@@ -1933,9 +1988,6 @@ select
 	@Error, @ProcReturn, @TranDT, @ProcResult
 go
 
-
-go
-
 commit transaction
 --rollback transaction
 
@@ -1950,64 +2002,5 @@ go
 Results {
 }
 */
+go
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-GO

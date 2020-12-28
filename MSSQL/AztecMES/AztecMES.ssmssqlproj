@@ -3,6 +3,18 @@
   <Items>
     <LogicalFolder Name="Connections" Type="2" Sorted="true">
       <Items>
+        <ConnectionNode Name="Aztec:estimpson">
+          <Created>2020-12-14T17:00:47.5755857-05:00</Created>
+          <Type>SQL</Type>
+          <Server>Aztec</Server>
+          <UserName>estimpson</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB />
+          <LoginTimeout>30</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
         <ConnectionNode Name="aztecsql2.aztecmfgcorp.local\fx:sa">
           <Created>2012-01-23T16:09:34.6949495-05:00</Created>
           <Type>SQL</Type>
@@ -62,9 +74,9 @@
           <FullPath>Procedure.dbo.usp_InventoryControl_GetPartInventory.sql</FullPath>
         </FileNode>
         <FileNode Name="Procedure.dbo.usp_InventoryControl_MaterialIssue.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztecsql2.aztecmfgcorp.local\fx:False:sa</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>aztecsql2.aztecmfgcorp.local\fx</AssociatedConnSrvName>
-          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Aztec</AssociatedConnSrvName>
+          <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Procedure.dbo.usp_InventoryControl_MaterialIssue.sql</FullPath>
         </FileNode>
         <FileNode Name="Procedure.dbo.usp_InventoryControl_UpdatePartOnHand.sql">

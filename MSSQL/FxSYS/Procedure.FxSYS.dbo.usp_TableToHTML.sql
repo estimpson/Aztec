@@ -6,17 +6,19 @@ Create Procedure.FxSYS.dbo.usp_TableToHTML.sql
 use FxSYS
 go
 
-if	objectproperty(object_id('dbo.usp_TableToHTML'), 'IsProcedure') = 1 begin
-	drop procedure dbo.usp_TableToHTML
-end
-go
+--if	objectproperty(object_id('dbo.usp_TableToHTML'), 'IsProcedure') = 1 begin
+--	drop procedure dbo.usp_TableToHTML
+--end
+--go
 
-create procedure dbo.usp_TableToHTML
+--create procedure dbo.usp_TableToHTML
+alter procedure dbo.usp_TableToHTML
 	@tableName sysname = 'dbo.part_packaging'
 ,	@html nvarchar(max) output
 ,	@orderBy nvarchar(max) = ''
 ,	@includeRowNumber bit = 1
 ,	@camelCaseHeaders bit = 1
+,	@colorCodeType bit = 0
 as
 set ansi_warnings on 
 
@@ -77,8 +79,13 @@ select
 from
 	@columnList.nodes('/th') as columnList(columnName)
 where
-	columnList.columnName.value('.[1]', 'varchar(128)') != 'Row'
-	or @includeRowNumber = 0
+	(	columnList.columnName.value('.[1]', 'varchar(128)') != 'Row'
+		or @includeRowNumber = 0
+	)
+	and
+	(	columnList.columnName.value('.[1]', 'varchar(128)') != 'Type'
+		or @colorCodeType = 0
+	)
 
 open
 	columnList
@@ -111,6 +118,10 @@ while
 					else @columnName
 			end + ']) % 2
 ' +
+			case	when @colorCodeType = 1 then
+'			,	[TRType] = case when Type < 0 then -1 else 0 end'
+					else ''
+			end +
 			case	when @includeRowNumber = 1 then
 '			,	[td] = Row_Number() over (order by [' +
 						case	when @orderBy > '' then @orderBy
@@ -118,6 +129,7 @@ while
 						end + '])'
 					else ''
 			end
+
 		set	@firstColumn = 0
 	end
 	
@@ -168,8 +180,16 @@ set	@html = replace(@html, '_x0020_', space(1))
 set	@html = replace(@html, '_x003D_', '=')
 set	@html = replace(@html, '<tr><TRRow>1</TRRow>', '<tr bgcolor=#C6CFFF>')
 set	@html = replace(@html, '<TRRow>0</TRRow>', '')
+if	@colorCodeType = 1 begin
+	set @html = replace(@html, '<th>Type</th>', '')
+	set @html = replace(@html, '<tr><TRType>-1</TRType>', '<tr bgcolor=#FF0000>')
+	set @html = replace(@html, '<tr bgcolor=#C6CFFF><TRType>-1</TRType>', '<tr bgcolor=#FF0000>')
+	set	@html = replace(@html, '<TRType>0</TRType>', '')
+end
 
 --print
 --	@html
 go
 
+grant execute on dbo.usp_TableToHTML to SupplierPortal
+go

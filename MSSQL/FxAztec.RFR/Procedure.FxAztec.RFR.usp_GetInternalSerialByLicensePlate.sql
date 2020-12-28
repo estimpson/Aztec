@@ -171,8 +171,8 @@ begin
 			goto found
 		end
 
-		/*	Lookup License Plate in receier object table, validate receiver object, do receipt [if required], return serial. */
-		set @TocMsg = 'Lookup License Plate in receier object table, [if required] do receipt, return serial if found'
+		/*	Lookup License Plate in receiver object table, validate receiver object, do receipt [if required], return serial. */
+		set @TocMsg = 'Lookup License Plate in receiver object table, [if required] do receipt, return serial if found'
 		if	exists
 			(	select
 					*

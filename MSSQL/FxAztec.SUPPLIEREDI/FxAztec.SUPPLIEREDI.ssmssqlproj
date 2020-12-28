@@ -68,8 +68,8 @@
     <LogicalFolder Name="Queries" Type="0" Sorted="true">
       <Items>
         <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_Process.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01:False:estimpson</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>aztec-sql01</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_Process.sql</FullPath>
         </FileNode>
@@ -134,8 +134,8 @@
           <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_GetShipNotices.sql</FullPath>
         </FileNode>
         <FileNode Name="Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_ProcessEdiShipper.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Aztec_FT:False:estimpson</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>Aztec_FT</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:aztec-sql01:False:estimpson</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>aztec-sql01</AssociatedConnSrvName>
           <AssociatedConnUserName>estimpson</AssociatedConnUserName>
           <FullPath>Procedure.FxAztec.SUPPLIEREDI.usp_Waupaca_ProcessEdiShipper.sql</FullPath>
         </FileNode>

@@ -83,13 +83,13 @@ from
 					on d.vendor = ph.vendor_code
 			where
 				ph.blanket_part = spl.InternalPartCode
-				and d.destination = @SupplierCode
-				and ph.ship_to_destination = @Destination
+				and d.destination like @SupplierCode
+				and ph.ship_to_destination like @Destination
 			order by
 				ph.po_number desc		
 		) spo
 where
-	spl.SupplierCode = @SupplierCode
+	spl.SupplierCode like @SupplierCode
 	and spl.Status = 0
 order by
 	spl.SupplierPartCode
@@ -118,6 +118,41 @@ go
 declare
 	@SupplierCode varchar(20) = 'HIB0010'
 ,	@Destination varchar(20) = 'MID0010'
+
+select
+	spl.SupplierCode
+,	spl.SupplierName
+,	spl.SupplierPartCode
+,	spl.Status
+,	spl.SupplierStdPack
+,	spl.InternalPartCode
+,	spl.Decription
+,	spl.PartClass
+,	spl.PartSubClass
+,	spl.HasBlanketPO
+,	spl.LabelFormatName
+,	spo.PONumber
+from
+	SPORTAL.SupplierPartList spl
+	cross apply
+		(	select top (1)
+				PONumber = ph.po_number
+			from
+				dbo.po_header ph
+				join dbo.destination d
+					on d.vendor = ph.vendor_code
+			where
+				ph.blanket_part = spl.InternalPartCode
+				and d.destination like @SupplierCode
+				and ph.ship_to_destination like @Destination
+			order by
+				ph.po_number desc		
+		) spo
+where
+	spl.SupplierCode like @SupplierCode
+	and spl.Status = 0
+order by
+	spl.SupplierPartCode
 
 declare
 	@ProcReturn integer
@@ -151,5 +186,5 @@ go
 
 
 exec SPORTAL.usp_Q_PartList_BySupplierAndDestination
-	@SupplierCode = 'ROC0010'
+	@SupplierCode = 'AUB0010'
 ,	@Destination = 'MID0010'
