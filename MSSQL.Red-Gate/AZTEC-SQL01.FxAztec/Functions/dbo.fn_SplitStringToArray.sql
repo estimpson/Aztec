@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create function [dbo].[fn_SplitStringToArray]
+CREATE function [dbo].[fn_SplitStringToArray]
 (	@InputString varchar(max)
 ,	@Splitter varchar(max)
 ,	@Index int
@@ -20,7 +20,15 @@ begin
 	from
 		dbo.fn_SplitStringToRows(@InputString, @Splitter)
 	where
-		ID = @Index
+		(	ID = @Index
+		) or
+		(	ID =
+			(	select
+					max(ID)
+				from
+					dbo.fn_SplitStringToRows(@InputString, @Splitter)
+			) + @Index
+		)
 	
 ---	<Return>
 	return

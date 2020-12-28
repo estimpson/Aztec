@@ -180,6 +180,7 @@ begin
 							EDI_XML.TRN_INFO('004010', '856', ah.TradingPartnerID, ah.iConnectID, ah.ShipperID, @PartialComplete)
 						,	EDI_XML_V4010.SEG_BSN(@Purpose, ah.ShipperID, ah.ShipDate, ah.ShipTime)
 						,	EDI_XML_V4010.SEG_DTM('011', ah.ShipDateTime, 'ET')
+						,	EDI_XML_V4010.SEG_DTM('017', ah.EstimatedDeliveryDateTime, 'ET')
 						,	(	select
 				 					EDI_XML.LOOP_INFO('HL')
 								,	EDI_XML_V4010.SEG_HL(1, null, 'S', null)
@@ -195,16 +196,25 @@ begin
 								,	(	select
 						 					EDI_XML.LOOP_INFO('N1')
 										,	EDI_XML_V4010.SEG_N1('ST', 92, ah.ShipTo)
+										,	EDI_XML_V4010.SEG_N2(ah.ShipToName)
+										,	EDI_XML_V4010.SEG_N3(ah.ShipToAddress)
+										,	EDI_XML_V4010.SEG_N4(ah.ShipToCity, ah.ShipToState, ah.ShipToZipCode, 'US')
 						 				for xml raw ('LOOP-N1'), type
 						 			)
 								,	(	select
 						 					EDI_XML.LOOP_INFO('N1')
 										,	EDI_XML_V4010.SEG_N1('SF', 92, ah.SupplierCode)
+										,	EDI_XML_V4010.SEG_N2(ah.SupplierName)
+										,	EDI_XML_V4010.SEG_N3(ah.SupplierAddress)
+										,	EDI_XML_V4010.SEG_N4(ah.SupplierCity, ah.SupplierState, ah.SupplierZipCode, 'US')
 						 				for xml raw ('LOOP-N1'), type
 						 			)
 								,	(	select
 						 					EDI_XML.LOOP_INFO('N1')
 										,	EDI_XML_V4010.SEG_N1('SU', 92, ah.SupplierCode)
+										,	EDI_XML_V4010.SEG_N2(ah.SupplierName)
+										,	EDI_XML_V4010.SEG_N3(ah.SupplierAddress)
+										,	EDI_XML_V4010.SEG_N4(ah.SupplierCity, ah.SupplierState, ah.SupplierZipCode, 'US')
 						 				for xml raw ('LOOP-N1'), type
 						 			)
 				 				for xml raw ('LOOP-HL'), type
