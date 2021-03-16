@@ -464,7 +464,7 @@ begin
 		/*	Set shipper to completed. */
 		set	@TocMsg = 'Set shipper to completed'
 		begin
-			--- <Update rows="1">
+			--- <Update rows="1+">
 			set	@TableName = 'FxEDI.EDI4010_WAUPACA.ShipNoticeHeaders'
 			
 			update
@@ -509,9 +509,9 @@ begin
 				rollback tran @ProcName
 				return
 			end
-			if	@RowCount != 1 begin
+			if	@RowCount <= 0 begin
 				set	@Result = 999999
-				RAISERROR ('Error updating %s in procedure %s.  Rows Updated: %d.  Expected rows: 1.', 16, 1, @TableName, @ProcName, @RowCount)
+				RAISERROR ('Error updating into %s in procedure %s.  Rows Updated: %d.  Expected rows: 1 or more.', 16, 1, @TableName, @ProcName, @RowCount)
 				rollback tran @ProcName
 				return
 			end
