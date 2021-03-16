@@ -33,6 +33,7 @@ select
 ,	TransMode = coalesce(s.trans_mode, 'LT')
 ,	TruckNumber = coalesce(s.truck_number, convert(varchar(15), s.id))
 ,	BOLNumber = coalesce(s.bill_of_lading_number, s.id)
+,	ProInvoice = coalesce(nullif(left(s.pro_number,30), ''), convert(varchar(30), s.invoice_number))
 ,	SupplierCode = es.supplier_code
 ,	SupplierName = p.name
 ,	SupplierPlant = s.plant

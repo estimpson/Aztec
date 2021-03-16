@@ -2,8 +2,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_NULLS ON
 GO
-
-create procedure [dbo].[usp_InventoryControl_DeleteObject]
+CREATE procedure [dbo].[usp_InventoryControl_DeleteObject]
 	@User varchar(10)
 ,	@Serial int
 ,	@TranDT datetime out
@@ -46,7 +45,7 @@ set	@TranDT = coalesce(@TranDT, GetDate())
 /*	Create quality audit trail. (i1) */
 declare
 	@DeleteATType char(1)
-,	@DeleteATRemarks char(1)
+,	@DeleteATRemarks varchar(10)
 
 set	@DeleteATType = 'D'
 set @DeleteATRemarks = 'Delete'

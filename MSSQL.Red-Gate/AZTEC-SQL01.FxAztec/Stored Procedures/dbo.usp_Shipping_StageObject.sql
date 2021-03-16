@@ -2,9 +2,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_NULLS ON
 GO
-
-
-create procedure [dbo].[usp_Shipping_StageObject]
+CREATE procedure [dbo].[usp_Shipping_StageObject]
 	@User varchar(5)
 ,	@Shipper int
 ,	@BoxOrPalletSerial int
@@ -188,6 +186,91 @@ if	exists
 	rollback tran @ProcName
 	return
 end
+
+/*		Object packaging is valid for this shipper... */
+declare
+	partPackaging cursor local for
+select
+	oBox.part
+,	coalesce(oBox.package_type, 'N/A')
+from
+	dbo.object oBox
+where
+	(	oBox.serial = @BoxOrPalletSerial
+		and @objectType = 'B')
+	or
+	(	oBox.parent_serial = @BoxOrPalletSerial
+		and @objectType = 'P')
+
+open
+	partPackaging
+
+while
+	1 = 1 begin
+	declare
+		@part varchar(25)
+	,	@packageType varchar(20)
+
+	fetch
+		partPackaging
+	into
+		@part
+	,	@packageType
+
+	if	@@FETCH_STATUS != 0 begin
+		break
+	end
+
+	--- <Call>	
+	set	@CallProcName = 'dbo.usp_Shipping_PartPackaging_VerifyPack'
+	declare
+		@defaultPackagingCode varchar(20)
+	,	@packDisabled tinyint
+	,	@packEnabled tinyint
+	,	@packWarn tinyint
+	
+	execute @ProcReturn = dbo.usp_Shipping_PartPackaging_VerifyPack
+		@ShipperID = @Shipper
+	,	@ShipperPart = @part
+	,	@PackagingCode = @packageType
+	,	@DefaultPackagingCode = @DefaultPackagingCode output
+	,	@PackDisabled = @PackDisabled output
+	,	@PackEnabled = @PackEnabled output
+	,	@PackWarn = @PackWarn output
+	,	@TranDT = @TranDT output
+	,	@Result = @Result output
+	
+	set	@Error = @@Error
+	if	@Error != 0 begin
+		set	@Result = 900501
+		RAISERROR ('Error encountered in %s.  Error: %d while calling %s', 16, 1, @ProcName, @Error, @CallProcName)
+		rollback tran @ProcName
+		return	@Result
+	end
+	if	@ProcReturn != 0 begin
+		set	@Result = 900502
+		RAISERROR ('Error encountered in %s.  ProcReturn: %d while calling %s', 16, 1, @ProcName, @ProcReturn, @CallProcName)
+		rollback tran @ProcName
+		return	@Result
+	end
+	if	@ProcResult != 0 begin
+		set	@Result = 900502
+		RAISERROR ('Error encountered in %s.  ProcResult: %d while calling %s', 16, 1, @ProcName, @ProcResult, @CallProcName)
+		rollback tran @ProcName
+		return	@Result
+	end
+	if	@packDisabled = 1 begin
+		set	@Result = 900502
+		RAISERROR ('Error encountered in %s.  Packaging %s for part %s is invalid for this shipper.  The default package type is %s', 16, 1, @ProcName, @packageType, @part, @defaultPackagingCode)
+		rollback tran @ProcName
+		return	@Result
+	end
+	--- </Call>
+end
+close
+	partPackaging
+deallocate
+	partPackaging
 
 /*	Validate shipper... */
 /*		Shipper is open. */

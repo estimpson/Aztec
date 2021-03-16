@@ -189,9 +189,9 @@ begin
 								,	EDI_XML_V4010.SEG_TD1(ah.PackageType, ah.BOLQuantity)
 								,	EDI_XML_V4010.SEG_TD5('B', '02', ah.Carrier, ah.TransMode, null, null)
 								,	EDI_XML_V4010.SEG_TD3('TL', ah.BOLCarrier, ah.TruckNumber)
-								--,	case
-								--		when ah.PRONumber > '' then EDI_XML_V4010.SEG_REF('CN', ah.PRONumber)
-								--	end
+								,	case
+										when ah.ProInvoice > '' then EDI_XML_V4010.SEG_REF('CN', ah.ProInvoice)
+									end
 								,	EDI_XML_V4010.SEG_REF('PK', ah.ShipperID)
 								,	(	select
 						 					EDI_XML.LOOP_INFO('N1')
@@ -232,7 +232,7 @@ begin
 						,	(	select
 				 					EDI_XML.LOOP_INFO('HL')
 								,	EDI_XML_V4010.SEG_HL(1+@ItemLoops+ao.RowNumber, 1+ao.RowNumber, 'I', null)
-								,	EDI_XML_V4010.SEG_LIN(1, 'BP', ao.CustomerPart, null, null)
+								,	EDI_XML_V4010.SEG_LIN('00010', 'BP', ao.CustomerPart, null, null)
 								,	EDI_XML_V4010.SEG_SN1(null, ao.QtyPacked, 'EA', ao.AccumQty)
 								,	(	select
 											EDI_XML.LOOP_INFO('CLD')

@@ -10,7 +10,7 @@ CREATE FUNCTION [EDIToyota].[CurrentPlanningReleases] ()
 RETURNS @CurrentPlanningReleases TABLE
 (	RawDocumentGUID UNIQUEIDENTIFIER
 ,	ReleaseNo VARCHAR(50)
-,	ShipToCode VARCHAR(15)
+,	ShipToCode VARCHAR(50)
 ,	ShipFromCode VARCHAR(15)
 ,	ConsigneeCode VARCHAR(15)
 ,	CustomerPart VARCHAR(50)
@@ -57,6 +57,7 @@ BEGIN
 				EDIToyota.PlanningHeaders ph
 				JOIN EDIToyota.PlanningReleases pr
 					ON pr.RawDocumentGUID = ph.RawDocumentGUID
+					and pr.Status in (0, 1)
 			WHERE
 				ph.Status IN
 				(	0 --(select dbo.udf_StatusValue('EDIToyota.PlanningHeaders', 'Status', 'New'))
@@ -72,7 +73,12 @@ BEGIN
 		JOIN EDIToyota.PlanningHeaders ph
 			JOIN EDIToyota.PlanningReleases pr
 				ON pr.RawDocumentGUID = ph.RawDocumentGUID
-			ON pr.ShipToCode = cl.ShipToCode
+				and pr.Status in (0, 1)
+			ON	ph.Status IN
+				(	0 --(select dbo.udf_StatusValue('EDIToyota.PlanningHeaders', 'Status', 'New'))
+				,	1 --(select dbo.udf_StatusValue('EDIToyota.PlanningHeaders', 'Status', 'Active'))
+				)
+			and pr.ShipToCode = cl.ShipToCode
 			AND COALESCE(pr.ReleaseNo,'') = cl.ReleaseNo
 			AND COALESCE(pr.ShipFromCode, '') = cl.ShipFromCode
 			AND COALESCE(pr.ConsigneeCode, '') = cl.ConsigneeCode

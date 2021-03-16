@@ -11,6 +11,7 @@ select
 	BlanketOrderNo = oh.order_no
 ,	ShipToCode = oh.destination
 ,	EDIShipToCode = coalesce(nullif(es.EDIShipToID,''), nullif(es.parent_destination,''), es.destination)
+,	MaterialIssuer = es.material_issuer
 ,	ShipToConsignee = es.pool_code
 ,	SupplierCode = es.supplier_code
 ,	Plant = oh.plant
@@ -65,7 +66,8 @@ from
 		on s.id = oh.shipper
 where
 	oh.order_type = 'B'
-	and	es.trading_partner_code like '%TMM%'
-
-
+	and
+	(	es.trading_partner_code like '%TMM%'
+		or es.trading_partner_code = 'Toyota Mot.(Sales)'
+	)
 GO

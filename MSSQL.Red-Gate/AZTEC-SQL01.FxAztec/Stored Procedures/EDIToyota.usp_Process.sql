@@ -781,7 +781,10 @@ from
 		and	coalesce(paa.CustomerPO,'') = coalesce(pr.CustomerPO,'')
 		and	coalesce(paa.CustomerModelYear,'') = coalesce(pr.CustomerModelYear,'')
 	join EDIToyota.BlanketOrders bo
-		on bo.EDIShipToCode = pr.ShipToCode
+		on
+		(	bo.EDIShipToCode = pr.ShipToCode
+			or bo.MaterialIssuer = pr.ShipToCode
+		)
 		and bo.CustomerPart = pr.CustomerPart
 		and
 		(	bo.CheckCustomerPOPlanning = 0
@@ -793,8 +796,8 @@ from
 		)
 	join
 		@Current830s c 
-		on c.CustomerPart = bo.customerpart
-		and c.ShipToCode = bo.EDIShipToCode
+		on c.CustomerPart = pr.CustomerPart
+		and c.ShipToCode = pr.ShipToCode
 		and
 		(	bo.CheckCustomerPOShipSchedule = 0
 			or bo.CustomerPO = c.CustomerPO
@@ -810,6 +813,201 @@ where
 	--and coalesce(nullif(pr.Scheduletype,''),'4') in ('4')
 order by
 	2,1,4
+
+select
+	'ph'
+,	ph.Status
+,	ph.Type
+,	ph.RawDocumentGUID
+,	ph.DocumentImportDT
+,	ph.TradingPartner
+,	ph.DocType
+,	ph.Version
+,	ph.Release
+,	ph.DocNumber
+,	ph.ControlNumber
+,	ph.DocumentDT
+,	ph.RowID
+,	ph.RowCreateDT
+,	ph.RowCreateUser
+,	ph.RowModifiedDT
+,	ph.RowModifiedUser
+,	'pr'
+,	pr.Status
+,	pr.Type
+,	pr.RawDocumentGUID
+,	pr.ReleaseNo
+,	pr.ShipToCode
+,	pr.ConsigneeCode
+,	pr.ShipFromCode
+,	pr.SupplierCode
+,	pr.CustomerPart
+,	pr.CustomerPO
+,	pr.CustomerPOLine
+,	pr.CustomerModelYear
+,	pr.CustomerECL
+,	pr.ReferenceNo
+,	pr.UserDefined1
+,	pr.UserDefined2
+,	pr.UserDefined3
+,	pr.UserDefined4
+,	pr.UserDefined5
+,	pr.ScheduleType
+,	pr.ReleaseQty
+,	pr.ReleaseDT
+,	pr.RowID
+,	pr.RowCreateDT
+,	pr.RowCreateUser
+,	pr.RowModifiedDT
+,	pr.RowModifiedUser
+,	'pa'
+,	pa.Status
+,	pa.Type
+,	pa.RawDocumentGUID
+,	pa.ReleaseNo
+,	pa.ShipToCode
+,	pa.ConsigneeCode
+,	pa.ShipFromCode
+,	pa.SupplierCode
+,	pa.CustomerPart
+,	pa.CustomerPO
+,	pa.CustomerPOLine
+,	pa.CustomerModelYear
+,	pa.CustomerECL
+,	pa.ReferenceNo
+,	pa.UserDefined1
+,	pa.UserDefined2
+,	pa.UserDefined3
+,	pa.UserDefined4
+,	pa.UserDefined5
+,	pa.LastQtyReceived
+,	pa.LastQtyDT
+,	pa.LastShipper
+,	pa.LastAccumQty
+,	pa.LastAccumDT
+,	pa.RowID
+,	pa.RowCreateDT
+,	pa.RowCreateUser
+,	pa.RowModifiedDT
+,	pa.RowModifiedUser
+,	'paa'
+,	paa.Status
+,	paa.Type
+,	paa.RawDocumentGUID
+,	paa.ReleaseNo
+,	paa.ShipToCode
+,	paa.ConsigneeCode
+,	paa.ShipFromCode
+,	paa.SupplierCode
+,	paa.CustomerPart
+,	paa.CustomerPO
+,	paa.CustomerPOLine
+,	paa.CustomerModelYear
+,	paa.CustomerECL
+,	paa.ReferenceNo
+,	paa.UserDefined1
+,	paa.UserDefined2
+,	paa.UserDefined3
+,	paa.UserDefined4
+,	paa.UserDefined5
+,	paa.PriorCUMStartDT
+,	paa.PriorCUMEndDT
+,	paa.PriorCUM
+,	paa.FABCUMStartDT
+,	paa.FABCUMEndDT
+,	paa.FABCUM
+,	paa.RAWCUMStartDT
+,	paa.RAWCUMEndDT
+,	paa.RAWCUM
+,	paa.RowID
+,	paa.RowCreateDT
+,	paa.RowCreateUser
+,	paa.RowModifiedDT
+,	paa.RowModifiedUser
+,	'bo'
+,	bo.BlanketOrderNo
+,	bo.ShipToCode
+,	bo.EDIShipToCode
+,	bo.MaterialIssuer
+,	bo.ShipToConsignee
+,	bo.SupplierCode
+,	bo.Plant
+,	bo.CustomerPart
+,	bo.CustomerPO
+,	bo.CheckCustomerPOPlanning
+,	bo.CheckCustomerPOShipSchedule
+,	bo.ModelYear862
+,	bo.ModelYear830
+,	bo.CheckModelYearPlanning
+,	bo.CheckModelYearShipSchedule
+,	bo.PartCode
+,	bo.StandardPack
+,	bo.OrderUnit
+,	bo.PackageMaterial
+,	bo.LastSID
+,	bo.LastShipDT
+,	bo.LastShipQty
+,	bo.PackageType
+,	bo.UnitWeight
+,	bo.AccumShipped
+,	bo.ProcessReleases
+,	bo.ActiveOrder
+,	bo.ModelYear
+,	bo.PlanningFlag
+,	bo.TransitDays
+,	bo.ReleaseDueDTOffsetDays
+,	bo.ReferenceAccum
+,	bo.AdjustmentAccum
+,	c.RawDocumentGUID
+,	c.ReleaseNo
+,	c.ShipToCode
+,	c.ShipFromCode
+,	c.ConsigneeCode
+,	c.CustomerPart
+,	c.CustomerPO
+,	c.CustomerModelYear
+,	c.NewDocument
+from
+	EDIToyota.PlanningHeaders ph
+	join EDIToyota.PlanningReleases pr
+		on pr.RawDocumentGUID = ph.RawDocumentGUID
+	left join EDIToyota.PlanningAccums pa
+		on pa.RawDocumentGUID = ph.RawDocumentGUID
+		and pa.CustomerPart = pr.CustomerPart
+		and	pa.ShipToCode = pr.ShipToCode
+		and	coalesce(pa.CustomerPO,'') = coalesce(pr.CustomerPO,'')
+		and	coalesce(pa.CustomerModelYear,'') = coalesce(pr.CustomerModelYear,'')
+	left join EDIToyota.PlanningAuthAccums paa
+		on paa.RawDocumentGUID = ph.RawDocumentGUID
+		and paa.CustomerPart = pr.CustomerPart
+		and	paa.ShipToCode = pr.ShipToCode
+		and	coalesce(paa.CustomerPO,'') = coalesce(pr.CustomerPO,'')
+		and	coalesce(paa.CustomerModelYear,'') = coalesce(pr.CustomerModelYear,'')
+	left join EDIToyota.BlanketOrders bo
+		on
+		(	bo.EDIShipToCode = pr.ShipToCode
+			or bo.MaterialIssuer = pr.ShipToCode
+		)
+		and bo.CustomerPart = pr.CustomerPart
+		and
+		(	bo.CheckCustomerPOPlanning = 0
+			or bo.CustomerPO = pr.CustomerPO
+		)
+		and
+		(	bo.CheckModelYearPlanning = 0
+			or bo.ModelYear830 = pr.CustomerModelYear
+		)
+	join
+		@Current830s c 
+		on c.CustomerPart = pr.CustomerPart
+		and c.ShipToCode = pr.ShipToCode
+		and c.CustomerPO = pr.CustomerPO
+		and c.CustomerModelYear = pr.CustomerModelYear
+where
+	c.RawDocumentGUID = pr.RawDocumentGUID
+	and ph.Status = 1 --(select dbo.udf_StatusValue('EDIToyota.PlanningHeaders', 'Status', 'Active'))
+	and pr.Status = 1 --(select dbo.udf_StatusValue('EDIToyota.PlanningReleases', 'Status', 'Active'))
+	
 
 /*		Calculate orders to update. */
 update
@@ -1420,9 +1618,6 @@ set	@Error = @@error
 
 select
 	@Error, @ProcReturn, @TranDT, @ProcResult
-go
-
-
 go
 
 commit transaction
