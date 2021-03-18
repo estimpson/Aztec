@@ -1056,7 +1056,7 @@ begin
 									)
 								union
 								select
-									'Kevin.Terrell@grede.com'
+									'Brandon.Reed@grede.com'
 								where
 									exists
 									(	select
