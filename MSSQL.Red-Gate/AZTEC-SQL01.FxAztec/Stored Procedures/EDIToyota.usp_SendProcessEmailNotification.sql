@@ -410,7 +410,7 @@ Begin
 		exec msdb.dbo.sp_send_dbmail
 			@profile_name = 'FxAlerts'-- sysname
 	,		@recipients = 'edialerts@aztecmfgcorp.com' -- varchar(max)
-	,		@copy_recipients = 'rjohnson@aztecmfgcorp.com' -- varchar(max)
+	,		@copy_recipients = 'rjohnson@aztecmfgcorp.com;estimpson@fore-thought.com' -- varchar(max)
 	, 	@subject = @EmailHeader
 	,  	@body = @EmailBody
 	,  	@body_format = 'HTML'

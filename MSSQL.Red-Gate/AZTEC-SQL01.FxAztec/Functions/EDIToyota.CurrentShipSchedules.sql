@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create function [EDIToyota].[CurrentShipSchedules] ()
+CREATE function [EDIToyota].[CurrentShipSchedules] ()
 returns @CurrentSS table
 (	RawDocumentGUID uniqueidentifier
 ,	ReleaseNo varchar(50)
@@ -20,30 +20,47 @@ begin
 --- <Body>
 	insert
 		@CurrentSS
+	
 	select distinct
-		RawDocumentGUID = ssh.RawDocumentGUID
-	,	ReleaseNo =  coalesce(ss.ReleaseNo,'')
-	,	ShipToCode = ss.ShipToCode
-	,	ShipFromCode = coalesce(ss.ShipFromCode,'')
-	,	ConsigneeCode = coalesce(ss.ConsigneeCode,'')
-	,	CustomerPart = ss.CustomerPart
-	,	CustomerPO = coalesce(ss.CustomerPO,'')
-	,	CustomerModelYear = coalesce(ss.CustomerModelYear,'')
-	,	NewDocument =
-			case
-				when ssh.Status = 0 --(select dbo.udf_StatusValue('EDIToyota.ShipScheduleHeaders', 'Status', 'New'))
-					then 1
-				else 0
-			end
+		ssActive.RawDocumentGUID
+	,	ssActive.ReleaseNo
+	,	ssActive.ShipToCode
+	,	ssActive.ShipFromCode
+	,	ssActive.ConsigneeCode
+	,	ssActive.CustomerPart
+	,	ssActive.CustomerPO
+	,	ssActive.CustomerModelYear
+	,	ssActive.NewDocument
 	from
-		EDIToyota.ShipScheduleHeaders ssh
-			join EDIToyota.ShipSchedules ss
-				on ss.RawDocumentGUID = ssh.RawDocumentGUID
+		(	select
+				RawDocumentGUID = ssh.RawDocumentGUID
+			,	ReleaseNo =  coalesce(ss.ReleaseNo,'')
+			,	ShipToCode = ss.ShipToCode
+			,	ShipFromCode = coalesce(ss.ShipFromCode,'')
+			,	ConsigneeCode = coalesce(ss.ConsigneeCode,'')
+			,	CustomerPart = ss.CustomerPart
+			,	CustomerPO = coalesce(ss.CustomerPO,'')
+			,	CustomerModelYear = coalesce(ss.CustomerModelYear,'')
+			,	NewDocument =
+					case
+						when ssh.Status = 0 --(select dbo.udf_StatusValue('EDIToyota.ShipScheduleHeaders', 'Status', 'New'))
+							then 1
+						else 0
+					end
+			,	Occurrence = row_number() over (partition by ss.ReleaseDT, ss.ShipToCode, ss.UserDefined1 order by ss.RowCreateDT desc)
+			from
+				EDIToyota.ShipScheduleHeaders ssh
+					join EDIToyota.ShipSchedules ss
+						on ss.RawDocumentGUID = ssh.RawDocumentGUID
+			where
+				ssh.Status in
+				(	0 --(select dbo.udf_StatusValue('EDIToyota.ShipScheduleHeaders', 'Status', 'New'))
+				,	1 --(select dbo.udf_StatusValue('EDIToyota.ShipScheduleHeaders', 'Status', 'Active'))
+				) and
+				ssh.RowCreateDT > getdate() - 90
+		) ssActive
 	where
-		ssh.Status in
-		(	0 --(select dbo.udf_StatusValue('EDIToyota.ShipScheduleHeaders', 'Status', 'New'))
-		,	1 --(select dbo.udf_StatusValue('EDIToyota.ShipScheduleHeaders', 'Status', 'Active'))
-		)
+		ssActive.Occurrence = 1
 --- </Body>
 
 ---	<Return>
