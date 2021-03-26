@@ -2,8 +2,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_NULLS ON
 GO
-
-CREATE PROCEDURE [dbo].[msp_shipout] (
+CREATE procedure [dbo].[msp_shipout] (
 	@shipper	INTEGER,
 	@invdate	DATETIME=NULL )
 AS
@@ -484,8 +483,6 @@ if isnull(@cnt,0) = 0
 		bill_of_lading.bol_number = shipper.bill_of_lading_number
 
 --	10.	Assign invoice number.
-begin transaction -- (1T)
-
 update	parameters
 set	next_invoice = next_invoice + 1
 
@@ -508,10 +505,21 @@ update	shipper
 set	invoice_number = @invoicenumber
 where	id = @shipper
 
-commit transaction -- (1T)
+if	exists
+		(	select
+  				*
+  			from
+  				dbo.shipper s
+			where
+				s.id = @shipper
+				and s.customer = 'MAGNA'
+  		) begin
+
+	execute
+		@ProcReturn = custom.usp_Magna_AddSurchargeInvoiceItems
+		@Shipper = @Shipper
+end
 
 select 0
 return 0
-
-
 GO
