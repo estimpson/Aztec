@@ -88,7 +88,7 @@ from
 	#current830s c
 
 Declare @EDIOrdersAlert table (
-	TradingPartner varchar(30) NULL,
+	TradingPartner varchar(100) NULL,
 	DocumentType varchar(30) NULL, --'PR - Planning Release; SS - ShipSchedule'
 	AlertType varchar(100) NULL,
 	ReleaseNo varchar(100) NULL,
