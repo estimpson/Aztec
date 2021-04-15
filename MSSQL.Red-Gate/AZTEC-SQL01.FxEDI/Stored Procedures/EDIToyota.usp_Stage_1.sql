@@ -3,12 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-
-
-
-
-
-CREATE PROCEDURE [EDIToyota].[usp_Stage_1]
+CREATE procedure [EDIToyota].[usp_Stage_1]
 	@TranDT DATETIME = NULL OUT
 ,	@Result INTEGER = NULL OUT
 AS
@@ -239,532 +234,545 @@ if	exists
 		--and ed.TradingPartner in ( 'MPT MUNCIE' )
 		and ed.Status = 100 -- (select dbo.udf_StatusValue('EDI.EDIDocuments', 'InProcess'))
 
+	--select * from @ShipScheduleHeaders
+
 /*			- prepare Ship Schedules Supplemental.*/
---Begin Transaction
+	begin
 
-	declare
-		@ShipScheduleSupplemental table
-	(	RawDocumentGUID uniqueidentifier
-	,	ReleaseNo varchar(50)
-	,	ShipToCode varchar(50)
-	,	ConsigneeCode varchar(50)
-	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
-	,	CustomerPart varchar(50)
-	,	CustomerPO varchar(50)
-	,	CustomerPOLine varchar(50)
-	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
-	,	UserDefined1 varchar(50) --Dock Code
-	,	UserDefined2 varchar(50) --Line Feed Code	
-	,	UserDefined3 varchar(50) --Reserve Line Feed Code
-	,	UserDefined4 varchar(50) --Zone code
-	,	UserDefined5 varchar(50)
-	,	UserDefined6 varchar(50)
-	,	UserDefined7 varchar(50)
-	,	UserDefined8 varchar(50)
-	,	UserDefined9 varchar(50)
-	,	UserDefined10 varchar(50)
-	,	UserDefined11 varchar(50) --11Z
-	,	UserDefined12 varchar(50) --12Z
-	,	UserDefined13 varchar(50) --13Z
-	,	UserDefined14 varchar(50) --14Z
-	,	UserDefined15 varchar(50) --15Z
-	,	UserDefined16 varchar(50) --16Z
-	,	UserDefined17 varchar(50) --17Z
-	,	UserDefined18 varchar(50)
-	,	UserDefined19 varchar(50)
-	,	UserDefined20 varchar(50)
-	)
+		declare
+			@ShipScheduleSupplemental table
+		(	RawDocumentGUID uniqueidentifier
+		,	ReleaseNo varchar(50)
+		,	ShipToCode varchar(50)
+		,	ConsigneeCode varchar(50)
+		,	ShipFromCode varchar(50)
+		,	SupplierCode varchar(50)	
+		,	CustomerPart varchar(50)
+		,	CustomerPO varchar(50)
+		,	CustomerPOLine varchar(50)
+		,	CustomerModelYear varchar(50)
+		,	CustomerECL varchar(50)	
+		,	UserDefined1 varchar(50) --Dock Code
+		,	UserDefined2 varchar(50) --Line Feed Code	
+		,	UserDefined3 varchar(50) --Reserve Line Feed Code
+		,	UserDefined4 varchar(50) --Zone code
+		,	UserDefined5 varchar(50)
+		,	UserDefined6 varchar(50)
+		,	UserDefined7 varchar(50)
+		,	UserDefined8 varchar(50)
+		,	UserDefined9 varchar(50)
+		,	UserDefined10 varchar(50)
+		,	UserDefined11 varchar(50) --11Z
+		,	UserDefined12 varchar(50) --12Z
+		,	UserDefined13 varchar(50) --13Z
+		,	UserDefined14 varchar(50) --14Z
+		,	UserDefined15 varchar(50) --15Z
+		,	UserDefined16 varchar(50) --16Z
+		,	UserDefined17 varchar(50) --17Z
+		,	UserDefined18 varchar(50)
+		,	UserDefined19 varchar(50)
+		,	UserDefined20 varchar(50)
+		)
 
-	declare
-		@ShipScheduleSupplementalTemp1 table
-	(	RawDocumentGUID uniqueidentifier
-	,	ReleaseNo varchar(50)
-	,	ShipToCode varchar(50)
-	,	ConsigneeCode varchar(50)
-	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
-	,	Data xml
-	)
+		declare
+			@ShipScheduleSupplementalTemp1 table
+		(	RawDocumentGUID uniqueidentifier
+		,	ReleaseNo varchar(50)
+		,	ShipToCode varchar(50)
+		,	ConsigneeCode varchar(50)
+		,	ShipFromCode varchar(50)
+		,	SupplierCode varchar(50)	
+		,	Data xml
+		)
 
-	declare
-		@ShipScheduleSupplementalTemp2 table
-	(	RawDocumentGUID uniqueidentifier
-	,	ReleaseNo varchar(50)
-	,	ShipToCode varchar(50)
-	,	ConsigneeCode varchar(50)
-	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)
-	,	CustomerPart varchar(50)
-	,	CustomerPO varchar(50)
-	,	CustomerPOLine varchar(50)
-	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
-	,	Data xml
-	)
+		declare
+			@ShipScheduleSupplementalTemp2 table
+		(	RawDocumentGUID uniqueidentifier
+		,	ReleaseNo varchar(50)
+		,	ShipToCode varchar(50)
+		,	ConsigneeCode varchar(50)
+		,	ShipFromCode varchar(50)
+		,	SupplierCode varchar(50)
+		,	CustomerPart varchar(50)
+		,	CustomerPO varchar(50)
+		,	CustomerPOLine varchar(50)
+		,	CustomerModelYear varchar(50)
+		,	CustomerECL varchar(50)	
+		,	Data xml
+		)
 
-	declare
-		@ShipScheduleSupplementalTemp3 table
-	(	RawDocumentGUID uniqueidentifier
-	,	ReleaseNo varchar(50)
-	,	ShipToCode varchar(50)
-	,	ConsigneeCode varchar(50)
-	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)
-	,	CustomerPart varchar(50)
-	,	CustomerPO varchar(50)
-	,	CustomerPOLine varchar(50)
-	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
-	,	ValueQualifier varchar(50)
-	,	Value varchar (50)
-	)
+		declare
+			@ShipScheduleSupplementalTemp3 table
+		(	RawDocumentGUID uniqueidentifier
+		,	ReleaseNo varchar(50)
+		,	ShipToCode varchar(50)
+		,	ConsigneeCode varchar(50)
+		,	ShipFromCode varchar(50)
+		,	SupplierCode varchar(50)
+		,	CustomerPart varchar(50)
+		,	CustomerPO varchar(50)
+		,	CustomerPOLine varchar(50)
+		,	CustomerModelYear varchar(50)
+		,	CustomerECL varchar(50)	
+		,	ValueQualifier varchar(50)
+		,	Value varchar (50)
+		)
 
-	insert
-		@ShipScheduleSupplementalTemp1
-	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	Data	
-	)
+		insert
+			@ShipScheduleSupplementalTemp1
+		(	RawDocumentGUID
+		,	ReleaseNo 
+		,	ShipToCode 
+		,	ConsigneeCode 
+		,	ShipFromCode 
+		,	SupplierCode	
+		,	Data	
+		)
 	
-	select
-		RawDocumentGUID
-	,	ReleaseNo = coalesce(ed.Data.value('(/TRN-862/SEG-BSS/DE[@code="0328"])[1]', 'varchar(30)'), ed.Data.value('(/TRN-862/SEG-BSS/DE[@code="0127"])[1]', 'varchar(30)'))
+		select
+			RawDocumentGUID
+		,	ReleaseNo = coalesce(ed.Data.value('(/TRN-862/SEG-BSS/DE[@code="0328"])[1]', 'varchar(30)'), ed.Data.value('(/TRN-862/SEG-BSS/DE[@code="0127"])[1]', 'varchar(30)'))
 	--	,	ShipToCode = coalesce(EDIData.Releases.value('(./SEG-REF [DE[.="DK"][@code="0128"]]/DE[@code="0127"])[1]', 'varchar(50)'), EDIData.Releases.value('(../SEG-N1 [DE[.="MI"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)'),ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="MI"][@code="0098"]]/DE[@code="0093"])[1]', 'varchar(50)')) -- Use if Dock Code is used as Fx Destination
-	, ShipToCode = coalesce(	ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="MI"][@code="0098"]]/DE[@code="0093"])[1]', 'varchar(50)'), EDIData.Releases.value('(./SEG-REF [DE[.="DK"][@code="0128"]]/DE[@code="0127"])[1]', 'varchar(50)'), 	EDIData.Releases.value('(../SEG-N1 [DE[.="MI"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')) -- Use if Material Issuer is used as Fx Destination
-	,	ConsigneeCode = ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="IC"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
-	,	ShipFromCode = ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="SF"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
-	,	SupplierCode = ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="SU"][@code="0098"]]/DE[@code="0093"])[1]', 'varchar(50)')
-	,	Data = EDIData.Releases.query('.')
-	from
-		@ShipScheduleHeaders ed
-		cross apply ed.Data.nodes('/TRN-862/LOOP-LIN') as EDIData(Releases)
+		,	ShipToCode = coalesce
+				(	ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="MI"][@code="0098"]]/DE[@code="0093"])[1]', 'varchar(50)')
+				,	EDIData.Releases.value('(./SEG-REF [DE[.="DK"][@code="0128"]]/DE[@code="0127"])[1]', 'varchar(50)')
+				, 	EDIData.Releases.value('(../SEG-N1 [DE[.="MI"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
+				, 	ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="ST"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
+				) -- Use if Material Issuer is used as Fx Destination
+		,	ConsigneeCode = ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="IC"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
+		,	ShipFromCode = ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="SF"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
+		,	SupplierCode = coalesce
+				(	nullif(ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="SU"][@code="0098"]]/DE[@code="0093"])[1]', 'varchar(50)'), '')
+				,	ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="SU"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
+				)
+		,	Data = EDIData.Releases.query('.')
+		from
+			@ShipScheduleHeaders ed
+			cross apply ed.Data.nodes('/TRN-862/LOOP-LIN') as EDIData(Releases)
 	
 		insert
-		@ShipScheduleSupplementalTemp2
-	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	CustomerPart 
-	,	CustomerPO 
-	,	CustomerPOLine 
-	,	CustomerModelYear 
-	,	CustomerECL 
-	,	Data	
-	)
-	select
-		RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	CustomerPart =ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	,	CustomerModelYear = ''
-	,	CustomerECL = ''
-	,	Data = EDIData.Data.query('.')
+			@ShipScheduleSupplementalTemp2
+		(	RawDocumentGUID
+		,	ReleaseNo 
+		,	ShipToCode 
+		,	ConsigneeCode 
+		,	ShipFromCode 
+		,	SupplierCode	
+		,	CustomerPart 
+		,	CustomerPO 
+		,	CustomerPOLine 
+		,	CustomerModelYear 
+		,	CustomerECL 
+		,	Data	
+		)
+		select
+			RawDocumentGUID
+		,	ReleaseNo 
+		,	ShipToCode 
+		,	ConsigneeCode 
+		,	ShipFromCode 
+		,	SupplierCode	
+		,	CustomerPart =ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
+		,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
+		,	CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
+		,	CustomerModelYear = ''
+		,	CustomerECL = ''
+		,	Data = EDIData.Data.query('.')
 	
-	from
-		@ShipScheduleSupplementalTemp1 ed
-		cross apply ed.data.nodes('/LOOP-LIN/SEG-REF') as EDIData(Data)
-	order by
-		2
-	,	3
-	,	7
+		from
+			@ShipScheduleSupplementalTemp1 ed
+			cross apply ed.data.nodes('/LOOP-LIN/SEG-REF') as EDIData(Data)
+		order by
+			2
+		,	3
+		,	7
 
-	Insert
-	@ShipScheduleSupplementalTemp3
-	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	CustomerPart 
-	,	CustomerPO 
-	,	CustomerPOLine 
-	,	CustomerModelYear 
-	,	CustomerECL 
-	,	ValueQualifier
-	,	Value
-	)
-
-	select
-		RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	CustomerPart 
-	,	CustomerPO
-	, CustomerPOLine 
-	,	CustomerModelYear
-	,	CustomerECL
-	,	ValueQualifier	=	ed.data.value('(/SEG-REF/DE[@code="0128"])[1]', 'varchar(50)')	
-	,	Value		=	ed.data.value('(/SEG-REF/DE[@code="0127"])[1]', 'varchar(50)')	
+		insert
+			@ShipScheduleSupplementalTemp3
+		(	RawDocumentGUID
+		,	ReleaseNo 
+		,	ShipToCode 
+		,	ConsigneeCode 
+		,	ShipFromCode 
+		,	SupplierCode	
+		,	CustomerPart 
+		,	CustomerPO 
+		,	CustomerPOLine 
+		,	CustomerModelYear 
+		,	CustomerECL 
+		,	ValueQualifier
+		,	Value
+		)
+		select
+			RawDocumentGUID
+		,	ReleaseNo 
+		,	ShipToCode 
+		,	ConsigneeCode 
+		,	ShipFromCode 
+		,	SupplierCode	
+		,	CustomerPart 
+		,	CustomerPO
+		, CustomerPOLine 
+		,	CustomerModelYear
+		,	CustomerECL
+		,	ValueQualifier	=	ed.data.value('(/SEG-REF/DE[@code="0128"])[1]', 'varchar(50)')	
+		,	Value		=	ed.data.value('(/SEG-REF/DE[@code="0127"])[1]', 'varchar(50)')	
 	
-	from
-		@ShipScheduleSupplementalTemp2 ed
-	order by
-		2
-	,	3
-	,	7
+		from
+			@ShipScheduleSupplementalTemp2 ed
+		order by
+			2
+		,	3
+		,	7
 
-		
-	insert
-		@ShipScheduleSupplemental
-	(	RawDocumentGUID
-	,	ReleaseNo
-	,	ShipToCode
-	,	ConsigneeCode
-	,	ShipFromCode
-	,	SupplierCode
-	,	CustomerPart	
-	,	CustomerPO
-	,	CustomerPOLine
-	,	CustomerModelYear
-	,	CustomerECL
-	,	UserDefined1
-	,	UserDefined2
-	,	UserDefined3
-	,	UserDefined4
-	,	UserDefined5 
-	,	UserDefined6 
-	,	UserDefined7 
-	,	UserDefined8 
-	,	UserDefined9 
-	,	UserDefined10 
-	,	UserDefined11 
-	,	UserDefined12 
-	,	UserDefined13 
-	,	UserDefined14 
-	,	UserDefined15 
-	,	UserDefined16 
-	,	UserDefined17 
-	,	UserDefined18 
-	,	UserDefined19 
-	,	UserDefined20 
-	)
-	select
-		RawDocumentGUID
-	,	ReleaseNo
-	,	ShipToCode
-	,	ConsigneeCode
-	,	ShipFromCode
-	,	SupplierCode
-	,	CustomerPart	
-	,	CustomerPO
-	,	CustomerPOLine
-	,	CustomerModelYear
-	,	CustomerECL 
-	,	UserDefined1 = max(case when ValueQualifier = 'DK' then Value end)
-	,	UserDefined2 = max(case when ValueQualifier = 'LF' then Value end)
-	,	UserDefined3 = max(case when ValueQualifier = 'RL' then Value end)
-	,	UserDefined4 = max(case when ValueQualifier = 'RU' then Value end) --Route - Indicates what truck is picing up. To be used to create a unique pickup in Fx ( per route abd pickup date) asb FT 2016-06-20
-	,	UserDefined5 = max(case when ValueQualifier = '??' then Value end)
-	,	UserDefined6 = max(case when ValueQualifier = '??' then Value end)
-	,	UserDefined7 = max(case when ValueQualifier = '??' then Value end)
-	,	UserDefined8 = max(case when ValueQualifier = '??' then Value end)
-	,	UserDefined9 = max(case when ValueQualifier = '??' then Value end)
-	,	UserDefined10 = max(case when ValueQualifier = '??' then Value end)
-	,	UserDefined11 = max(case when ValueQualifier = '11Z' then Value end)
-	,	UserDefined12 = max(case when ValueQualifier = '12Z' then Value end)
-	,	UserDefined13 = max(case when ValueQualifier = '13Z' then Value end)
-	,	UserDefined14 = max(case when ValueQualifier = '14Z' then Value end)
-	,	UserDefined15 = max(case when ValueQualifier = '15Z' then Value end)
-	,	UserDefined16 = max(case when ValueQualifier = '16Z' then Value end)
-	,	UserDefined17 = max(case when ValueQualifier = '17Z' then Value end)
-	,	UserDefined18 = max(case when ValueQualifier = '??' then Value end)
-	,	UserDefined19 = max(case when ValueQualifier = '??' then Value end)
-	,	UserDefined20 = max(case when ValueQualifier = '??' then Value end)
-	from
-		@ShipScheduleSupplementalTemp3
-	group by
-		RawDocumentGUID
-	,	ReleaseNo
-	,	ShipToCode
-	,	ConsigneeCode
-	,	ShipFromCode
-	,	SupplierCode
-	,	CustomerPart	
-	,	CustomerPO
-	,	CustomerPOLine
-	,	CustomerModelYear
-	,	CustomerECL 
+		insert
+			@ShipScheduleSupplemental
+		(	RawDocumentGUID
+		,	ReleaseNo
+		,	ShipToCode
+		,	ConsigneeCode
+		,	ShipFromCode
+		,	SupplierCode
+		,	CustomerPart	
+		,	CustomerPO
+		,	CustomerPOLine
+		,	CustomerModelYear
+		,	CustomerECL
+		,	UserDefined1
+		,	UserDefined2
+		,	UserDefined3
+		,	UserDefined4
+		,	UserDefined5 
+		,	UserDefined6 
+		,	UserDefined7 
+		,	UserDefined8 
+		,	UserDefined9 
+		,	UserDefined10 
+		,	UserDefined11 
+		,	UserDefined12 
+		,	UserDefined13 
+		,	UserDefined14 
+		,	UserDefined15 
+		,	UserDefined16 
+		,	UserDefined17 
+		,	UserDefined18 
+		,	UserDefined19 
+		,	UserDefined20 
+		)
+		select
+			RawDocumentGUID
+		,	ReleaseNo
+		,	ShipToCode
+		,	ConsigneeCode
+		,	ShipFromCode
+		,	SupplierCode
+		,	CustomerPart	
+		,	CustomerPO
+		,	CustomerPOLine
+		,	CustomerModelYear
+		,	CustomerECL 
+		,	UserDefined1 = max(case when ValueQualifier = 'DK' then Value end)
+		,	UserDefined2 = max(case when ValueQualifier = 'LF' then Value end)
+		,	UserDefined3 = max(case when ValueQualifier = 'RL' then Value end)
+		,	UserDefined4 = max(case when ValueQualifier = 'RU' then Value end) --Route - Indicates what truck is picing up. To be used to create a unique pickup in Fx ( per route abd pickup date) asb FT 2016-06-20
+		,	UserDefined5 = max(case when ValueQualifier = '??' then Value end)
+		,	UserDefined6 = max(case when ValueQualifier = '??' then Value end)
+		,	UserDefined7 = max(case when ValueQualifier = '??' then Value end)
+		,	UserDefined8 = max(case when ValueQualifier = '??' then Value end)
+		,	UserDefined9 = max(case when ValueQualifier = '??' then Value end)
+		,	UserDefined10 = max(case when ValueQualifier = '??' then Value end)
+		,	UserDefined11 = max(case when ValueQualifier = '11Z' then Value end)
+		,	UserDefined12 = max(case when ValueQualifier = '12Z' then Value end)
+		,	UserDefined13 = max(case when ValueQualifier = '13Z' then Value end)
+		,	UserDefined14 = max(case when ValueQualifier = '14Z' then Value end)
+		,	UserDefined15 = max(case when ValueQualifier = '15Z' then Value end)
+		,	UserDefined16 = max(case when ValueQualifier = '16Z' then Value end)
+		,	UserDefined17 = max(case when ValueQualifier = '17Z' then Value end)
+		,	UserDefined18 = max(case when ValueQualifier = '??' then Value end)
+		,	UserDefined19 = max(case when ValueQualifier = '??' then Value end)
+		,	UserDefined20 = max(case when ValueQualifier = '??' then Value end)
+		from
+			@ShipScheduleSupplementalTemp3
+		group by
+			RawDocumentGUID
+		,	ReleaseNo
+		,	ShipToCode
+		,	ConsigneeCode
+		,	ShipFromCode
+		,	SupplierCode
+		,	CustomerPart	
+		,	CustomerPO
+		,	CustomerPOLine
+		,	CustomerModelYear
+		,	CustomerECL 
 
---Select * From @ShipScheduleSupplementalTemp1
---Select * From @ShipScheduleSupplementalTemp2
---Select * From @ShipScheduleSupplementalTemp3
---Select * From @ShipScheduleSupplemental
-
---Rollback Transaction
+		--select * From @ShipScheduleSupplementalTemp1
+		--select * From @ShipScheduleSupplementalTemp2
+		--select * From @ShipScheduleSupplementalTemp3
+		--select * from @ShipScheduleSupplemental
+	end
 
 /*			- prepare Ship Schedules Releases.*/
+	begin
 
-
---Begin Transaction
-
-declare
-		@ShipSchedules table
-	(	RawDocumentGUID uniqueidentifier
-	,	ReleaseNo varchar(50)
-	,	ShipToCode varchar(50)
-	,	ConsigneeCode varchar(50)
-	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
-	,	CustomerPart varchar(50)
-	,	CustomerPO varchar(50)
-	,	CustomerPOLine varchar(50)
-	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
-	,	UserDefined1 varchar(50) 
-	,	UserDefined2 varchar(50) 
-	,	UserDefined3 varchar(50) 
-	,	UserDefined4 varchar(50)
-	,	UserDefined5 varchar(50)
-	,	DateDue varchar(50)
-	,	QuantityDue varchar(50)
-	,	QuantityType varchar(50)
+		declare
+			@ShipSchedules table
+		(	RawDocumentGUID uniqueidentifier
+		,	ReleaseNo varchar(50)
+		,	ShipToCode varchar(50)
+		,	ConsigneeCode varchar(50)
+		,	ShipFromCode varchar(50)
+		,	SupplierCode varchar(50)	
+		,	CustomerPart varchar(50)
+		,	CustomerPO varchar(50)
+		,	CustomerPOLine varchar(50)
+		,	CustomerModelYear varchar(50)
+		,	CustomerECL varchar(50)	
+		,	UserDefined1 varchar(50) 
+		,	UserDefined2 varchar(50) 
+		,	UserDefined3 varchar(50) 
+		,	UserDefined4 varchar(50)
+		,	UserDefined5 varchar(50)
+		,	DateDue varchar(50)
+		,	QuantityDue varchar(50)
+		,	QuantityType varchar(50)
 	
-	)
+		)
 
-	declare
-		@ShipSchedulesTemp1 table
-	(	RawDocumentGUID uniqueidentifier
-	,	ReleaseNo varchar(50)
-	,	ShipToCode varchar(50)
-	,	ConsigneeCode varchar(50)
-	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
-	,	Data xml
-	)
+		declare
+			@ShipSchedulesTemp1 table
+		(	RawDocumentGUID uniqueidentifier
+		,	ReleaseNo varchar(50)
+		,	ShipToCode varchar(50)
+		,	ConsigneeCode varchar(50)
+		,	ShipFromCode varchar(50)
+		,	SupplierCode varchar(50)	
+		,	Data xml
+		)
 
-	declare
-		@ShipSchedulesTemp2 table
-	(	RawDocumentGUID uniqueidentifier
-	,	ReleaseNo varchar(50)
-	,	ShipToCode varchar(50)
-	,	ConsigneeCode varchar(50)
-	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)
-	,	CustomerPart varchar(50)
-	,	CustomerPO varchar(50)
-	,	CustomerPOLine varchar(50)
-	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)
-	,	RouteCode VARCHAR(50)	
-	,	Data xml
-	)
+		declare
+			@ShipSchedulesTemp2 table
+		(	RawDocumentGUID uniqueidentifier
+		,	ReleaseNo varchar(50)
+		,	ShipToCode varchar(50)
+		,	ConsigneeCode varchar(50)
+		,	ShipFromCode varchar(50)
+		,	SupplierCode varchar(50)
+		,	CustomerPart varchar(50)
+		,	CustomerPO varchar(50)
+		,	CustomerPOLine varchar(50)
+		,	CustomerModelYear varchar(50)
+		,	CustomerECL varchar(50)
+		,	RouteCode VARCHAR(50)	
+		,	Data xml
+		)
 
-
-	declare
-		@ShipSchedulesTemp3 table
-	(	RawDocumentGUID uniqueidentifier
-	,	ReleaseNo varchar(50)
-	,	ShipToCode varchar(50)
-	,	ConsigneeCode varchar(50)
-	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
-	,	CustomerPart varchar(50)
-	,	CustomerPO varchar(50)
-	,	CustomerPOLine varchar(50)
-	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
-	,	UserDefined1 varchar(50) 
-	,	UserDefined2 varchar(50) 
-	,	UserDefined3 varchar(50) 
-	,	UserDefined4 varchar(50)
-	,	UserDefined5 varchar(50)
-	,	DateDue varchar(50)
-	,	QuantityDue varchar(50)
-	,	QuantityType varchar(50)	
+		declare
+			@ShipSchedulesTemp3 table
+		(	RawDocumentGUID uniqueidentifier
+		,	ReleaseNo varchar(50)
+		,	ShipToCode varchar(50)
+		,	ConsigneeCode varchar(50)
+		,	ShipFromCode varchar(50)
+		,	SupplierCode varchar(50)	
+		,	CustomerPart varchar(50)
+		,	CustomerPO varchar(50)
+		,	CustomerPOLine varchar(50)
+		,	CustomerModelYear varchar(50)
+		,	CustomerECL varchar(50)	
+		,	UserDefined1 varchar(50) 
+		,	UserDefined2 varchar(50) 
+		,	UserDefined3 varchar(50) 
+		,	UserDefined4 varchar(50)
+		,	UserDefined5 varchar(50)
+		,	DateDue varchar(50)
+		,	QuantityDue varchar(50)
+		,	QuantityType varchar(50)	
 	
-	)
+		)
 
-
-	insert
-		@ShipSchedulesTemp1
-	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	Data	
-	)
+		insert
+			@ShipSchedulesTemp1
+		(	RawDocumentGUID
+		,	ReleaseNo 
+		,	ShipToCode 
+		,	ConsigneeCode 
+		,	ShipFromCode 
+		,	SupplierCode	
+		,	Data	
+		)
 	
-	select
-		RawDocumentGUID
-	,	ReleaseNo = coalesce(ed.Data.value('(/TRN-862/SEG-BSS/DE[@code="0328"])[1]', 'varchar(30)'), ed.Data.value('(/TRN-862/SEG-BSS/DE[@code="0127"])[1]', 'varchar(30)'))
-	--	,	ShipToCode = coalesce(EDIData.Releases.value('(./SEG-REF [DE[.="DK"][@code="0128"]]/DE[@code="0127"])[1]', 'varchar(50)'), EDIData.Releases.value('(../SEG-N1 [DE[.="MI"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)'),ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="MI"][@code="0098"]]/DE[@code="0093"])[1]', 'varchar(50)')) -- Use if Dock Code is used as Fx Destination
-	, ShipToCode = coalesce(	ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="MI"][@code="0098"]]/DE[@code="0093"])[1]', 'varchar(50)'), EDIData.Releases.value('(./SEG-REF [DE[.="DK"][@code="0128"]]/DE[@code="0127"])[1]', 'varchar(50)'), 	EDIData.Releases.value('(../SEG-N1 [DE[.="MI"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')) -- Use if Material Issuer is used as Fx Destination
-	,	ConsigneeCode = ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="IC"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
-	,	ShipFromCode = ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="SF"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
-	,	SupplierCode = ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="SU"][@code="0098"]]/DE[@code="0093"])[1]', 'varchar(50)')
-	,	Data = EDIData.Releases.query('.')
-	from
-		@ShipScheduleHeaders ed
-		cross apply ed.Data.nodes('/TRN-862/LOOP-LIN') as EDIData(Releases)
+		select
+			RawDocumentGUID
+		,	ReleaseNo = coalesce(ed.Data.value('(/TRN-862/SEG-BSS/DE[@code="0328"])[1]', 'varchar(30)'), ed.Data.value('(/TRN-862/SEG-BSS/DE[@code="0127"])[1]', 'varchar(30)'))
+		--	,	ShipToCode = coalesce(EDIData.Releases.value('(./SEG-REF [DE[.="DK"][@code="0128"]]/DE[@code="0127"])[1]', 'varchar(50)'), EDIData.Releases.value('(../SEG-N1 [DE[.="MI"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)'),ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="MI"][@code="0098"]]/DE[@code="0093"])[1]', 'varchar(50)')) -- Use if Dock Code is used as Fx Destination
+		,	ShipToCode = coalesce
+				(	ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="MI"][@code="0098"]]/DE[@code="0093"])[1]', 'varchar(50)')
+				,	EDIData.Releases.value('(./SEG-REF [DE[.="DK"][@code="0128"]]/DE[@code="0127"])[1]', 'varchar(50)')
+				, 	EDIData.Releases.value('(../SEG-N1 [DE[.="MI"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
+				, 	ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="ST"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
+				) -- Use if Material Issuer is used as Fx Destination
+		,	ConsigneeCode = ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="IC"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
+		,	ShipFromCode = ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="SF"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
+		,	SupplierCode = coalesce
+				(	nullif(ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="SU"][@code="0098"]]/DE[@code="0093"])[1]', 'varchar(50)'), '')
+				,	ed.Data.value('(/TRN-862/LOOP-N1/SEG-N1 [DE[.="SU"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
+				)
+		,	Data = EDIData.Releases.query('.')
+		from
+			@ShipScheduleHeaders ed
+			cross apply ed.Data.nodes('/TRN-862/LOOP-LIN') as EDIData(Releases)
 	
 		insert
-		@ShipSchedulesTemp2
-	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	CustomerPart 
-	,	CustomerPO 
-	,	CustomerPOLine 
-	,	CustomerModelYear 
-	,	CustomerECL 
-	,	RouteCode
-	,	Data	
-	)
-	select
-		RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	CustomerPart =ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
-	,	CustomerModelYear = ''
-	,	CustomerECL = ''
-	,	RouteCode = ed.Data.value('(	for $a in LOOP-LIN/SEG-REF/DE[@code="0128"] where $a="RU" return $a/../DE[. >> $a][@code="0127"][1])[1]', 'varchar(30)')
-	,	Data = EDIData.Data.query('.')
+			@ShipSchedulesTemp2
+		(	RawDocumentGUID
+		,	ReleaseNo 
+		,	ShipToCode 
+		,	ConsigneeCode 
+		,	ShipFromCode 
+		,	SupplierCode	
+		,	CustomerPart 
+		,	CustomerPO 
+		,	CustomerPOLine 
+		,	CustomerModelYear 
+		,	CustomerECL 
+		,	RouteCode
+		,	Data	
+		)
+		select
+			RawDocumentGUID
+		,	ReleaseNo 
+		,	ShipToCode 
+		,	ConsigneeCode 
+		,	ShipFromCode 
+		,	SupplierCode	
+		,	CustomerPart =ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
+		,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
+		,	CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
+		,	CustomerModelYear = ''
+		,	CustomerECL = ''
+		,	RouteCode = ed.Data.value('(	for $a in LOOP-LIN/SEG-REF/DE[@code="0128"] where $a="RU" return $a/../DE[. >> $a][@code="0127"][1])[1]', 'varchar(30)')
+		,	Data = EDIData.Data.query('.')
 	
-	from
-		@ShipSchedulesTemp1 ed
-		cross apply ed.Data.nodes('/LOOP-LIN/LOOP-SHP') as EDIData(Data)
-	order by
-		2
-	,	3
-	,	7
-
+		from
+			@ShipSchedulesTemp1 ed
+			cross apply ed.Data.nodes('/LOOP-LIN/LOOP-SHP,/LOOP-LIN/LOOP-FST') as EDIData(Data)
+		order by
+			2
+		,	3
+		,	7
 		
-	insert
-		@ShipSchedulesTemp3
-	(	RawDocumentGUID
-	,	ReleaseNo
-	,	ShipToCode
-	,	ConsigneeCode
-	,	ShipFromCode
-	,	SupplierCode
-	,	CustomerPart	
-	,	CustomerPO
-	,	CustomerPOLine
-	,	CustomerModelYear
-	,	CustomerECL
-	,	UserDefined1
-	,	UserDefined2
-	,	UserDefined3
-	,	UserDefined4
-	,	UserDefined5 
-	,	DateDue
-	,	QuantityDue
-	,	QuantityType
-	)
+		insert
+			@ShipSchedulesTemp3
+		(	RawDocumentGUID
+		,	ReleaseNo
+		,	ShipToCode
+		,	ConsigneeCode
+		,	ShipFromCode
+		,	SupplierCode
+		,	CustomerPart	
+		,	CustomerPO
+		,	CustomerPOLine
+		,	CustomerModelYear
+		,	CustomerECL
+		,	UserDefined1
+		,	UserDefined2
+		,	UserDefined3
+		,	UserDefined4
+		,	UserDefined5 
+		,	DateDue
+		,	QuantityDue
+		,	QuantityType
+		)
+		select
+			RawDocumentGUID
+		,	ReleaseNo
+		,	ShipToCode
+		,	ConsigneeCode
+		,	ShipFromCode
+		,	SupplierCode
+		,	CustomerPart	
+		,	CustomerPO
+		,	CustomerPOLine
+		,	CustomerModelYear
+		,	CustomerECL
+		,	UserDefined1 = coalesce
+				(	Data.value ('(/LOOP-SHP/SEG-REF [DE[.="MK"][@code="0128"]]/DE[@code="0127"])[1]', 'varchar(50)')
+				,	Data.value ('(/LOOP-FST/SEG-REF [DE[.="MK"][@code="0128"]]/DE[@code="0127"])[1]', 'varchar(50)')
+				)
+		,	UserDefined2 = ''
+		,	UserDefined3 = ''
+		,	UserDefined4 = RouteCode
+		,	UserDefined5 = ''
+		,	DateDue = coalesce
+				(	Data.value('(/LOOP-SHP/SEG-SHP/DE[@code="0373"])[1]', 'varchar(50)')
+				,	Data.value('(/LOOP-FST/SEG-FST/DE[@code="0373"])[1]', 'varchar(50)')
+				)
+		,	QuantityDue = coalesce
+				(	Data.value('(/LOOP-SHP/SEG-SHP/DE[@code="0380"])[1]', 'varchar(50)')
+				,	Data.value('(/LOOP-FST/SEG-FST/DE[@code="0380"])[1]', 'varchar(50)')
+				)
+		,	QuantityType = coalesce
+				(	Data.value('(/LOOP-SHP/SEG-SHP/DE[@code="0673"])[1]', 'varchar(50)')
+				,	Data.value('(/LOOP-FST/SEG-FST/DE[@code="0673"])[1]', 'varchar(50)')
+				)
+		from
+			@ShipSchedulesTemp2
 
-	select
-		RawDocumentGUID
-	,	ReleaseNo
-	,	ShipToCode
-	,	ConsigneeCode
-	,	ShipFromCode
-	,	SupplierCode
-	,	CustomerPart	
-	,	CustomerPO
-	,	CustomerPOLine
-	,	CustomerModelYear
-	,	CustomerECL
-	,	UserDefined1 =  Data.value ('(/LOOP-SHP/SEG-REF [DE[.="MK"][@code="0128"]]/DE[@code="0127"])[1]', 'varchar(50)')
-	,	UserDefined2 = ''
-	,	UserDefined3 = ''
-	,	UserDefined4 = RouteCode
-	,	UserDefined5 = ''
-	,	DateDue = Data.value('(/LOOP-SHP/SEG-SHP/DE[@code="0373"])[1]', 'varchar(50)')
-	,	QuantityDue = Data.value('(/LOOP-SHP/SEG-SHP/DE[@code="0380"])[1]', 'varchar(50)')
-	,	QuantityType = Data.value('(/LOOP-SHP/SEG-SHP/DE[@code="0673"])[1]', 'varchar(50)')
+		insert
+			@ShipSchedules
+		(	RawDocumentGUID
+		,	ReleaseNo
+		,	ShipToCode
+		,	ConsigneeCode
+		,	ShipFromCode
+		,	SupplierCode
+		,	CustomerPart	
+		,	CustomerPO
+		,	CustomerPOLine
+		,	CustomerModelYear
+		,	CustomerECL
+		,	UserDefined1
+		,	UserDefined2
+		,	UserDefined3
+		,	UserDefined4
+		,	UserDefined5 
+		,	DateDue 
+		,	QuantityDue 
+		,	QuantityType 
+		)
+
+		SELECT
+			RawDocumentGUID
+		,	ReleaseNo
+		,	ShipToCode
+		,	ConsigneeCode
+		,	ShipFromCode
+		,	SupplierCode
+		,	CustomerPart	
+		,	CustomerPO
+		,	CustomerPOLine
+		,	CustomerModelYear
+		,	CustomerECL
+		,	UserDefined1 = UserDefined1
+		,	UserDefined2 = ''
+		,	UserDefined3 = ''
+		,	UserDefined4 = UserDefined4
+		,	UserDefined5 = ''
+		,	DateDue 
+		,	QuantityDue 
+		,	QuantityType
+	
+		FROM
+			@ShipSchedulesTemp3
+		ORDER BY
+		 2,3,7
  
-	
-	from
-		@ShipSchedulesTemp2
-
-INSERT 
-		@ShipSchedules
-	(	RawDocumentGUID
-	,	ReleaseNo
-	,	ShipToCode
-	,	ConsigneeCode
-	,	ShipFromCode
-	,	SupplierCode
-	,	CustomerPart	
-	,	CustomerPO
-	,	CustomerPOLine
-	,	CustomerModelYear
-	,	CustomerECL
-	,	UserDefined1
-	,	UserDefined2
-	,	UserDefined3
-	,	UserDefined4
-	,	UserDefined5 
-	,	DateDue 
-	,	QuantityDue 
-	,	QuantityType 
-	)
-
-	SELECT
-		RawDocumentGUID
-	,	ReleaseNo
-	,	ShipToCode
-	,	ConsigneeCode
-	,	ShipFromCode
-	,	SupplierCode
-	,	CustomerPart	
-	,	CustomerPO
-	,	CustomerPOLine
-	,	CustomerModelYear
-	,	CustomerECL
-	,	UserDefined1 = UserDefined1
-	,	UserDefined2 = ''
-	,	UserDefined3 = ''
-	,	UserDefined4 = UserDefined4
-	,	UserDefined5 = ''
-	,	DateDue 
-	,	QuantityDue 
-	,	QuantityType
-	
-	FROM
-		@ShipSchedulesTemp3
-
-ORDER BY
- 2,3,7
-
-
-	 
-	 	 
-
-		--Select * From @ShipSchedulesTemp1
-		--Select * From @ShipSchedulesTemp2
-		--Select * From @ShipSchedulesTemp3
-		--Select * From @ShipSchedules
-
-		--Rollback Transaction
+		--select * From @ShipSchedulesTemp1
+		--select * From @ShipSchedulesTemp2
+		--select * From @ShipSchedulesTemp3
+		--select * From @ShipSchedules
+	end
 END
 
 /*		- prepare Release Plans...*/
