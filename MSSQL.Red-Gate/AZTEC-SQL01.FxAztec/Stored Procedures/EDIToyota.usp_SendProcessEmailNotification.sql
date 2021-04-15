@@ -153,42 +153,57 @@ where
 				coalesce(a.CustomerModelYear,'') = coalesce(b.CustomerModelYear,'')
 )
 union
-Select
-	TradingPartner = Coalesce((Select max(TradingPartner) from fxEDI.EDI.EDIDocuments where GUID = a.RawDocumentGUID) ,'')
+select
+	TradingPartner	= coalesce
+		(	(	select
+					max(TradingPartner)
+				from
+					FxEDI.EDI.EDIDocuments
+				where
+					GUID = a.RawDocumentGUID
+			)
+		,	''
+		)
 ,	DocumentType = 'PR'
-,	AlertType =  ' Exception'
-,	ReleaseNo =  Coalesce(a.ReleaseNo,'')
+,	AlertType = ' Exception'
+,	ReleaseNo = coalesce(a.ReleaseNo, '')
 ,	ShipToCode = a.ShipToCode
-,	ConsigneeCode =  coalesce(a.ConsigneeCode,'')
-,	ShipFromCode = coalesce(a.ShipFromCode,'')
-,	CustomerPart = Coalesce(a.CustomerPart,'')
-,	CustomerPO = Coalesce(a.CustomerPO,'')
-,	CustomerModelYear = Coalesce(a.CustomerModelYear,'')
-,   Description = 'Please Add Blanket Order to Fx and Reprocess EDI'
+,	ConsigneeCode = coalesce(a.ConsigneeCode, '')
+,	ShipFromCode = coalesce(a.ShipFromCode, '')
+,	CustomerPart = coalesce(a.CustomerPart, '')
+,	CustomerPO = coalesce(a.CustomerPO, '')
+,	CustomerModelYear = coalesce(a.CustomerModelYear, '')
+,	Description = 'Please Add Blanket Order to Fx and Reprocess EDI'
 from
 	@Current830s a
-Where
-		coalesce(a.newDocument,0) = 1
-and not exists
-( Select 1 from 
-		EDIToyota.PlanningReleases b
- Join 
-	EDIToyota.BlanketOrders bo on b.CustomerPart = bo.CustomerPart
-and
-	b.ShipToCode = bo.EDIShipToCode
-and
-(	bo.CheckCustomerPOPlanning = 0
-	or bo.CustomerPO = b.CustomerPO)
-and
-(	bo.CheckModelYearPlanning = 0
-	or bo.ModelYear830 = b.CustomerModelYear)
 where
-				a.RawDocumentGUID = b.RawDocumentGUID and
-				a.CustomerPart = b.CustomerPart and
-				a.ShipToCode = b.ShipToCode and
-				coalesce(a.customerPO,'') = coalesce(b.CustomerPO,'') and
-				coalesce(a.CustomerModelYear,'') = coalesce(b.CustomerModelYear,'')
-)
+	coalesce(a.NewDocument, 0) = 1
+	and not exists
+	(	select
+			*
+		from
+			EDIToyota.PlanningReleases b
+			join EDIToyota.BlanketOrders bo
+				on b.CustomerPart = bo.CustomerPart
+				and
+				(	bo.EDIShipToCode = b.ShipToCode
+					or bo.MaterialIssuer = b.ShipToCode
+				)
+				and
+				(	bo.CheckCustomerPOPlanning = 0
+					or bo.CustomerPO = b.CustomerPO
+				)
+				and
+				(	bo.CheckModelYearPlanning = 0
+					or bo.ModelYear830 = b.CustomerModelYear
+				)
+		where
+			a.RawDocumentGUID = b.RawDocumentGUID
+			and a.CustomerPart = b.CustomerPart
+			and a.ShipToCode = b.ShipToCode
+			and coalesce(a.CustomerPO, '') = coalesce(b.CustomerPO, '')
+			and coalesce(a.CustomerModelYear, '') = coalesce(b.CustomerModelYear, '')
+	)
 union
 
 --Orders Processed
@@ -220,146 +235,46 @@ and
 		coalesce(a.newDocument,0) = 1 
 
 union
-Select 
-	TradingPartner = Coalesce((Select max(TradingPartner) from fxEDI.EDI.EDIDocuments where GUID = a.RawDocumentGUID) ,'')
+select
+	TradingPartner	= coalesce
+		(	(	select
+					max(TradingPartner)
+				from
+					FxEDI.EDI.EDIDocuments
+				where
+					GUID = a.RawDocumentGUID
+			)
+		,	''
+		)
 ,	DocumentType = 'PR'
-,	AlertType =  ' OrderProcessed'
-,	ReleaseNo =  Coalesce(a.ReleaseNo,'')
+,	AlertType = ' OrderProcessed'
+,	ReleaseNo = coalesce(a.ReleaseNo, '')
 ,	ShipToCode = bo.ShipToCode
-,	ConsigneeCode =  coalesce(a.ConsigneeCode,'')
-,	ShipFromCode = coalesce(a.ShipFromCode,'')
-,	CustomerPart = Coalesce(a.CustomerPart,'')
-,	CustomerPO = Coalesce(a.CustomerPO,'')
-,	CustomerModelYear = Coalesce(a.CustomerModelYear,'')
-,   Description = 'EDI Processed for Fx Blanket Sales Order No: ' + convert(varchar(15), bo.BlanketOrderNo)
+,	ConsigneeCode = coalesce(a.ConsigneeCode, '')
+,	ShipFromCode = coalesce(a.ShipFromCode, '')
+,	CustomerPart = coalesce(a.CustomerPart, '')
+,	CustomerPO = coalesce(a.CustomerPO, '')
+,	CustomerModelYear = coalesce(a.CustomerModelYear, '')
+,	Description = 'EDI Processed for Fx Blanket Sales Order No: ' + convert(varchar(15), bo.BlanketOrderNo)
 from
 	@Current830s a
-	 Join 
-	EDIToyota.BlanketOrders bo on a.CustomerPart = bo.CustomerPart
-and
-	a.ShipToCode = bo.EDIShipToCode
-and
-(	bo.CheckCustomerPOPlanning = 0
-	or bo.CustomerPO = a.CustomerPO)
-and
-(	bo.CheckModelYearPlanning = 0
-	or bo.ModelYear830 = a.CustomerModelYear)
-	Where
-		coalesce(a.newDocument,0) = 1
-
+	join EDIToyota.BlanketOrders bo
+		on a.CustomerPart = bo.CustomerPart
+		and
+		(	bo.EDIShipToCode = a.ShipToCode
+			or bo.MaterialIssuer = a.ShipToCode
+		)
+		and
+		(	bo.CheckCustomerPOPlanning = 0
+			or bo.CustomerPO = a.CustomerPO
+		)
+		and
+		(	bo.CheckModelYearPlanning = 0
+			or bo.ModelYear830 = a.CustomerModelYear
+		)
+where
+	coalesce(a.NewDocument, 0) = 1
 --Accums Reporting -- Commented Toyota does not send Accums
-/*union
-Select 
-	TradingPartner = Coalesce((Select max(TradingPartner) from fxEDI.EDI.EDIDocuments where GUID = a.RawDocumentGUID) ,'')
-,	DocumentType = 'SS'
-,	AlertType =  ' Accum Notice'
-,	ReleaseNo =  Coalesce(a.ReleaseNo,'')
-,	ShipToCode = a.ShipToCode
-,	ConsigneeCode =  coalesce(a.ConsigneeCode,'')
-,	ShipFromCode = coalesce(a.ShipFromCode,'')
-,	CustomerPart = Coalesce(a.CustomerPart,'')
-,	CustomerPO = Coalesce(a.CustomerPO,'')
-,	CustomerModelYear = Coalesce(a.CustomerModelYear,'')
-,   Description = 'Customer Accum Received != Fx Accum Shipped for BlanketOrder No ' 
-					+ convert(varchar(15), bo.BlanketOrderNo) 
-					+ '  Customer Accum: ' 
-					+ convert(varchar(15), coalesce(ssa.LastAccumQty,0))
-					+ '  Our Accum Shipped: '
-					+ convert(varchar(15), coalesce(bo.AccumShipped,0))
-					+ '  Customer Last Recvd Qty: ' 
-					+ convert(varchar(15), coalesce(ssa.LastQtyReceived,0))
-					+ '  Our Last Shipped Qty: '
-					+ convert(varchar(15), coalesce(bo.LastShipQty,0))
-					+ '  Customer Prior Auth Accum: ' 
-					+ convert(varchar(15), coalesce(ssaa.PriorCUM,0))
-from
-	@Current862s a
-	 Join 
-	EDIToyota.BlanketOrders bo on a.CustomerPart = bo.CustomerPart
-and
-	a.ShipToCode = bo.EDIShipToCode
-and
-(	bo.CheckCustomerPOShipSchedule = 0
-	or bo.CustomerPO = a.CustomerPO)
-and
-(	bo.CheckModelYearShipSchedule = 0
-	or bo.ModelYear862 = a.CustomerModelYear)
-	left join
-		EDIToyota.ShipScheduleAccums ssa on 
-		ssa.RawDocumentGUID = a.RawDocumentGUID and
-		ssa.ShipToCode = a.ShipToCode and
-		ssa.CustomerPart = a.CustomerPart and
-		coalesce(ssa.CustomerPO,'') = coalesce(a.customerPO,'') and
-		coalesce(ssa.CustomerModelYear,'') = coalesce(a.customerModelYear,'')
- 	left join
-		EDIToyota.ShipScheduleAuthAccums ssaa on 
-		ssaa.RawDocumentGUID = a.RawDocumentGUID and
-		ssaa.ShipToCode = a.ShipToCode and
-		ssaa.CustomerPart = a.CustomerPart and
-		coalesce(ssaa.CustomerPO,'') = coalesce(a.customerPO,'') and
-		coalesce(ssaa.CustomerModelYear,'') = coalesce(a.customerModelYear,'')
-										
-	Where
-		coalesce(a.newDocument,0) = 1 and
-		coalesce(bo.AccumShipped,0) != coalesce(ssa.LastAccumQty,0)
-
-
-union
-Select 
-	TradingPartner = Coalesce((Select max(TradingPartner) from fxEDI.EDI.EDIDocuments where GUID = a.RawDocumentGUID) ,'')
-,	DocumentType = 'PR'
-,	AlertType =  ' Accum Notice'
-,	ReleaseNo =  Coalesce(a.ReleaseNo,'')
-,	ShipToCode = a.ShipToCode
-,	ConsigneeCode =  coalesce(a.ConsigneeCode,'')
-,	ShipFromCode = coalesce(a.ShipFromCode,'')
-,	CustomerPart = Coalesce(a.CustomerPart,'')
-,	CustomerPO = Coalesce(a.CustomerPO,'')
-,	CustomerModelYear = Coalesce(a.CustomerModelYear,'')
-,   Description = 'Customer Accum Received != Fx Accum Shipped for BlanketOrder No ' 
-					+ convert(varchar(15), bo.BlanketOrderNo) 
-					+ '  Customer Accum: ' 
-					+ convert(varchar(15), coalesce(pra.LastAccumQty,0))
-					+ '  Our Accum Shipped: '
-					+ convert(varchar(15), coalesce(bo.AccumShipped,0))
-					+ '  Customer Last Recvd Qty: ' 
-					+ convert(varchar(15), coalesce(pra.LastQtyReceived,0))
-					+ '  Our Last Shipped Qty: '
-					+ convert(varchar(15), coalesce(bo.LastShipQty,0))
-					+ '  Customer Prior Auth Accum: ' 
-					+ convert(varchar(15), coalesce(praa.PriorCUM,0))
-from
-	@Current830s  a
-	 Join 
-	EDIToyota.BlanketOrders bo on a.CustomerPart = bo.CustomerPart
-and
-	a.ShipToCode = bo.EDIShipToCode
-and
-(	bo.CheckCustomerPOPlanning = 0
-	or bo.CustomerPO = a.CustomerPO)
-and
-(	bo.CheckModelYearPlanning = 0
-	or bo.ModelYear830 = a.CustomerModelYear)
-	left join
-		EDIToyota.PlanningAccums pra on 
-		pra.RawDocumentGUID = a.RawDocumentGUID and
-		pra.ShipToCode = a.ShipToCode and
-		pra.CustomerPart = a.CustomerPart and
-		coalesce(pra.CustomerPO,'') = coalesce(a.customerPO,'') and
-		coalesce(pra.CustomerModelYear,'') = coalesce(a.customerModelYear,'')
- 	left join
-		EDIToyota.PlanningAuthAccums praa on 
-		praa.RawDocumentGUID = a.RawDocumentGUID and
-		praa.ShipToCode = a.ShipToCode and
-		praa.CustomerPart = a.CustomerPart and
-		coalesce(praa.CustomerPO,'') = coalesce(a.customerPO,'') and
-		coalesce(praa.CustomerModelYear,'') = coalesce(a.customerModelYear,'')
-										
-	Where
-		coalesce(a.newDocument,0) = 1 and
-		coalesce(bo.AccumShipped,0) != coalesce(pra.LastAccumQty,0)
-*/
-
 order by 1,2,5,4,7
 		
 
