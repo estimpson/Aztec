@@ -106,7 +106,25 @@ Insert	@ShipmentAlert
 	shipper 
 	Where	(destination LIKE 'AF[0-9]%' or destination = '24874') AND
 				NULLIF(pro_number, '') IS NULL AND
-				id = @shipper 
+				id = @shipper
+	union all
+	select
+		id
+	,	'Ship-out failed. Truck number not enetered on shipper. Enter truck number and ship'
+	from
+		dbo.shipper s
+	where
+		exists
+			(	select
+					*
+				from
+					dbo.edi_setups es
+				where
+					es.destination = s.destination
+					and es.asn_overlay_group = 'DAN'
+					and nullif(rtrim(s.truck_number), '') is null
+			)
+
 		
 if exists ( Select 1 from @ShipmentAlert ) begin
 
@@ -130,7 +148,7 @@ DECLARE
 		
 		DECLARE
 			@EmailBody NVARCHAR(MAX)
-		,	@EmailHeader NVARCHAR(MAX) = 'Failed Shipout due to missing pro number - no action required' 
+		,	@EmailHeader NVARCHAR(MAX) = 'Failed Shipout due to missing data - no action required' 
 
 		SELECT
 			@EmailBody =
@@ -142,7 +160,6 @@ DECLARE
 	EXEC msdb.dbo.sp_send_dbmail
 			@profile_name = 'FxAlerts'-- sysname
 	,		@recipients = 'rjohnson@aztecmfgcorp.com;mkroll@aztecmfgcorp.com;rreyna@aztecmfgcorp.com' -- varchar(max)
-	,		@copy_recipients = 'rjohnson@aztecmfgcorp.com; aboulanger@fore-thought.com' -- varchar(max)
 	, 		@subject = @EmailHeader
 	,		@body = @EmailBody
 	,  		@body_format = 'HTML'
@@ -151,7 +168,7 @@ DECLARE
 		declare		@ShipperString varchar(10)
 		select		@ShipperString = convert(varchar(10), @shipper)
 		
-		RAISERROR (N'Shipout failed. Enter pro number of shipper %s.', -- Message text.
+		RAISERROR (N'Shipout failed. Missing required data for shipper %s.', -- Message text.
            16, -- Severity,
            1, -- State,
            @ShipperString
