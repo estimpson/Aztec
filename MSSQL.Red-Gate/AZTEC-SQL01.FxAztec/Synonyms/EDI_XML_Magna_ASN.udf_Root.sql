@@ -1,0 +1,2 @@
+CREATE SYNONYM [EDI_XML_Magna_ASN].[udf_Root] FOR [FxEDI].[EDI_XML_MAGNA].[Get856]
+GO
