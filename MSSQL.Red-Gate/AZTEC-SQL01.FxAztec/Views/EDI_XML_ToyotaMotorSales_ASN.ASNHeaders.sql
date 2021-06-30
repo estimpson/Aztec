@@ -27,6 +27,7 @@ select
 ,	TruckNumber = coalesce(s.truck_number, convert(varchar(15), s.id))
 ,	BOLNumber = coalesce(s.bill_of_lading_number, s.id)
 ,	SupplierCode = es.supplier_code
+,	s2.CaseNumber
 from
 	dbo.shipper s
 	left join dbo.carrier c
@@ -37,6 +38,16 @@ from
 		join dbo.edi_setups esBOL
 			on esBOL.destination = bol.destination
 		on bol.bol_number = s.bill_of_lading_number
+	cross apply
+		(	select
+		 		CaseNumber = '082' + right('00000' + convert(varchar(5), (right(datepart(year, max(s2.date_stamp)), 1) * 10000 + count(*) % 10000)), 5)
+		 	from
+		 		dbo.shipper s2
+			where
+				s2.destination = s.destination
+				and datepart(year, s2.date_stamp) = datepart(year, s.date_stamp)
+				and s2.id <= s.id
+		) s2
 where
 	coalesce(s.type, 'N') in ('N', 'M')
 	and es.asn_overlay_group like 'TMS'
