@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create procedure [dbo].[usp_Admin_AddUserMenuItem]
+CREATE procedure [dbo].[usp_Admin_AddUserMenuItem]
 	@User sysname
 ,	@MenuItemName sysname
 ,	@TranDT datetime = null out
@@ -73,7 +73,6 @@ if	not exists
 				and sa.ResourceID = @MenuID
 		) begin
 
-	/*	Non-licensed databases.
 	--- <Insert rows="1">
 	set	@TableName = 'FT.SecurityAccess'
 	
@@ -104,12 +103,12 @@ if	not exists
 		return
 	end
 	--- </Insert>
-	*/
 
 	--- <Call>
 	declare
 		@Message nvarchar(4000)
 
+	/*
 	set	@CallProcName = 'xp_Security_InsertAccess'
 	execute
 		@ProcReturn = dbo.xp_Security_InsertAccess
@@ -131,6 +130,7 @@ if	not exists
 		return	@Result
 	end
 	--- </Call>
+	*/
 end
 --- </Body>
 

@@ -3,7 +3,7 @@ GO
 SET ANSI_NULLS ON
 GO
 
-create procedure [dbo].[usp_Admin_RemoveUserMenuItem]
+CREATE procedure [dbo].[usp_Admin_RemoveUserMenuItem]
 	@User sysname
 ,	@MenuItemName sysname
 ,	@TranDT datetime = null out
@@ -73,7 +73,6 @@ if	exists
 				and sa.ResourceID = @MenuID
 		) begin
 
-	/*	Non-licensed databases.
 	--- <Delete rows="1">
 	set	@TableName = 'FT.SecurityAccess'
 	
@@ -102,8 +101,8 @@ if	exists
 		return
 	end
 	--- </Delete>
-	*/
 
+	/*
 	--- <Call>
 	declare
 		@Message nvarchar(4000)
@@ -129,6 +128,7 @@ if	exists
 		return	@Result
 	end
 	--- </Call>
+	*/
 end
 --- </Body>
 
