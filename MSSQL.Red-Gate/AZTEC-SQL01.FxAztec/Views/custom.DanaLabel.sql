@@ -14,6 +14,10 @@ select
 ,	Lot = o.lot
 ,	DateMFG = right(datepart(year, o.last_date), 1) + right('000' + datepart(dayofyear, o.last_date), 3)
 ,	DestinationCode = d.destination
+,	Destination = d.name
+,	DestinationAdd1 = d.address_1
+,	DestinationAdd2 = d.address_2
+,	DestinationAdd3 = d.address_3
 ,	CustomerCode = d.customer
 ,	CustomerPO = oh.customer_po
 ,	RevLevel = coalesce(nullif(rtrim(oh.engineering_level), ''), '--')
@@ -48,6 +52,10 @@ select
 ,	Lot = o.lot
 ,	DateMFG = right(datepart(year, o.date_stamp), 1) + right('000' + datepart(dayofyear, o.date_stamp), 3)
 ,	DestinationCode = d.destination
+,	Destination = d.name
+,	DestinationAdd1 = d.address_1
+,	DestinationAdd2 = d.address_2
+,	DestinationAdd3 = d.address_3
 ,	CustomerCode = d.customer
 ,	CustomerPO = oh.customer_po
 ,	RevLevel = coalesce(nullif(rtrim(oh.engineering_level), ''), '--')
