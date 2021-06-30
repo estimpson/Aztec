@@ -2,11 +2,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_NULLS ON
 GO
-
-
-
-
-
 CREATE procedure [EDIToyota].[usp_SendProcessEmailNotification]
 	@TranDT datetime = null out
 ,	@Result integer = null out
@@ -312,7 +307,7 @@ Begin
 		
 		declare
 			@EmailBody nvarchar(max)
-		,	@EmailHeader nvarchar(max) = 'EDI Processing for EDIToyota' 
+		,	@EmailHeader nvarchar(max) = 'EDI Processing for EDIToyota [EDIToyota.usp_Process]' 
 
 		select
 			@EmailBody =

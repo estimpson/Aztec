@@ -47,7 +47,7 @@ begin
 							then 1
 						else 0
 					end
-			,	Occurrence = row_number() over (partition by ss.ReleaseDT, ss.ShipToCode, ss.UserDefined1 order by ss.RowCreateDT desc)
+			,	Occurrence = row_number() over (partition by ss.ReleaseDT, ss.ShipToCode, ss.CustomerPart, ss.UserDefined1 order by ss.RowCreateDT desc)
 			from
 				EDIToyota.ShipScheduleHeaders ssh
 					join EDIToyota.ShipSchedules ss

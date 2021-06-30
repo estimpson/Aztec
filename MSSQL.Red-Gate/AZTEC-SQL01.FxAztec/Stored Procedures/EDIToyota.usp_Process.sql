@@ -2,6 +2,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_NULLS ON
 GO
+
 CREATE procedure [EDIToyota].[usp_Process]
 	@TranDT datetime = null out
 ,	@Result integer = null out
@@ -1381,14 +1382,48 @@ if	@Testing = 0 begin
 		
 	--- <Update rows="*">
 	set	@TableName = 'dbo.order_header'
+
+	select
+		custom01 = rtrim(sss.UserDefined1)
+	,	dock_code = coalesce(nullif(rtrim(sss.UserDefined1), ''), rtrim(sss.UserDefined5))
+	,	line_feed_code = coalesce(nullif(rtrim(sss.UserDefined2), ''), rtrim(sss.CustomerPOLine))
+	,	zone_code = rtrim(sss.UserDefined4)
+	,	line11 = rtrim(sss.UserDefined11)
+	,	line12 = rtrim(sss.UserDefined12)
+	,	line13 = rtrim(sss.UserDefined13)
+	,	line14 = rtrim(sss.UserDefined14)
+	,	line15 = rtrim(sss.UserDefined15)
+	,	line16 = rtrim(sss.UserDefined16)
+	,	line17 = rtrim(sss.UserDefined17)
+	from
+		dbo.order_header oh
+		join EDIToyota.blanketOrders bo
+			on bo.BlanketOrderNo = oh.order_no
+		join @Current862s c
+			on c.CustomerPart = bo.customerpart
+			and c.ShipToCode = bo.EDIShipToCode
+			and
+			(	bo.CheckCustomerPOShipSchedule = 0
+				or bo.CustomerPO = c.CustomerPO
+			)
+			and
+			(	bo.CheckModelYearShipSchedule = 0
+				or bo.ModelYear862 = c.CustomerModelYear
+			)
+		join EDIToyota.ShipScheduleSupplemental sss
+			on sss.RawDocumentGUID = c.RawDocumentGUID
+			and sss.CustomerPart = c.CustomerPart
+			and coalesce(sss.CustomerPO, '') = c.CustomerPO
+			and sss.CustomerModelYear = c.CustomerModelYear
+			and sss.ShipToCode = c.ShipToCode
 		
 	update
 		oh
 	set
 		custom01 = rtrim(sss.UserDefined1)
-	,	dock_code = rtrim(sss.UserDefined1)
-	,	line_feed_code = rtrim(sss.UserDefined2)
-	,	zone_code = rtrim(sss.UserDefined3)
+	,	dock_code = coalesce(nullif(rtrim(sss.UserDefined1), ''), rtrim(sss.UserDefined5))
+	,	line_feed_code = coalesce(nullif(rtrim(sss.UserDefined2), ''), rtrim(sss.CustomerPOLine))
+	,	zone_code = rtrim(sss.UserDefined4)
 	,	line11 = rtrim(sss.UserDefined11)
 	,	line12 = rtrim(sss.UserDefined12)
 	,	line13 = rtrim(sss.UserDefined13)
@@ -1634,54 +1669,4 @@ go
 Results {
 }
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 GO
