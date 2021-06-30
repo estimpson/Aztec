@@ -2,7 +2,6 @@ SET QUOTED_IDENTIFIER ON
 GO
 SET ANSI_NULLS ON
 GO
-
 CREATE procedure [EDIToyota].[usp_Stage_1]
 	@TranDT DATETIME = NULL OUT
 ,	@Result INTEGER = NULL OUT
@@ -475,7 +474,7 @@ if	exists
 		,	UserDefined2 = max(case when ValueQualifier = 'LF' then Value end)
 		,	UserDefined3 = max(case when ValueQualifier = 'RL' then Value end)
 		,	UserDefined4 = max(case when ValueQualifier = 'RU' then Value end) --Route - Indicates what truck is picing up. To be used to create a unique pickup in Fx ( per route abd pickup date) asb FT 2016-06-20
-		,	UserDefined5 = max(case when ValueQualifier = '??' then Value end)
+		,	UserDefined5 = max(case when ValueQualifier = 'WS' then Value end)
 		,	UserDefined6 = max(case when ValueQualifier = '??' then Value end)
 		,	UserDefined7 = max(case when ValueQualifier = '??' then Value end)
 		,	UserDefined8 = max(case when ValueQualifier = '??' then Value end)
@@ -929,7 +928,12 @@ if	exists
 	select
 		RawDocumentGUID
 	,	ReleaseNo = coalesce(nullif(ed.Data.value('(/TRN-830/SEG-BFR/DE[@code="0328"])[1]', 'varchar(30)'),''), ed.Data.value('(/TRN-830/SEG-BFR/DE[@code="0127"])[1]', 'varchar(30)'))
-	,	ShipToCode =  coalesce(ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="MI"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)'),ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="MI"][@code="0098"]]/DE[@code="0093"])[1]', 'varchar(50)'),EDIData.Releases.value('(./SEG-REF [DE[.="DK"][@code="0128"]]/DE[@code="0127"])[1]', 'varchar(50)'), ed.Data.value('/*[1]/TRN-INFO[1]/@trading_partner', 'varchar(50)'))
+	,	ShipToCode =  coalesce
+			(	nullif(ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="MI"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)'),'')
+			,	ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="MI"][@code="0098"]]/DE[@code="0093"])[1]', 'varchar(50)')
+			,	EDIData.Releases.value('(./SEG-REF [DE[.="DK"][@code="0128"]]/DE[@code="0127"])[1]', 'varchar(50)')
+			,	ed.Data.value('/*[1]/TRN-INFO[1]/@trading_partner', 'varchar(50)')
+			)
 	,	ConsigneeCode = ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="IC"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
 	,	ShipFromCode = ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="SF"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
 	,	SupplierCode = ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="SU"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
@@ -1200,7 +1204,12 @@ declare
 	select
 		RawDocumentGUID
 	,	ReleaseNo = coalesce(nullif(ed.Data.value('(/TRN-830/SEG-BFR/DE[@code="0328"])[1]', 'varchar(30)'),''), ed.Data.value('(/TRN-830/SEG-BFR/DE[@code="0127"])[1]', 'varchar(30)'))
-	,	ShipToCode = coalesce(ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="MI"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)'),ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="MI"][@code="0098"]]/DE[@code="0093"])[1]', 'varchar(50)'),EDIData.Releases.value('(./SEG-REF [DE[.="DK"][@code="0128"]]/DE[@code="0127"])[1]', 'varchar(50)'), ed.Data.value('/*[1]/TRN-INFO[1]/@trading_partner', 'varchar(50)'))
+	,	ShipToCode =  coalesce
+			(	nullif(ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="MI"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)'),'')
+			,	ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="MI"][@code="0098"]]/DE[@code="0093"])[1]', 'varchar(50)')
+			,	EDIData.Releases.value('(./SEG-REF [DE[.="DK"][@code="0128"]]/DE[@code="0127"])[1]', 'varchar(50)')
+			,	ed.Data.value('/*[1]/TRN-INFO[1]/@trading_partner', 'varchar(50)')
+			)
 	,	ConsigneeCode = ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="IC"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
 	,	ShipFromCode = ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="SF"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
 	,	SupplierCode = ed.Data.value('(/TRN-830/LOOP-N1/SEG-N1 [DE[.="SU"][@code="0098"]]/DE[@code="0067"])[1]', 'varchar(50)')
