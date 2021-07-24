@@ -7,7 +7,7 @@ create view [EDI_XML_Dana_ASN].[ASNOrders]
 as
 select
 	ShipperID	= s.id
-,	CustomerPart = sd.customer_part
+,	CustomerPart = dbo.fn_SplitStringToArray(sd.customer_part, ' ', 1)
 ,	QtyPacked = convert(int, round(sd.alternative_qty, 0))
 ,	UnitPacked = sd.alternative_unit
 ,	AccumQty = convert(int, round(sd.accum_shipped, 0))
