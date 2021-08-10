@@ -38,23 +38,23 @@ set	@TranDT = coalesce(@TranDT, GetDate())
 /*	Look for documents already in the queue.*/
 if	exists
 	(	select
-			1
+			*
 		from
 			EDI.EDIDocuments ed
 		where
 			ed.Type = '862'
-			and  left(ed.EDIStandard,6) = '00FORD' 
+			and  left(ed.EDIStandard,6) = '00FORD'
 			--and ed.TradingPartner in ( 'MPT MUNCIE' )
 			and ed.Status = 100 -- (select dbo.udf_StatusValue('EDI.EDIDocuments', 'InProcess'))
 	)
 	or exists
 	(	select
-			1
+			*
 		from
 			EDI.EDIDocuments ed
 		where
 			ed.Type = '830'
-			and  left(ed.EDIStandard,6) = '00FORD' 
+			and  left(ed.EDIStandard,6) = '00FORD'
 			--and ed.TradingPartner in ( 'MPT MUNCIE' )
 			and ed.Status = 100 -- (select dbo.udf_StatusValue('EDI.EDIDocuments', 'InProcess'))
 	) begin
@@ -68,28 +68,32 @@ set	@TableName = 'EDI.EDIDocuments'
 
 if	exists
 	(	select
-			1
+			*
 		from
 			EDI.EDIDocuments ed
 		where
 			ed.Type = '862'
-			and  left(ed.EDIStandard,6) = '00FORD' 
+			and  left(ed.EDIStandard,6) = '00FORD'
 			--and ed.TradingPartner in ( 'MPT MUNCIE' )
 			and ed.Status in
 				(	0 -- (select dbo.udf_StatusValue('EDI.EDIDocuments', 'New'))
 				,	2 -- (select dbo.udf_StatusValue('EDI.EDIDocuments', 'Requeued'))
 				)
 	) begin
-	
+
 	update
 		ed
 	set
-		Status = 100 -- (select dbo.udf_StatusValue('EDI.EDIDocuments', 'InProcess'))
+		Status =
+			case
+				when ed.TradingPartner = 'Ford Motor Company - Education' then -1
+				else 100 -- (select dbo.udf_StatusValue('EDI.EDIDocuments', 'InProcess'))
+			end
 	from
 		EDI.EDIDocuments ed
 	where
 		ed.Type = '862'
-		and  left(ed.EDIStandard,6) = '00FORD' 
+		and  left(ed.EDIStandard,6) = '00FORD'
 		--and ed.TradingPartner in ( 'MPT MUNCIE' )
 		and ed.Status in
 			(	0 -- (select dbo.udf_StatusValue('EDI.EDIDocuments', 'New'))
@@ -102,11 +106,11 @@ if	exists
 				EDI.EDIDocuments ed
 			where
 				ed.Type = '862'
-				and  left(ed.EDIStandard,6) = '00FORD' 
+				and  left(ed.EDIStandard,6) = '00FORD'
 				--and ed.TradingPartner in ( 'MPT MUNCIE' )
 				and ed.Status = 100 -- (select dbo.udf_StatusValue('EDI.EDIDocuments', 'InProcess'))
 		)
-	
+
 	select
 		@Error = @@Error,
 		@RowCount = @@Rowcount
@@ -124,28 +128,32 @@ set	@TableName = 'EDI.EDIDocuments'
 
 if	exists
 	(	select
-			1
+			*
 		from
 			EDI.EDIDocuments ed
 		where
 			ed.Type = '830'
-			and  left(ed.EDIStandard,6) = '00FORD' 
+			and  left(ed.EDIStandard,6) = '00FORD'
 			--and ed.TradingPartner in ( 'MPT MUNCIE' )
 			and ed.Status in
 				(	0 -- (select dbo.udf_StatusValue('EDI.EDIDocuments', 'New'))
 				,	2 -- (select dbo.udf_StatusValue('EDI.EDIDocuments', 'Requeued'))
 				)
 	) begin
-		
+
 	update
 		ed
 	set
-		Status = 100 -- (select dbo.udf_StatusValue('EDI.EDIDocuments', 'InProcess'))
+		Status =
+			case
+				when ed.TradingPartner = 'Ford Motor Company - Education' then -1
+				else 100 -- (select dbo.udf_StatusValue('EDI.EDIDocuments', 'InProcess'))
+			end
 	from
 		EDI.EDIDocuments ed
 	where
 		ed.Type = '830'
-		and  left(ed.EDIStandard,6) = '00FORD' 
+		and  left(ed.EDIStandard,6) = '00FORD'
 		--and ed.TradingPartner in ( 'MPT MUNCIE' )
 		and ed.Status in
 			(	0 -- (select dbo.udf_StatusValue('EDI.EDIDocuments', 'New'))
@@ -158,7 +166,7 @@ if	exists
 				EDI.EDIDocuments ed
 			where
 				ed.Type = '830'
-				and  left(ed.EDIStandard,6) = '00FORD' 
+				and  left(ed.EDIStandard,6) = '00FORD'
 				--and ed.TradingPartner in ( 'MPT MUNCIE' )
 				and ed.Status = 100 -- (select dbo.udf_StatusValue('EDI.EDIDocuments', 'InProcess'))
 		)
@@ -179,12 +187,12 @@ END
 /*		- prepare Ship Schedules...*/
 if	exists
 	(	select
-			1
+			*
 		from
 			EDI.EDIDocuments ed
 		where
 			ed.Type = '862'
-			and  left(ed.EDIStandard,6) = '00FORD' 
+			and  left(ed.EDIStandard,6) = '00FORD'
 			--and ed.TradingPartner in ( 'MPT MUNCIE' )
 			and ed.Status = 100 -- (select dbo.udf_StatusValue('EDI.EDIDocuments', 'InProcess'))
 	) begin
@@ -232,7 +240,7 @@ if	exists
 		EDI.EDIDocuments ed
 	where
 		ed.Type = '862'
-		and  left(ed.EDIStandard,6) = '00FORD' 
+		and  left(ed.EDIStandard,6) = '00FORD'
 		--and ed.TradingPartner in ( 'MPT MUNCIE' )
 		and ed.Status = 100 -- (select dbo.udf_StatusValue('EDI.EDIDocuments', 'InProcess'))
 
@@ -246,14 +254,14 @@ if	exists
 	,	ShipToCode varchar(50)
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
+	,	SupplierCode varchar(50)
 	,	CustomerPart varchar(50)
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
+	,	CustomerECL varchar(50)
 	,	UserDefined1 varchar(50) --Dock Code
-	,	UserDefined2 varchar(50) --Line Feed Code	
+	,	UserDefined2 varchar(50) --Line Feed Code
 	,	UserDefined3 varchar(50) --Reserve Line Feed Code
 	,	UserDefined4 varchar(50) --Zone code
 	,	UserDefined5 varchar(50)
@@ -281,7 +289,7 @@ if	exists
 	,	ShipToCode varchar(50)
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
+	,	SupplierCode varchar(50)
 	,	Data xml
 	)
 
@@ -297,7 +305,7 @@ if	exists
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
+	,	CustomerECL varchar(50)
 	,	Data xml
 	)
 
@@ -313,7 +321,7 @@ if	exists
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
+	,	CustomerECL varchar(50)
 	,	ValueQualifier varchar(50)
 	,	Value varchar (50)
 	)
@@ -321,14 +329,14 @@ if	exists
 	insert
 		@ShipScheduleSupplementalTemp1
 	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	Data	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
+	,	Data
 	)
-	
+
 	select
 		RawDocumentGUID = ed.RawDocumentGUID
 	,	ReleaseNo = coalesce(ed.Data.value('(/TRN-862/SEG-BSS/DE[@code="0328"])[1]', 'varchar(30)'), ed.Data.value('(/TRN-862/SEG-BSS/DE[@code="0127"])[1]', 'varchar(30)'))
@@ -341,36 +349,36 @@ if	exists
 		@ShipScheduleHeaders ed
 		cross apply ed.Data.nodes('/TRN-862/LOOP-LIN') as EDIData(Releases)
 
-	
+
 		insert
 		@ShipScheduleSupplementalTemp2
 	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	CustomerPart 
-	,	CustomerPO 
-	,	CustomerPOLine 
-	,	CustomerModelYear 
-	,	CustomerECL 
-	,	Data	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
+	,	CustomerPart
+	,	CustomerPO
+	,	CustomerPOLine
+	,	CustomerModelYear
+	,	CustomerECL
+	,	Data
 	)
 	select
 		RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
 	,	CustomerPart = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerModelYear = ''
 	,	CustomerECL = ''
 	,	Data = EDIData.Data.query('.')
-	
+
 	from
 		@ShipScheduleSupplementalTemp1 ed
 		cross apply ed.data.nodes('/LOOP-LIN/SEG-REF') as EDIData(Data)
@@ -382,35 +390,35 @@ if	exists
 	Insert
 	@ShipScheduleSupplementalTemp3
 	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	CustomerPart 
-	,	CustomerPO 
-	,	CustomerPOLine 
-	,	CustomerModelYear 
-	,	CustomerECL 
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
+	,	CustomerPart
+	,	CustomerPO
+	,	CustomerPOLine
+	,	CustomerModelYear
+	,	CustomerECL
 	,	ValueQualifier
 	,	Value
 	)
 
 	select
 		RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	CustomerPart 
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
+	,	CustomerPart
 	,	CustomerPO
-	, CustomerPOLine 
+	, CustomerPOLine
 	,	CustomerModelYear
 	,	CustomerECL
-	,	ValueQualifier	=	Data.value('(/SEG-REF/DE[@code="0128"])[1]', 'varchar(50)')	
-	,	Value		=	Data.value('(/SEG-REF/DE[@code="0127"])[1]', 'varchar(50)')	
-	
+	,	ValueQualifier	=	Data.value('(/SEG-REF/DE[@code="0128"])[1]', 'varchar(50)')
+	,	Value		=	Data.value('(/SEG-REF/DE[@code="0127"])[1]', 'varchar(50)')
+
 	from
 		@ShipScheduleSupplementalTemp2 ed
 	order by
@@ -418,7 +426,7 @@ if	exists
 	,	3
 	,	7
 
-		
+
 	insert
 		@ShipScheduleSupplemental
 	(	RawDocumentGUID
@@ -427,7 +435,7 @@ if	exists
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -436,22 +444,22 @@ if	exists
 	,	UserDefined2
 	,	UserDefined3
 	,	UserDefined4
-	,	UserDefined5 
-	,	UserDefined6 
-	,	UserDefined7 
-	,	UserDefined8 
-	,	UserDefined9 
-	,	UserDefined10 
-	,	UserDefined11 
-	,	UserDefined12 
-	,	UserDefined13 
-	,	UserDefined14 
-	,	UserDefined15 
-	,	UserDefined16 
-	,	UserDefined17 
-	,	UserDefined18 
-	,	UserDefined19 
-	,	UserDefined20 
+	,	UserDefined5
+	,	UserDefined6
+	,	UserDefined7
+	,	UserDefined8
+	,	UserDefined9
+	,	UserDefined10
+	,	UserDefined11
+	,	UserDefined12
+	,	UserDefined13
+	,	UserDefined14
+	,	UserDefined15
+	,	UserDefined16
+	,	UserDefined17
+	,	UserDefined18
+	,	UserDefined19
+	,	UserDefined20
 	)
 	select
 		RawDocumentGUID
@@ -460,11 +468,11 @@ if	exists
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
-	,	CustomerECL 
+	,	CustomerECL
 	,	UserDefined1 = max(case when ValueQualifier = 'DK' then Value end)
 	,	UserDefined2 = max(case when ValueQualifier = 'LF' then Value end)
 	,	UserDefined3 = max(case when ValueQualifier = 'RL' then Value end)
@@ -494,11 +502,11 @@ if	exists
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
-	,	CustomerECL 
+	,	CustomerECL
 
 --Select * From @ShipScheduleSupplementalTemp1
 --Select * From @ShipScheduleSupplementalTemp2
@@ -518,15 +526,15 @@ declare
 	,	ShipToCode varchar(50)
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
+	,	SupplierCode varchar(50)
 	,	CustomerPart varchar(50)
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
-	,	UserDefined1 varchar(50) 
-	,	UserDefined2 varchar(50) 
-	,	UserDefined3 varchar(50) 
+	,	CustomerECL varchar(50)
+	,	UserDefined1 varchar(50)
+	,	UserDefined2 varchar(50)
+	,	UserDefined3 varchar(50)
 	,	UserDefined4 varchar(50)
 	,	UserDefined5 varchar(50)
 	,	ReceivedAccum varchar(50)
@@ -535,7 +543,7 @@ declare
 	,	ReceivedQty varchar(50)
 	,	ReceivedQtyDT varchar(50)
 	,	ReceivedShipper varchar(50)
-	
+
 	)
 
 	declare
@@ -545,7 +553,7 @@ declare
 	,	ShipToCode varchar(50)
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
+	,	SupplierCode varchar(50)
 	,	Data xml
 	)
 
@@ -561,7 +569,7 @@ declare
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
+	,	CustomerECL varchar(50)
 	,	Data xml
 	)
 
@@ -573,15 +581,15 @@ declare
 	,	ShipToCode varchar(50)
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
+	,	SupplierCode varchar(50)
 	,	CustomerPart varchar(50)
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
-	,	UserDefined1 varchar(50) 
-	,	UserDefined2 varchar(50) 
-	,	UserDefined3 varchar(50) 
+	,	CustomerECL varchar(50)
+	,	UserDefined1 varchar(50)
+	,	UserDefined2 varchar(50)
+	,	UserDefined3 varchar(50)
 	,	UserDefined4 varchar(50)
 	,	UserDefined5 varchar(50)
 	,	ReceivedAccum varchar(50)
@@ -590,21 +598,21 @@ declare
 	,	ReceivedQty varchar(50)
 	,	ReceivedQtyDT varchar(50)
 	,	ReceivedShipper varchar(50)
-	
+
 	)
 
 
 	insert
 		@ShipScheduleAccumsTemp1
 	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	Data	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
+	,	Data
 	)
-	
+
 	select
 		RawDocumentGUID = ed.RawDocumentGUID
 	,	ReleaseNo = coalesce(ed.Data.value('(/TRN-862/SEG-BSS/DE[@code="0328"])[1]', 'varchar(30)'), ed.Data.value('(/TRN-862/SEG-BSS/DE[@code="0127"])[1]', 'varchar(30)'))
@@ -616,37 +624,37 @@ declare
 	from
 		@ShipScheduleHeaders ed
 		cross apply ed.Data.nodes('/TRN-862/LOOP-LIN') as EDIData(Releases)
-	
-	
-		insert
+
+
+	insert
 		@ShipScheduleAccumsTemp2
 	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	CustomerPart 
-	,	CustomerPO 
-	,	CustomerPOLine 
-	,	CustomerModelYear 
-	,	CustomerECL 
-	,	Data	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
+	,	CustomerPart
+	,	CustomerPO
+	,	CustomerPOLine
+	,	CustomerModelYear
+	,	CustomerECL
+	,	Data
 	)
 	select
 		RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
 	,	CustomerPart = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerModelYear = ''
 	,	CustomerECL = ''
 	,	Data = EDIData.Data.query('.')
-	
+
 	from
 		@ShipScheduleAccumsTemp1 ed
 		cross apply ed.data.nodes('/LOOP-LIN/LOOP-SHP') as EDIData(Data)
@@ -655,7 +663,7 @@ declare
 	,	3
 	,	7
 
-			
+
 	insert
 		@ShipScheduleAccumsTemp3
 	(	RawDocumentGUID
@@ -664,7 +672,7 @@ declare
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -673,13 +681,13 @@ declare
 	,	UserDefined2
 	,	UserDefined3
 	,	UserDefined4
-	,	UserDefined5 
+	,	UserDefined5
 	,	ReceivedAccum
 	,	ReceivedAccumBeginDT
-	,	ReceivedAccumEndDT 
-	,	ReceivedQty 
-	,	ReceivedQtyDT 
-	,	ReceivedShipper 
+	,	ReceivedAccumEndDT
+	,	ReceivedQty
+	,	ReceivedQtyDT
+	,	ReceivedShipper
 	)
 
 	select
@@ -689,7 +697,7 @@ declare
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -704,12 +712,12 @@ declare
 	,	ReceivedAccumEndDT = Data.value('(for $a in LOOP-SHP/SEG-SHP/DE[@code="0673"] where $a="02" return $a/../DE[. >> $a][@code="0373"][2])[1]', 'varchar(30)')
 	,	ReceivedQty = Data.value('(for $a in LOOP-SHP/SEG-SHP/DE[@code="0673"] where $a="01" return $a/../DE[. >> $a][@code="0380"][1])[1]', 'varchar(30)')
 	,	ReceivedQtyDT = Data.value('(for $a in LOOP-SHP/SEG-SHP/DE[@code="0673"] where $a="01" return $a/../DE[. >> $a][@code="0373"][1])[1]', 'varchar(30)')
-	,	ReceivedShipper = Data.value('(for $a in LOOP-SHP/SEG-REF/DE[@code="0128"] where $a="SI" return $a/../DE[. >> $a][@code="0127"][1])[1]', 'varchar(30)') 
-	
+	,	ReceivedShipper = Data.value('(for $a in LOOP-SHP/SEG-REF/DE[@code="0128"] where $a="SI" return $a/../DE[. >> $a][@code="0127"][1])[1]', 'varchar(30)')
+
 	from
 		@ShipScheduleAccumsTemp2
 
-Insert 
+Insert
 		@ShipScheduleAccums
 	(	RawDocumentGUID
 	,	ReleaseNo
@@ -717,7 +725,7 @@ Insert
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -726,13 +734,13 @@ Insert
 	,	UserDefined2
 	,	UserDefined3
 	,	UserDefined4
-	,	UserDefined5 
+	,	UserDefined5
 	,	ReceivedAccum
 	,	ReceivedAccumBeginDT
-	,	ReceivedAccumEndDT 
-	,	ReceivedQty 
-	,	ReceivedQtyDT 
-	,	ReceivedShipper 
+	,	ReceivedAccumEndDT
+	,	ReceivedQty
+	,	ReceivedQtyDT
+	,	ReceivedShipper
 	)
 
 	select
@@ -742,7 +750,7 @@ Insert
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -757,8 +765,8 @@ Insert
 	,	ReceivedAccumEndDT = max(case when ReceivedAccumEndDT is not Null then ReceivedAccumEndDT end)
 	,	ReceivedQty = max(case when ReceivedQty is not Null then ReceivedQty end)
 	,	ReceivedQtyDT = max(case when ReceivedQtyDT is not Null then ReceivedQtyDT end)
-	,	ReceivedShipper = max(case when ReceivedShipper is not Null then ReceivedShipper end) 
-	
+	,	ReceivedShipper = max(case when ReceivedShipper is not Null then ReceivedShipper end)
+
 	from
 		@ShipScheduleAccumsTemp3
 group by
@@ -768,17 +776,17 @@ group by
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
 	,	CustomerECL
-	,	UserDefined1 
-	,	UserDefined2 
-	,	UserDefined3 
-	,	UserDefined4 
-	,	UserDefined5 
-	 
+	,	UserDefined1
+	,	UserDefined2
+	,	UserDefined3
+	,	UserDefined4
+	,	UserDefined5
+
 
 --Select * From @ShipScheduleAccumsTemp1
 --Select * From @ShipScheduleAccumsTemp2
@@ -788,7 +796,7 @@ group by
 --Rollback Transaction
 
 
-	
+
 
 /*			- Prepare Ship Schedules Auth Accums.*/
 --Begin Transaction
@@ -800,21 +808,21 @@ declare
 	,	ShipToCode varchar(50)
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
+	,	SupplierCode varchar(50)
 	,	CustomerPart varchar(50)
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
-	,	UserDefined1 varchar(50) 
-	,	UserDefined2 varchar(50) 
-	,	UserDefined3 varchar(50) 
+	,	CustomerECL varchar(50)
+	,	UserDefined1 varchar(50)
+	,	UserDefined2 varchar(50)
+	,	UserDefined3 varchar(50)
 	,	UserDefined4 varchar(50)
 	,	UserDefined5 varchar(50)
 	,	AuthAccum varchar(50)
 	,	AuthAccumBeginDT varchar(50)
 	,	AuthAccumEndDT varchar(50)
-	
+
 	)
 
 	declare
@@ -824,7 +832,7 @@ declare
 	,	ShipToCode varchar(50)
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
+	,	SupplierCode varchar(50)
 	,	Data xml
 	)
 
@@ -840,7 +848,7 @@ declare
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
+	,	CustomerECL varchar(50)
 	,	Data xml
 	)
 
@@ -852,36 +860,36 @@ declare
 	,	ShipToCode varchar(50)
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
+	,	SupplierCode varchar(50)
 	,	CustomerPart varchar(50)
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
-	,	UserDefined1 varchar(50) 
-	,	UserDefined2 varchar(50) 
-	,	UserDefined3 varchar(50) 
+	,	CustomerECL varchar(50)
+	,	UserDefined1 varchar(50)
+	,	UserDefined2 varchar(50)
+	,	UserDefined3 varchar(50)
 	,	UserDefined4 varchar(50)
 	,	UserDefined5 varchar(50)
 	,	AuthAccum varchar(50)
 	,	AuthAccumBeginDT varchar(50)
 	,	AuthAccumEndDT varchar(50)
 
-	
+
 	)
 
 
 	insert
 		@ShipScheduleAuthAccumsTemp1
 	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	Data	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
+	,	Data
 	)
-	
+
 	select
 		RawDocumentGUID = ed.RawDocumentGUID
 	,	ReleaseNo = coalesce(ed.Data.value('(/TRN-862/SEG-BSS/DE[@code="0328"])[1]', 'varchar(30)'), ed.Data.value('(/TRN-862/SEG-BSS/DE[@code="0127"])[1]', 'varchar(30)'))
@@ -893,37 +901,37 @@ declare
 	from
 		@ShipScheduleHeaders ed
 		cross apply ed.Data.nodes('/TRN-862/LOOP-LIN') as EDIData(Releases)
-	
-	
+
+
 		insert
 		@ShipScheduleAuthAccumsTemp2
 	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	CustomerPart 
-	,	CustomerPO 
-	,	CustomerPOLine 
-	,	CustomerModelYear 
-	,	CustomerECL 
-	,	Data	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
+	,	CustomerPart
+	,	CustomerPO
+	,	CustomerPOLine
+	,	CustomerModelYear
+	,	CustomerECL
+	,	Data
 	)
 	select
 		RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
 	,	CustomerPart = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerModelYear = ''
 	,	CustomerECL = ''
 	,	Data = EDIData.Data.query('.')
-	
+
 	from
 		@ShipScheduleAuthAccumsTemp1 ed
 		cross apply ed.data.nodes('/LOOP-LIN/LOOP-ATH') as EDIData(Data)
@@ -932,7 +940,7 @@ declare
 	,	3
 	,	7
 
-			
+
 	insert
 		@ShipScheduleAuthAccumsTemp3
 	(	RawDocumentGUID
@@ -941,7 +949,7 @@ declare
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -950,11 +958,11 @@ declare
 	,	UserDefined2
 	,	UserDefined3
 	,	UserDefined4
-	,	UserDefined5 
+	,	UserDefined5
 	,	AuthAccum
 	,	AuthAccumBeginDT
-	,	AuthAccumEndDT 
- 
+	,	AuthAccumEndDT
+
 	)
 
 	select
@@ -964,7 +972,7 @@ declare
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -976,12 +984,12 @@ declare
 	,	UserDefined5 = ''
 	,	AuthAccum = Data.value('(for $a in LOOP-ATH/SEG-ATH/DE[@code="0673"] where $a="02" return $a/../DE[. >> $a][@code="0380"][1])[1]', 'varchar(30)')
 	,	AuthAccumBeginDT = Data.value('(for $a in LOOP-ATH/SEG-ATH/DE[@code="0374"] where $a="051" return $a/../DE[. >> $a][@code="0373"][1])[1]', 'varchar(30)')
-	,	AuthAccumEndDT = Data.value('(for $a in LOOP-ATH/SEG-ATH/DE[@code="0374"] where $a="052" return $a/../DE[. >> $a][@code="0373"][1])[1]', 'varchar(30)') 
-	
+	,	AuthAccumEndDT = Data.value('(for $a in LOOP-ATH/SEG-ATH/DE[@code="0374"] where $a="052" return $a/../DE[. >> $a][@code="0373"][1])[1]', 'varchar(30)')
+
 	from
 		@ShipScheduleAuthAccumsTemp2
 
-Insert 
+Insert
 		@ShipScheduleAuthAccums
 	(	RawDocumentGUID
 	,	ReleaseNo
@@ -989,7 +997,7 @@ Insert
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -998,11 +1006,11 @@ Insert
 	,	UserDefined2
 	,	UserDefined3
 	,	UserDefined4
-	,	UserDefined5 
+	,	UserDefined5
 	,	AuthAccum
 	,	AuthAccumBeginDT
-	,	AuthAccumEndDT 
- 
+	,	AuthAccumEndDT
+
 	)
 
 	select
@@ -1012,7 +1020,7 @@ Insert
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -1035,17 +1043,17 @@ group by
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
 	,	CustomerECL
-	,	UserDefined1 
-	,	UserDefined2 
-	,	UserDefined3 
-	,	UserDefined4 
-	,	UserDefined5 
-	 
+	,	UserDefined1
+	,	UserDefined2
+	,	UserDefined3
+	,	UserDefined4
+	,	UserDefined5
+
 
 --Select * From @ShipScheduleAuthAccumsTemp1
 --Select * From @ShipScheduleAuthAccumsTemp2
@@ -1054,7 +1062,7 @@ group by
 
 --Rollback Transaction
 
-	
+
 
 
 
@@ -1070,21 +1078,21 @@ declare
 	,	ShipToCode varchar(50)
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
+	,	SupplierCode varchar(50)
 	,	CustomerPart varchar(50)
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
-	,	UserDefined1 varchar(50) 
-	,	UserDefined2 varchar(50) 
-	,	UserDefined3 varchar(50) 
+	,	CustomerECL varchar(50)
+	,	UserDefined1 varchar(50)
+	,	UserDefined2 varchar(50)
+	,	UserDefined3 varchar(50)
 	,	UserDefined4 varchar(50)
 	,	UserDefined5 varchar(50)
 	,	DateDue varchar(50)
 	,	QuantityDue varchar(50)
 	,	QuantityType varchar(50)
-	
+
 	)
 
 	declare
@@ -1094,7 +1102,7 @@ declare
 	,	ShipToCode varchar(50)
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
+	,	SupplierCode varchar(50)
 	,	Data xml
 	)
 
@@ -1110,7 +1118,7 @@ declare
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
+	,	CustomerECL varchar(50)
 	,	Data xml
 	)
 
@@ -1122,35 +1130,35 @@ declare
 	,	ShipToCode varchar(50)
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
+	,	SupplierCode varchar(50)
 	,	CustomerPart varchar(50)
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
-	,	UserDefined1 varchar(50) 
-	,	UserDefined2 varchar(50) 
-	,	UserDefined3 varchar(50) 
+	,	CustomerECL varchar(50)
+	,	UserDefined1 varchar(50)
+	,	UserDefined2 varchar(50)
+	,	UserDefined3 varchar(50)
 	,	UserDefined4 varchar(50)
 	,	UserDefined5 varchar(50)
 	,	DateDue varchar(50)
 	,	QuantityDue varchar(50)
-	,	QuantityType varchar(50)	
-	
+	,	QuantityType varchar(50)
+
 	)
 
 
 	insert
 		@ShipSchedulesTemp1
 	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	Data	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
+	,	Data
 	)
-	
+
 	select
 		RawDocumentGUID = ed.RawDocumentGUID
 	,	ReleaseNo = coalesce(ed.Data.value('(/TRN-862/SEG-BSS/DE[@code="0328"])[1]', 'varchar(30)'), ed.Data.value('(/TRN-862/SEG-BSS/DE[@code="0127"])[1]', 'varchar(30)'))
@@ -1162,37 +1170,37 @@ declare
 	from
 		@ShipScheduleHeaders ed
 		cross apply ed.Data.nodes('/TRN-862/LOOP-LIN') as EDIData(Releases)
-	
-	
+
+
 		insert
 		@ShipSchedulesTemp2
 	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	CustomerPart 
-	,	CustomerPO 
-	,	CustomerPOLine 
-	,	CustomerModelYear 
-	,	CustomerECL 
-	,	Data	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
+	,	CustomerPart
+	,	CustomerPO
+	,	CustomerPOLine
+	,	CustomerModelYear
+	,	CustomerECL
+	,	Data
 	)
 	select
 		RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
 	,	CustomerPart = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerModelYear = ''
 	,	CustomerECL = ''
 	,	Data = EDIData.Data.query('.')
-	
+
 	from
 		@ShipSchedulesTemp1 ed
 		cross apply ed.Data.nodes('/LOOP-LIN/LOOP-FST[not(LOOP-JIT)]/SEG-FST') as EDIData(Data)
@@ -1204,33 +1212,33 @@ declare
 insert
 		@ShipSchedulesTemp2
 	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	CustomerPart 
-	,	CustomerPO 
-	,	CustomerPOLine 
-	,	CustomerModelYear 
-	,	CustomerECL 
-	,	Data	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
+	,	CustomerPart
+	,	CustomerPO
+	,	CustomerPOLine
+	,	CustomerModelYear
+	,	CustomerECL
+	,	Data
 	)
 
 	select
 		RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
 	,	CustomerPart = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerModelYear = ''
 	,	CustomerECL = ''
 	,	Data = EDIData.Data.query('.')
-	
+
 	from
 		@ShipSchedulesTemp1 ed
 		cross apply ed.Data.nodes('/LOOP-LIN/LOOP-FST/LOOP-JIT/SEG-JIT') as EDIData(Data)
@@ -1239,7 +1247,7 @@ insert
 	,	3
 	,	7
 
-			
+
 	insert
 		@ShipSchedulesTemp3
 	(	RawDocumentGUID
@@ -1248,7 +1256,7 @@ insert
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -1257,7 +1265,7 @@ insert
 	,	UserDefined2
 	,	UserDefined3
 	,	UserDefined4
-	,	UserDefined5 
+	,	UserDefined5
 	,	DateDue
 	,	QuantityDue
 	,	QuantityType
@@ -1270,7 +1278,7 @@ insert
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -1283,12 +1291,12 @@ insert
 	,	DateDue = Data.value('(/SEG-FST/DE[@code="0373"])[1]', 'varchar(50)')
 	,	QuantityDue = Data.value('(/SEG-FST/DE[@code="0380"])[1]', 'varchar(50)')
 	,	QuantityType = Data.value('(/SEG-FST/DE[@code="0680"])[1]', 'varchar(50)')
- 
-	
+
+
 	from
 		@ShipSchedulesTemp2
 
-INSERT 
+INSERT
 		@ShipSchedules
 	(	RawDocumentGUID
 	,	ReleaseNo
@@ -1296,7 +1304,7 @@ INSERT
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -1305,10 +1313,10 @@ INSERT
 	,	UserDefined2
 	,	UserDefined3
 	,	UserDefined4
-	,	UserDefined5 
-	,	DateDue 
-	,	QuantityDue 
-	,	QuantityType 
+	,	UserDefined5
+	,	DateDue
+	,	QuantityDue
+	,	QuantityType
 	)
 
 	SELECT
@@ -1318,7 +1326,7 @@ INSERT
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -1328,16 +1336,16 @@ INSERT
 	,	UserDefined3 = ''
 	,	UserDefined4 = ''
 	,	UserDefined5 = ''
-	,	DateDue 
-	,	QuantityDue 
+	,	DateDue
+	,	QuantityDue
 	,	QuantityType
-	
+
 	FROM
 		@ShipSchedulesTemp3
 
 ORDER BY
  2,3,7
-	 
+
 
 		--Select * From @ShipSchedulesTemp1
 		--Select * From @ShipSchedulesTemp2
@@ -1355,10 +1363,10 @@ if	exists
 			EDI.EDIDocuments ed
 		where
 			ed.Type = '830'
-			and  left(ed.EDIStandard,6) = '00FORD' 
+			and  left(ed.EDIStandard,6) = '00FORD'
 			--and ed.TradingPartner in ( 'MPT MUNCIE' )
 			and ed.Status = 100 -- (select dbo.udf_StatusValue('EDI.EDIDocuments', 'InProcess'))
-	) 
+	)
 	begin
 /*			- prepare Release Plans Headers.*/
 	declare
@@ -1415,14 +1423,14 @@ if	exists
 	,	ShipToCode varchar(50)
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
+	,	SupplierCode varchar(50)
 	,	CustomerPart varchar(50)
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
+	,	CustomerECL varchar(50)
 	,	UserDefined1 varchar(50) --Dock Code
-	,	UserDefined2 varchar(50) --Line Feed Code	
+	,	UserDefined2 varchar(50) --Line Feed Code
 	,	UserDefined3 varchar(50) --Reserve Line Feed Code
 	,	UserDefined4 varchar(50) --Zone code
 	,	UserDefined5 varchar(50)
@@ -1450,7 +1458,7 @@ if	exists
 	,	ShipToCode varchar(50)
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
+	,	SupplierCode varchar(50)
 	,	Data xml
 	)
 
@@ -1466,7 +1474,7 @@ if	exists
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
+	,	CustomerECL varchar(50)
 	,	Data xml
 	)
 
@@ -1482,7 +1490,7 @@ if	exists
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
+	,	CustomerECL varchar(50)
 	,	ValueQualifier varchar(50)
 	,	Value varchar (50)
 	)
@@ -1490,14 +1498,14 @@ if	exists
 	insert
 		@PlanningSupplementalTemp1
 	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	Data	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
+	,	Data
 	)
-	
+
 	select
 		RawDocumentGUID = ed.RawDocumentGUID
 	,	ReleaseNo = coalesce(nullif(ed.Data.value('(/TRN-830/SEG-BFR/DE[@code="0328"])[1]', 'varchar(30)'),''), ed.Data.value('(/TRN-830/SEG-BFR/DE[@code="0127"])[1]', 'varchar(30)'))
@@ -1509,37 +1517,37 @@ if	exists
 	from
 		@PlanningHeaders ed
 		cross apply ed.Data.nodes('/TRN-830/LOOP-LIN') as EDIData(Releases)
-	
-	
+
+
 		insert
 		@PlanningSupplementalTemp2
 	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	CustomerPart 
-	,	CustomerPO 
-	,	CustomerPOLine 
-	,	CustomerModelYear 
-	,	CustomerECL 
-	,	Data	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
+	,	CustomerPart
+	,	CustomerPO
+	,	CustomerPOLine
+	,	CustomerModelYear
+	,	CustomerECL
+	,	Data
 	)
 	select
 		RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
 	,	CustomerPart = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerModelYear = ''
 	,	CustomerECL = ''
 	,	Data = EDIData.Data.query('.')
-	
+
 	from
 		@PlanningSupplementalTemp1 ed
 		cross apply ed.data.nodes('/LOOP-LIN/SEG-REF') as EDIData(Data)
@@ -1551,35 +1559,35 @@ if	exists
 	Insert
 	@PlanningSupplementalTemp3
 	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	CustomerPart 
-	,	CustomerPO 
-	,	CustomerPOLine 
-	,	CustomerModelYear 
-	,	CustomerECL 
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
+	,	CustomerPart
+	,	CustomerPO
+	,	CustomerPOLine
+	,	CustomerModelYear
+	,	CustomerECL
 	,	ValueQualifier
 	,	Value
 	)
 
 	select
 		RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	CustomerPart 
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
+	,	CustomerPart
 	,	CustomerPO
-	, CustomerPOLine 
+	, CustomerPOLine
 	,	CustomerModelYear
 	,	CustomerECL
-	,	ValueQualifier	=	Data.value('(/SEG-REF/DE[@code="0128"])[1]', 'varchar(50)')	
-	,	Value		=	Data.value('(/SEG-REF/DE[@code="0127"])[1]', 'varchar(50)')	
-	
+	,	ValueQualifier	=	Data.value('(/SEG-REF/DE[@code="0128"])[1]', 'varchar(50)')
+	,	Value		=	Data.value('(/SEG-REF/DE[@code="0127"])[1]', 'varchar(50)')
+
 	from
 		@PlanningSupplementalTemp2 ed
 	order by
@@ -1587,7 +1595,7 @@ if	exists
 	,	3
 	,	7
 
-		
+
 	insert
 		@PlanningSupplemental
 	(	RawDocumentGUID
@@ -1596,7 +1604,7 @@ if	exists
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -1605,22 +1613,22 @@ if	exists
 	,	UserDefined2
 	,	UserDefined3
 	,	UserDefined4
-	,	UserDefined5 
-	,	UserDefined6 
-	,	UserDefined7 
-	,	UserDefined8 
-	,	UserDefined9 
-	,	UserDefined10 
-	,	UserDefined11 
-	,	UserDefined12 
-	,	UserDefined13 
-	,	UserDefined14 
-	,	UserDefined15 
-	,	UserDefined16 
-	,	UserDefined17 
-	,	UserDefined18 
-	,	UserDefined19 
-	,	UserDefined20 
+	,	UserDefined5
+	,	UserDefined6
+	,	UserDefined7
+	,	UserDefined8
+	,	UserDefined9
+	,	UserDefined10
+	,	UserDefined11
+	,	UserDefined12
+	,	UserDefined13
+	,	UserDefined14
+	,	UserDefined15
+	,	UserDefined16
+	,	UserDefined17
+	,	UserDefined18
+	,	UserDefined19
+	,	UserDefined20
 	)
 	select
 		RawDocumentGUID
@@ -1629,11 +1637,11 @@ if	exists
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
-	,	CustomerECL 
+	,	CustomerECL
 	,	UserDefined1 = max(case when ValueQualifier = 'DK' then Value end)
 	,	UserDefined2 = max(case when ValueQualifier = 'LF' then Value end)
 	,	UserDefined3 = max(case when ValueQualifier = 'RL' then Value end)
@@ -1663,11 +1671,11 @@ if	exists
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
-	,	CustomerECL 
+	,	CustomerECL
 
 --Select * From @PlanningSupplementalTemp1
 --Select * From @PlanningSupplementalTemp2
@@ -1686,15 +1694,15 @@ declare
 	,	ShipToCode varchar(50)
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
+	,	SupplierCode varchar(50)
 	,	CustomerPart varchar(50)
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
-	,	UserDefined1 varchar(50) 
-	,	UserDefined2 varchar(50) 
-	,	UserDefined3 varchar(50) 
+	,	CustomerECL varchar(50)
+	,	UserDefined1 varchar(50)
+	,	UserDefined2 varchar(50)
+	,	UserDefined3 varchar(50)
 	,	UserDefined4 varchar(50)
 	,	UserDefined5 varchar(50)
 	,	ReceivedAccum varchar(50)
@@ -1703,7 +1711,7 @@ declare
 	,	ReceivedQty varchar(50)
 	,	ReceivedQtyDT varchar(50)
 	,	ReceivedShipper varchar(50)
-	
+
 	)
 
 	declare
@@ -1713,7 +1721,7 @@ declare
 	,	ShipToCode varchar(50)
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
+	,	SupplierCode varchar(50)
 	,	Data xml
 	)
 
@@ -1729,7 +1737,7 @@ declare
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
+	,	CustomerECL varchar(50)
 	,	Data xml
 	)
 
@@ -1741,15 +1749,15 @@ declare
 	,	ShipToCode varchar(50)
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
+	,	SupplierCode varchar(50)
 	,	CustomerPart varchar(50)
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
-	,	UserDefined1 varchar(50) 
-	,	UserDefined2 varchar(50) 
-	,	UserDefined3 varchar(50) 
+	,	CustomerECL varchar(50)
+	,	UserDefined1 varchar(50)
+	,	UserDefined2 varchar(50)
+	,	UserDefined3 varchar(50)
 	,	UserDefined4 varchar(50)
 	,	UserDefined5 varchar(50)
 	,	ReceivedAccum varchar(50)
@@ -1758,21 +1766,21 @@ declare
 	,	ReceivedQty varchar(50)
 	,	ReceivedQtyDT varchar(50)
 	,	ReceivedShipper varchar(50)
-	
+
 	)
 
 
 	insert
 		@PlanningAccumsTemp1
 	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	Data	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
+	,	Data
 	)
-	
+
 select
 		RawDocumentGUID = ed.RawDocumentGUID
 	,	ReleaseNo = coalesce(nullif(ed.Data.value('(/TRN-830/SEG-BFR/DE[@code="0328"])[1]', 'varchar(30)'),''), ed.Data.value('(/TRN-830/SEG-BFR/DE[@code="0127"])[1]', 'varchar(30)'))
@@ -1784,36 +1792,36 @@ select
 	from
 		@PlanningHeaders ed
 		cross apply ed.Data.nodes('/TRN-830/LOOP-LIN') as EDIData(Releases)
-	
+
 		insert
 		@PlanningAccumsTemp2
 	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	CustomerPart 
-	,	CustomerPO 
-	,	CustomerPOLine 
-	,	CustomerModelYear 
-	,	CustomerECL 
-	,	Data	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
+	,	CustomerPart
+	,	CustomerPO
+	,	CustomerPOLine
+	,	CustomerModelYear
+	,	CustomerECL
+	,	Data
 	)
 	select
 		RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
 	,	CustomerPart = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerModelYear = ''
 	,	CustomerECL = ''
 	,	Data = EDIData.Data.query('.')
-	
+
 	from
 		@PlanningAccumsTemp1 ed
 		cross apply ed.data.nodes('/LOOP-LIN/LOOP-SHP') as EDIData(Data)
@@ -1822,7 +1830,7 @@ select
 	,	3
 	,	7
 
-			
+
 	insert
 		@PlanningAccumsTemp3
 	(	RawDocumentGUID
@@ -1831,7 +1839,7 @@ select
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -1840,13 +1848,13 @@ select
 	,	UserDefined2
 	,	UserDefined3
 	,	UserDefined4
-	,	UserDefined5 
+	,	UserDefined5
 	,	ReceivedAccum
 	,	ReceivedAccumBeginDT
-	,	ReceivedAccumEndDT 
-	,	ReceivedQty 
-	,	ReceivedQtyDT 
-	,	ReceivedShipper 
+	,	ReceivedAccumEndDT
+	,	ReceivedQty
+	,	ReceivedQtyDT
+	,	ReceivedShipper
 	)
 
 	select
@@ -1856,7 +1864,7 @@ select
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -1871,12 +1879,12 @@ select
 	,	ReceivedAccumEndDT = Data.value('(for $a in LOOP-SHP/SEG-SHP/DE[@code="0673"] where $a="02" return $a/../DE[. >> $a][@code="0373"][2])[1]', 'varchar(30)')
 	,	ReceivedQty = Data.value('(for $a in LOOP-SHP/SEG-SHP/DE[@code="0673"] where $a="01" return $a/../DE[. >> $a][@code="0380"][1])[1]', 'varchar(30)')
 	,	ReceivedQtyDT = Data.value('(for $a in LOOP-SHP/SEG-SHP/DE[@code="0673"] where $a="01" return $a/../DE[. >> $a][@code="0373"][1])[1]', 'varchar(30)')
-	,	ReceivedShipper = Data.value('(for $a in LOOP-SHP/SEG-REF/DE[@code="0128"] where $a="SI" return $a/../DE[. >> $a][@code="0127"][1])[1]', 'varchar(30)') 
-	
+	,	ReceivedShipper = Data.value('(for $a in LOOP-SHP/SEG-REF/DE[@code="0128"] where $a="SI" return $a/../DE[. >> $a][@code="0127"][1])[1]', 'varchar(30)')
+
 	from
 		@PlanningAccumsTemp2
 
-Insert 
+Insert
 		@PlanningAccums
 	(	RawDocumentGUID
 	,	ReleaseNo
@@ -1884,7 +1892,7 @@ Insert
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -1893,13 +1901,13 @@ Insert
 	,	UserDefined2
 	,	UserDefined3
 	,	UserDefined4
-	,	UserDefined5 
+	,	UserDefined5
 	,	ReceivedAccum
 	,	ReceivedAccumBeginDT
-	,	ReceivedAccumEndDT 
-	,	ReceivedQty 
-	,	ReceivedQtyDT 
-	,	ReceivedShipper 
+	,	ReceivedAccumEndDT
+	,	ReceivedQty
+	,	ReceivedQtyDT
+	,	ReceivedShipper
 	)
 
 	select
@@ -1909,7 +1917,7 @@ Insert
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -1924,8 +1932,8 @@ Insert
 	,	ReceivedAccumEndDT = max(case when ReceivedAccumEndDT is not Null then ReceivedAccumEndDT end)
 	,	ReceivedQty = max(case when ReceivedQty is not Null then ReceivedQty end)
 	,	ReceivedQtyDT = max(case when ReceivedQtyDT is not Null then ReceivedQtyDT end)
-	,	ReceivedShipper = max(case when ReceivedShipper is not Null then ReceivedShipper end) 
-	
+	,	ReceivedShipper = max(case when ReceivedShipper is not Null then ReceivedShipper end)
+
 	from
 		@PlanningAccumsTemp3
 group by
@@ -1935,17 +1943,17 @@ group by
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
 	,	CustomerECL
-	,	UserDefined1 
-	,	UserDefined2 
-	,	UserDefined3 
-	,	UserDefined4 
-	,	UserDefined5 
-	 
+	,	UserDefined1
+	,	UserDefined2
+	,	UserDefined3
+	,	UserDefined4
+	,	UserDefined5
+
 
 --Select * From @PlanningAccumsTemp1
 --Select * From @PlanningAccumsTemp2
@@ -1966,15 +1974,15 @@ declare
 	,	ShipToCode varchar(50)
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
+	,	SupplierCode varchar(50)
 	,	CustomerPart varchar(50)
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
-	,	UserDefined1 varchar(50) 
-	,	UserDefined2 varchar(50) 
-	,	UserDefined3 varchar(50) 
+	,	CustomerECL varchar(50)
+	,	UserDefined1 varchar(50)
+	,	UserDefined2 varchar(50)
+	,	UserDefined3 varchar(50)
 	,	UserDefined4 varchar(50)
 	,	UserDefined5 varchar(50)
 	,	AuthAccum varchar(50)
@@ -1986,7 +1994,7 @@ declare
 	,	RawAccum varchar(50)
 	,	RawAccumBeginDT varchar(50)
 	,	RawAccumEndDT varchar(50)
-	
+
 	)
 
 	declare
@@ -1996,7 +2004,7 @@ declare
 	,	ShipToCode varchar(50)
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
+	,	SupplierCode varchar(50)
 	,	Data xml
 	)
 
@@ -2012,7 +2020,7 @@ declare
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
+	,	CustomerECL varchar(50)
 	,	Data xml
 	)
 
@@ -2024,15 +2032,15 @@ declare
 	,	ShipToCode varchar(50)
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
+	,	SupplierCode varchar(50)
 	,	CustomerPart varchar(50)
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
-	,	UserDefined1 varchar(50) 
-	,	UserDefined2 varchar(50) 
-	,	UserDefined3 varchar(50) 
+	,	CustomerECL varchar(50)
+	,	UserDefined1 varchar(50)
+	,	UserDefined2 varchar(50)
+	,	UserDefined3 varchar(50)
 	,	UserDefined4 varchar(50)
 	,	UserDefined5 varchar(50)
 	,	AuthAccum varchar(50)
@@ -2044,21 +2052,21 @@ declare
 	,	RawAccum varchar(50)
 	,	RawAccumBeginDT varchar(50)
 	,	RawAccumEndDT varchar(50)
-	
+
 	)
 
 
 	insert
 		@PlanningAuthAccumsTemp1
 	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	Data	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
+	,	Data
 	)
-	
+
 	select
 		RawDocumentGUID = ed.RawDocumentGUID
 	,	ReleaseNo = coalesce(nullif(ed.Data.value('(/TRN-830/SEG-BFR/DE[@code="0328"])[1]', 'varchar(30)'),''), ed.Data.value('(/TRN-830/SEG-BFR/DE[@code="0127"])[1]', 'varchar(30)'))
@@ -2071,36 +2079,36 @@ declare
 		@PlanningHeaders ed
 		cross apply ed.Data.nodes('/TRN-830/LOOP-LIN') as EDIData(Releases)
 
-	
+
 		insert
 		@PlanningAuthAccumsTemp2
 	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	CustomerPart 
-	,	CustomerPO 
-	,	CustomerPOLine 
-	,	CustomerModelYear 
-	,	CustomerECL 
-	,	Data	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
+	,	CustomerPart
+	,	CustomerPO
+	,	CustomerPOLine
+	,	CustomerModelYear
+	,	CustomerECL
+	,	Data
 	)
 	select
 		RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
 	,	CustomerPart = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerModelYear = ''
 	,	CustomerECL = ''
 	,	Data = EDIData.Data.query('.')
-	
+
 	from
 		@PlanningAuthAccumsTemp1 ed
 		cross apply ed.data.nodes('/LOOP-LIN/SEG-ATH') as EDIData(Data)
@@ -2109,7 +2117,7 @@ declare
 	,	3
 	,	7
 
-			
+
 	insert
 		@PlanningAuthAccumsTemp3
 	(	RawDocumentGUID
@@ -2118,7 +2126,7 @@ declare
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -2127,18 +2135,18 @@ declare
 	,	UserDefined2
 	,	UserDefined3
 	,	UserDefined4
-	,	UserDefined5 
+	,	UserDefined5
 	,	AuthAccum
 	,	AuthAccumBeginDT
-	,	AuthAccumEndDT 
+	,	AuthAccumEndDT
 	,	FabAccum
 	,	FabAccumBeginDT
 	,	FabAccumEndDT
 	,	RawAccum
 	,	RawAccumBeginDT
-	,	RawAccumEndDT 
- 
- 
+	,	RawAccumEndDT
+
+
 	)
 
 	select
@@ -2148,7 +2156,7 @@ declare
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -2159,8 +2167,8 @@ declare
 	,	UserDefined4 = ''
 	,	UserDefined5 = ''
 	,	AuthAccum = Data.value('(for $a in SEG-ATH/DE[@code="0672"] where $a="PQ" return $a/../DE[. >> $a][@code="0380"][1])[1]', 'varchar(30)')
-	,	AuthAccumBeginDT = coalesce(Data.value('(for $a in SEG-ATH/DE[@code="0672"] where $a="PQ" return $a/../DE[. >> $a][@code="0373"][2])[1]', 'varchar(30)'),Data.value('(for $a in SEG-ATH/DE[@code="0672"] where $a="PQ" return $a/../DE[. >> $a][@code="0373"][1])[1]', 'varchar(30)')  ) 
-	,	AuthAccumEndDT = Data.value('(for $a in SEG-ATH/DE[@code="0672"] where $a="PQ" return $a/../DE[. >> $a][@code="0373"][1])[1]', 'varchar(30)') 
+	,	AuthAccumBeginDT = coalesce(Data.value('(for $a in SEG-ATH/DE[@code="0672"] where $a="PQ" return $a/../DE[. >> $a][@code="0373"][2])[1]', 'varchar(30)'),Data.value('(for $a in SEG-ATH/DE[@code="0672"] where $a="PQ" return $a/../DE[. >> $a][@code="0373"][1])[1]', 'varchar(30)')  )
+	,	AuthAccumEndDT = Data.value('(for $a in SEG-ATH/DE[@code="0672"] where $a="PQ" return $a/../DE[. >> $a][@code="0373"][1])[1]', 'varchar(30)')
 	,	FabAccum = Data.value('(for $a in SEG-ATH/DE[@code="0672"] where $a="FI" return $a/../DE[. >> $a][@code="0380"][1])[1]', 'varchar(30)')
 	,	FabAccumBeginDT =  coalesce(Data.value('(for $a in SEG-ATH/DE[@code="0672"] where $a="FI" return $a/../DE[. >> $a][@code="0373"][2])[1]', 'varchar(30)'),Data.value('(for $a in SEG-ATH/DE[@code="0672"] where $a="FI" return $a/../DE[. >> $a][@code="0373"][1])[1]', 'varchar(30)')  )
 	,	FabAccumEndDT =   Data.value('(for $a in SEG-ATH/DE[@code="0672"] where $a="FI" return $a/../DE[. >> $a][@code="0373"][1])[1]', 'varchar(30)')
@@ -2170,7 +2178,7 @@ declare
 	from
 		@PlanningAuthAccumsTemp2
 
-Insert 
+Insert
 		@PlanningAuthAccums
 	(	RawDocumentGUID
 	,	ReleaseNo
@@ -2178,7 +2186,7 @@ Insert
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -2187,17 +2195,17 @@ Insert
 	,	UserDefined2
 	,	UserDefined3
 	,	UserDefined4
-	,	UserDefined5 
+	,	UserDefined5
 	,	AuthAccum
 	,	AuthAccumBeginDT
 	,	AuthAccumEndDT
 	,	FabAccum
 	,	FabAccumBeginDT
-	,	FabAccumEndDT 
+	,	FabAccumEndDT
 	,	RawAccum
 	,	RawAccumBeginDT
-	,	RawAccumEndDT 
- 
+	,	RawAccumEndDT
+
 	)
 
 	select
@@ -2207,7 +2215,7 @@ Insert
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -2235,17 +2243,17 @@ group by
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
 	,	CustomerECL
-	,	UserDefined1 
-	,	UserDefined2 
-	,	UserDefined3 
-	,	UserDefined4 
-	,	UserDefined5 
-	 
+	,	UserDefined1
+	,	UserDefined2
+	,	UserDefined3
+	,	UserDefined4
+	,	UserDefined5
+
 
 --Select * From @PlanningAuthAccumsTemp1
 --Select * From @PlanningAuthAccumsTemp2
@@ -2266,21 +2274,21 @@ declare
 	,	ShipToCode varchar(50)
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
+	,	SupplierCode varchar(50)
 	,	CustomerPart varchar(50)
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
-	,	UserDefined1 varchar(50) 
-	,	UserDefined2 varchar(50) 
-	,	UserDefined3 varchar(50) 
+	,	CustomerECL varchar(50)
+	,	UserDefined1 varchar(50)
+	,	UserDefined2 varchar(50)
+	,	UserDefined3 varchar(50)
 	,	UserDefined4 varchar(50)
 	,	UserDefined5 varchar(50)
 	,	DateDue varchar(50)
 	,	QuantityDue varchar(50)
 	,	QuantityType varchar(50)
-	
+
 	)
 
 	declare
@@ -2290,7 +2298,7 @@ declare
 	,	ShipToCode varchar(50)
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
+	,	SupplierCode varchar(50)
 	,	Data xml
 	)
 
@@ -2306,7 +2314,7 @@ declare
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
+	,	CustomerECL varchar(50)
 	,	Data xml
 	)
 
@@ -2318,35 +2326,35 @@ declare
 	,	ShipToCode varchar(50)
 	,	ConsigneeCode varchar(50)
 	,	ShipFromCode varchar(50)
-	,	SupplierCode varchar(50)	
+	,	SupplierCode varchar(50)
 	,	CustomerPart varchar(50)
 	,	CustomerPO varchar(50)
 	,	CustomerPOLine varchar(50)
 	,	CustomerModelYear varchar(50)
-	,	CustomerECL varchar(50)	
-	,	UserDefined1 varchar(50) 
-	,	UserDefined2 varchar(50) 
-	,	UserDefined3 varchar(50) 
+	,	CustomerECL varchar(50)
+	,	UserDefined1 varchar(50)
+	,	UserDefined2 varchar(50)
+	,	UserDefined3 varchar(50)
 	,	UserDefined4 varchar(50)
 	,	UserDefined5 varchar(50)
 	,	DateDue varchar(50)
 	,	QuantityDue varchar(50)
-	,	QuantityType varchar(50)	
-	
+	,	QuantityType varchar(50)
+
 	)
 
 
 	insert
 		@PlanningReleasesTemp1
 	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	Data	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
+	,	Data
 	)
-	
+
 	select
 		RawDocumentGUID = ed.RawDocumentGUID
 	,	ReleaseNo = coalesce(nullif(ed.Data.value('(/TRN-830/SEG-BFR/DE[@code="0328"])[1]', 'varchar(30)'),''), ed.Data.value('(/TRN-830/SEG-BFR/DE[@code="0127"])[1]', 'varchar(30)'))
@@ -2362,32 +2370,32 @@ declare
 		insert
 		@PlanningReleasesTemp2
 	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	CustomerPart 
-	,	CustomerPO 
-	,	CustomerPOLine 
-	,	CustomerModelYear 
-	,	CustomerECL 
-	,	Data	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
+	,	CustomerPart
+	,	CustomerPO
+	,	CustomerPOLine
+	,	CustomerModelYear
+	,	CustomerECL
+	,	Data
 	)
 	select
 		RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
 	,	CustomerPart = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerModelYear = ''
 	,	CustomerECL = ''
 	,	Data = EDIData.Data.query('.')
-	
+
 	from
 		@PlanningReleasesTemp1 ed
 		cross apply ed.Data.nodes('/LOOP-LIN/LOOP-SDP[not(LOOP-JIT)]/SEG-FST') as EDIData(Data)
@@ -2399,33 +2407,33 @@ declare
 insert
 		@PlanningReleasesTemp2
 	(	RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
-	,	CustomerPart 
-	,	CustomerPO 
-	,	CustomerPOLine 
-	,	CustomerModelYear 
-	,	CustomerECL 
-	,	Data	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
+	,	CustomerPart
+	,	CustomerPO
+	,	CustomerPOLine
+	,	CustomerModelYear
+	,	CustomerECL
+	,	Data
 	)
 
 	select
 		RawDocumentGUID
-	,	ReleaseNo 
-	,	ShipToCode 
-	,	ConsigneeCode 
-	,	ShipFromCode 
-	,	SupplierCode	
+	,	ReleaseNo
+	,	ShipToCode
+	,	ConsigneeCode
+	,	ShipFromCode
+	,	SupplierCode
 	,	CustomerPart = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="BP" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerPO = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PO" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	, CustomerPOLine = ed.Data.value('(	for $a in LOOP-LIN/SEG-LIN/DE[@code="0235"] where $a="PL" return $a/../DE[. >> $a][@code="0234"][1])[1]', 'varchar(30)')
 	,	CustomerModelYear = ''
 	,	CustomerECL = ''
 	,	Data = EDIData.Data.query('.')
-	
+
 	from
 		@PlanningReleasesTemp1 ed
 		cross apply ed.Data.nodes('/LOOP-LIN/LOOP-SDP/LOOP-JIT/SEG-JIT') as EDIData(Data)
@@ -2434,7 +2442,7 @@ insert
 	,	3
 	,	7
 
-			
+
 	insert
 		@PlanningReleasesTemp3
 	(	RawDocumentGUID
@@ -2443,7 +2451,7 @@ insert
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -2452,7 +2460,7 @@ insert
 	,	UserDefined2
 	,	UserDefined3
 	,	UserDefined4
-	,	UserDefined5 
+	,	UserDefined5
 	,	DateDue
 	,	QuantityDue
 	,	QuantityType
@@ -2465,7 +2473,7 @@ insert
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -2478,12 +2486,12 @@ insert
 	,	DateDue = CASE WHEN Data.value('(/SEG-FST/DE[@code="0681"])[1]', 'varchar(50)') = 'F' THEN Data.value('(/SEG-FST/DE[@code="0373"])[2]', 'varchar(50)') ELSE Data.value('(/SEG-FST/DE[@code="0373"])[1]', 'varchar(50)') END
 	,	QuantityDue = Data.value('(/SEG-FST/DE[@code="0380"])[1]', 'varchar(50)')
 	,	QuantityType = Data.value('(/SEG-FST/DE[@code="0680"])[1]', 'varchar(50)')
- 
-	
+
+
 	from
 		@PlanningReleasesTemp2
 
-INSERT 
+INSERT
 		@PlanningReleases
 	(	RawDocumentGUID
 	,	ReleaseNo
@@ -2491,7 +2499,7 @@ INSERT
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -2500,10 +2508,10 @@ INSERT
 	,	UserDefined2
 	,	UserDefined3
 	,	UserDefined4
-	,	UserDefined5 
-	,	DateDue 
-	,	QuantityDue 
-	,	QuantityType 
+	,	UserDefined5
+	,	DateDue
+	,	QuantityDue
+	,	QuantityType
 	)
 
 	SELECT
@@ -2513,7 +2521,7 @@ INSERT
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -2523,16 +2531,16 @@ INSERT
 	,	UserDefined3 = ''
 	,	UserDefined4 = ''
 	,	UserDefined5 = ''
-	,	DateDue 
-	,	QuantityDue 
+	,	DateDue
+	,	QuantityDue
 	,	QuantityType
-	
+
 	FROM
 		@PlanningReleasesTemp3
 
 ORDER BY
  2,3,7,17
-	 
+
 
 		--Select * From @PlanningReleasesTemp1
 		--Select * From @PlanningReleasesTemp2
@@ -2603,8 +2611,8 @@ if	exists
 	) begin
 	--- <Insert rows="*">
 	set	@TableName = 'FxAztec.EDIFORD.StagingShipScheduleSupplemental'
-	
-	insert 
+
+	insert
 		FxAztec.EDIFORD.StagingShipScheduleSupplemental
 	(	RawDocumentGUID
     ,	ReleaseNo
@@ -2612,7 +2620,7 @@ if	exists
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -2621,22 +2629,22 @@ if	exists
 	,	UserDefined2
 	,	UserDefined3
 	,	UserDefined4
-	,	UserDefined5 
-	,	UserDefined6 
-	,	UserDefined7 
-	,	UserDefined8 
-	,	UserDefined9 
-	,	UserDefined10 
-	,	UserDefined11 
-	,	UserDefined12 
-	,	UserDefined13 
-	,	UserDefined14 
-	,	UserDefined15 
-	,	UserDefined16 
-	,	UserDefined17 
-	,	UserDefined18 
-	,	UserDefined19 
-	,	UserDefined20 
+	,	UserDefined5
+	,	UserDefined6
+	,	UserDefined7
+	,	UserDefined8
+	,	UserDefined9
+	,	UserDefined10
+	,	UserDefined11
+	,	UserDefined12
+	,	UserDefined13
+	,	UserDefined14
+	,	UserDefined15
+	,	UserDefined16
+	,	UserDefined17
+	,	UserDefined18
+	,	UserDefined19
+	,	UserDefined20
     )
     select
     RawDocumentGUID
@@ -2645,7 +2653,7 @@ if	exists
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -2654,12 +2662,12 @@ if	exists
 	,	UserDefined2 -- Line Feed Code
 	,	UserDefined3 -- Zone Code
 	,	UserDefined4
-	,	UserDefined5 
-	,	UserDefined6 
-	,	UserDefined7 
-	,	UserDefined8 
-	,	UserDefined9 
-	,	UserDefined10 
+	,	UserDefined5
+	,	UserDefined6
+	,	UserDefined7
+	,	UserDefined8
+	,	UserDefined9
+	,	UserDefined10
 	,	UserDefined11 --Line11
 	,	UserDefined12 --Line12
 	,	UserDefined13 --Line13
@@ -2667,12 +2675,12 @@ if	exists
 	,	UserDefined15 --Line15
 	,	UserDefined16 --Line16
 	,	UserDefined17 --Line17
-	,	UserDefined18 
-	,	UserDefined19 
-	,	UserDefined20 
+	,	UserDefined18
+	,	UserDefined19
+	,	UserDefined20
     from
         @ShipScheduleSupplemental fs
-	
+
 	select
 		@Error = @@Error,
 		@RowCount = @@Rowcount
@@ -2704,7 +2712,7 @@ if	exists
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -2714,7 +2722,7 @@ if	exists
   ,	LastQtyDT
 	,	LastShipper
   ,	LastAccumQty
-  ,	LastAccumDT 
+  ,	LastAccumDT
 
     )
     select
@@ -2724,7 +2732,7 @@ if	exists
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -2747,7 +2755,7 @@ if	exists
 								End
     from
         @ShipScheduleAccums
-	
+
 	select
 		@Error = @@Error,
 		@RowCount = @@Rowcount
@@ -2771,14 +2779,14 @@ if	exists
 
 	insert
 		FxAztec.EDIFORD.StagingShipScheduleAuthAccums
-	(	
+	(
 		RawDocumentGUID
 	,	ReleaseNo
 	,	ShipToCode
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -2794,7 +2802,7 @@ if	exists
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -2814,8 +2822,8 @@ if	exists
     ,   PriorCUM = AuthAccum
     from
         @ShipScheduleAuthAccums
-	
-	
+
+
 	select
 		@Error = @@Error,
 		@RowCount = @@Rowcount
@@ -2833,7 +2841,7 @@ if	exists
 	(	select
 			*
 		from
-			@ShipSchedules fr	
+			@ShipSchedules fr
 	) begin
 	--- <Insert rows="*">
 	set	@TableName = 'FxAztec.EDIFORD.StagingShipSchedules'
@@ -2846,7 +2854,7 @@ if	exists
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -2862,7 +2870,7 @@ if	exists
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -2877,7 +2885,7 @@ if	exists
 												End
 	from
 		@ShipSchedules
-	
+
 
 	select
 		@Error = @@Error,
@@ -2950,8 +2958,8 @@ if	exists
 	) begin
 	--- <Insert rows="*">
 	set	@TableName = 'FxAztec.EDIFORD.StagingShipScheduleSupplemental'
-	
-	insert 
+
+	insert
 		FxAztec.EDIFORD.StagingPlanningSupplemental
 	(	RawDocumentGUID
     ,	ReleaseNo
@@ -2959,7 +2967,7 @@ if	exists
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -2968,22 +2976,22 @@ if	exists
 	,	UserDefined2
 	,	UserDefined3
 	,	UserDefined4
-	,	UserDefined5 
-	,	UserDefined6 
-	,	UserDefined7 
-	,	UserDefined8 
-	,	UserDefined9 
-	,	UserDefined10 
-	,	UserDefined11 
-	,	UserDefined12 
-	,	UserDefined13 
-	,	UserDefined14 
-	,	UserDefined15 
-	,	UserDefined16 
-	,	UserDefined17 
-	,	UserDefined18 
-	,	UserDefined19 
-	,	UserDefined20 
+	,	UserDefined5
+	,	UserDefined6
+	,	UserDefined7
+	,	UserDefined8
+	,	UserDefined9
+	,	UserDefined10
+	,	UserDefined11
+	,	UserDefined12
+	,	UserDefined13
+	,	UserDefined14
+	,	UserDefined15
+	,	UserDefined16
+	,	UserDefined17
+	,	UserDefined18
+	,	UserDefined19
+	,	UserDefined20
     )
     select
     RawDocumentGUID
@@ -2992,7 +3000,7 @@ if	exists
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -3001,12 +3009,12 @@ if	exists
 	,	UserDefined2 -- Line Feed Code
 	,	UserDefined3 -- Zone Code
 	,	UserDefined4
-	,	UserDefined5 
-	,	UserDefined6 
-	,	UserDefined7 
-	,	UserDefined8 
-	,	UserDefined9 
-	,	UserDefined10 
+	,	UserDefined5
+	,	UserDefined6
+	,	UserDefined7
+	,	UserDefined8
+	,	UserDefined9
+	,	UserDefined10
 	,	UserDefined11 --Line11
 	,	UserDefined12 --Line12
 	,	UserDefined13 --Line13
@@ -3014,9 +3022,9 @@ if	exists
 	,	UserDefined15 --Line15
 	,	UserDefined16 --Line16
 	,	UserDefined17 --Line17
-	,	UserDefined18 
-	,	UserDefined19 
-	,	UserDefined20 
+	,	UserDefined18
+	,	UserDefined19
+	,	UserDefined20
    from
        @PlanningSupplemental
 
@@ -3052,7 +3060,7 @@ if	exists
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -3062,7 +3070,7 @@ if	exists
 	,	LastQtyDT
 	, LastShipper
 	,	LastAccumQty
-	,	LastAccumDT 
+	,	LastAccumDT
 
    )
   select
@@ -3072,7 +3080,7 @@ if	exists
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -3095,8 +3103,8 @@ if	exists
 								End
     from
         @PlanningAccums
-	
-	
+
+
 	select
 		@Error = @@Error,
 		@RowCount = @@Rowcount
@@ -3121,14 +3129,14 @@ if	exists
 
 	insert
 		FxAztec.EDIFORD.StagingPlanningAuthAccums
-	(	
+	(
 		RawDocumentGUID
 	,	ReleaseNo
 	,	ShipToCode
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -3142,7 +3150,7 @@ if	exists
   ,	RawCUM
 	,	RawCUMStartDT
   ,	RawCUMEndDT
-  
+
 	)
     select
     RawDocumentGUID
@@ -3151,7 +3159,7 @@ if	exists
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart	
+	,	CustomerPart
 	,	CustomerPO
 	,	CustomerPOLine
 	,	CustomerModelYear
@@ -3196,11 +3204,11 @@ if	exists
 												else convert(datetime, RawAccumEndDT)
 												End
 
-		
+
     from
         @PlanningAuthAccums
-	
-	
+
+
 	select
 		@Error = @@Error,
 		@RowCount = @@Rowcount
@@ -3231,11 +3239,11 @@ if	exists
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart 
-	,	CustomerPO			
-	,	CustomerPOLine		
-	,	CustomerModelYear 
-	,	CustomerECL	
+	,	CustomerPart
+	,	CustomerPO
+	,	CustomerPOLine
+	,	CustomerModelYear
+	,	CustomerECL
 	,	UserDefined1
 	,	UserDefined2
 	,	UserDefined3
@@ -3243,7 +3251,7 @@ if	exists
 	,	UserDefined5
 	,	ScheduleType
 	,	QuantityQualifier
-	,	Quantity 
+	,	Quantity
 	,	QuantityType
 	,	DateType
 	,	DateDT
@@ -3256,11 +3264,11 @@ if	exists
 	,	ConsigneeCode
 	,	ShipFromCode
 	,	SupplierCode
-	,	CustomerPart 
-	,	CustomerPO			
-	,	CustomerPOLine		
-	,	CustomerModelYear 
-	,	CustomerECL	
+	,	CustomerPart
+	,	CustomerPO
+	,	CustomerPOLine
+	,	CustomerModelYear
+	,	CustomerECL
 	,	UserDefined1
 	,	UserDefined2
 	,	UserDefined3
@@ -3268,7 +3276,7 @@ if	exists
 	,	UserDefined5
 	,	''
 	,	''
-	,	QuantityDue 
+	,	QuantityDue
 	,	QuantityType
 	,	''
 	,	CASE		WHEN DATALENGTH(DateDue) = '6'
@@ -3280,8 +3288,8 @@ if	exists
 	,	''
 	FROM
 		@PlanningReleases
-	
-		
+
+
 
 	SELECT
 		@Error = @@Error,
@@ -3304,13 +3312,13 @@ IF	EXISTS
 			EDI.EDIDocuments ed
 		WHERE
 			ed.Type = '862'
-			AND  LEFT(ed.EDIStandard,6) = '00FORD' 
+			AND  LEFT(ed.EDIStandard,6) = '00FORD'
 			--and ed.TradingPartner in ( 'MPT MUNCIE' )
 			AND ed.Status = 100 -- (select dbo.udf_StatusValue('EDI.EDIDocuments', 'InProcess'))
 	) BEGIN
 	--- <Update rows="*">
 	SET	@TableName = 'EDIFORD.ShipScheduleHeaders'
-	
+
 	UPDATE
 		ed
 	SET
@@ -3319,7 +3327,7 @@ IF	EXISTS
 		EDI.EDIDocuments ed
 	WHERE
 		ed.Type = '862'
-		AND  LEFT(ed.EDIStandard,6) = '00FORD' 
+		AND  LEFT(ed.EDIStandard,6) = '00FORD'
 		--and ed.TradingPartner in ( 'MPT MUNCIE' )
 		AND ed.Status = 100 -- (select dbo.udf_StatusValue('EDI.EDIDocuments', 'InProcess'))
 
@@ -3343,13 +3351,13 @@ IF	EXISTS
 			EDI.EDIDocuments ed
 		WHERE
 			ed.Type = '830'
-			AND  LEFT(ed.EDIStandard,6) = '00FORD' 
+			AND  LEFT(ed.EDIStandard,6) = '00FORD'
 			--and ed.TradingPartner in ( 'MPT MUNCIE' )
 			AND ed.Status = 100 -- (select dbo.udf_StatusValue('EDI.EDIDocuments', 'InProcess'))
 	) BEGIN
 	--- <Update rows="*">
 	SET	@TableName = 'EDI.EDIDocuments'
-	
+
 	UPDATE
 		ed
 	SET
@@ -3358,7 +3366,7 @@ IF	EXISTS
 		EDI.EDIDocuments ed
 	WHERE
 		ed.Type = '830'
-		AND  LEFT(ed.EDIStandard,6) = '00FORD' 
+		AND  LEFT(ed.EDIStandard,6) = '00FORD'
 		--and ed.TradingPartner in ( 'MPT MUNCIE' )
 		AND ed.Status = 100 -- (select dbo.udf_StatusValue('EDI.EDIDocuments', 'InProcess'))
 
@@ -3387,7 +3395,7 @@ queueError:
 SET	@Result = 100
 	RAISERROR ('Chrysler documents already in process.  Use EDIFORD.usp_ClearQueue to clear the queue if necessary.', 16, 1)
 	RETURN
-	
+
 --- </Error>
 
 /*
@@ -3437,13 +3445,13 @@ from
 	FxAztec.EDIFORD.StagingShipSchedules sfr
 
 Select 'StagingSSAccums'
-select 
+select
 	*
 from
 	FxAztec.EDIFORD.StagingShipScheduleAccums sfs
 
 Select 'StagingSSSupplemental'
-select 
+select
 	*
 from
 	FxAztec.EDIFORD.StagingShipScheduleSupplemental sfs
@@ -3461,20 +3469,20 @@ select
 from
 	FxAztec.EDIFORD.StagingPlanningReleases sfr
 
-Select 'PlanningAccums'	
-select 
+Select 'PlanningAccums'
+select
 	*
 from
 	FxAztec.EDIFORD.StagingPlanningAccums sfa
-Select 'PlanningAuthAccums'	
+Select 'PlanningAuthAccums'
 
-select 
+select
 	*
 from
 	FxAztec.EDIFORD.StagingPlanningAuthAccums sfa
 
-Select 'PlanningSupplemental'	
-select 
+Select 'PlanningSupplemental'
+select
 	*
 from
 	FxAztec.EDIFORD.StagingPlanningSupplemental sfa
@@ -3493,16 +3501,4 @@ go
 Results {
 }
 */
-
-
-
-
-
-
-
-
-
-
-
-
 GO
